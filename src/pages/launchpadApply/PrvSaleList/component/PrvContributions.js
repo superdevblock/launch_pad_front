@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-import { usePoolListUser } from "../helper/useStats";
+import { usePoolListUser } from "../../../helper/useStats";
 import ProjectCard from "../../../../component/ProjectCard";
 
 export default function PrvContributions() {
@@ -56,7 +56,12 @@ export default function PrvContributions() {
                   .reverse()
                   .map((rowdata, index) => {
                     if (rowdata.poolType === "1")
-                      return ProjectCard(stats.chainId, rowdata, index);
+                    return <ProjectCard
+                    chainId={stats.chainId}
+                    rowdata={rowdata}
+                    index={index} 
+                    key={index}/>
+                    // return (<></>)
                   })
               ) : (
                 <div className="col-12 item explore-item mt-5">

@@ -7,6 +7,7 @@ import LiquidityToken from "./LiquidityToken";
 import Context from "./context/Context";
 import { useWeb3React } from "@web3-react/core";
 import { defaultValue } from "./context/defaults";
+import { RiHeartFill } from "react-icons/ri";
 
 const createFee = 10 ** 17;
 
@@ -41,10 +42,10 @@ export default function MainToken() {
           <div className="container px-3">
             <div className="intro">
               <div className="intro-content text-center">
-                <span className="intro-text">Create Token</span>
+                <h2 className="color-primary">Create Token</h2>
               </div>
             </div>
-            <div className="my-5">
+            <div className="d-flex justify-content-center">
               <div className="card stepcard">
                 <div className="card-body">
                   <form className="login-box">
@@ -68,7 +69,7 @@ export default function MainToken() {
                               <option value="2">Baby Token</option>
                               <option value="3">BuyBackBaby Token</option>
                             </select>
-                            <small>Fee : 0.1 BNB</small>
+                            <small>Fee : 0.1 ETH</small>
                           </div>
                         </div>
                       </div>

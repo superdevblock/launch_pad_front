@@ -5,13 +5,15 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import { supportNetwork, RPC_URLS } from "./network";
 
-export const CHAIN_ID = 56;
+// export const CHAIN_ID = 56;
+export const DEFAULT_CHAIN_ID = 1;
 export const infura_Id = "";
 
 export const getRpcUrl = () => {
   return {
-    56: "https://bsc-dataseed.binance.org",
-  }[CHAIN_ID];
+    5: "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+    1: "https://eth-mainnet.g.alchemy.com/v2/Mm0Dx17oDc52YllPQYiPWd6h0w6Mt8VV",
+  }[DEFAULT_CHAIN_ID];
 };
 
 export const getWeb3 = (chainId) => {
@@ -36,8 +38,8 @@ export const walletconnect = new WalletConnectConnector({
 });
 
 export const coinbaseWallet = new WalletLinkConnector({
-  url: `https://bsc-dataseed.binance.org`,
-  appName: "NovaPad",
+  url: `https://eth-mainnet.g.alchemy.com/v2/Mm0Dx17oDc52YllPQYiPWd6h0w6Mt8VV`,
+  appName: "BDAI",
   supportedChainIds: supportChainId,
 });
 

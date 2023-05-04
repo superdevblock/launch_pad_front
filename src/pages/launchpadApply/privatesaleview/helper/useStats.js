@@ -157,7 +157,7 @@ export const useCommonStats = (update) => {
           currencySymbol: currencyList[data[24].toLowerCase()],
         });
       } catch (err) {
-        toast.error("wrong network selected !");
+        toast.error("Wrong network selected !");
         history.push("/sale-list");
       }
     };

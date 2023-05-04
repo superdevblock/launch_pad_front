@@ -76,7 +76,7 @@ export default function PrivateSale() {
                     >
                       <a href="#step2">
                         <span className="round-tab">2</span>{" "}
-                        <i>DeFi Launchpad Info</i>
+                        <i>Token Info</i>
                       </a>
                     </li>
                     <li

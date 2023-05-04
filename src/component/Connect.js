@@ -9,7 +9,7 @@ import { trimAddress } from "../hooks/constant";
 import { supportNetwork } from "../hooks/network";
 import useEagerConnect from "../hooks/useWeb3";
 
-export const Connect = function () {
+export const Connect = function ({mobile}) {
   const context = useWeb3React();
   const { connector, account, activate, deactivate, chainId, active, error } =
     context;
@@ -27,7 +27,7 @@ export const Connect = function () {
 
   function getErrorMessage(error) {
     if (error instanceof NoEthereumProviderError) {
-      return "Metamask not deteced";
+      return "Metamask not detected";
     }
     if (error instanceof UnsupportedChainIdError) {
       return (
@@ -67,8 +67,8 @@ export const Connect = function () {
 
   return (
     <React.Fragment>
-      <div className="d-flex justify-content-between align-items-center">
-        <div
+      <div className={`${mobile ? "" : "m-connect"}`}>
+        {/* <div
           className="badge badge-outline"
           // onClick={() => {
           //   setNetworkshow(!networkshow);
@@ -95,7 +95,7 @@ export const Connect = function () {
               ? supportNetwork[chainId].name
               : supportNetwork["default"].name}
           </span>
-        </div>
+        </div> */}
         {error && (
           <button
             type="button"

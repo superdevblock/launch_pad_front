@@ -239,11 +239,11 @@ export default function ProjectDetails() {
                 setEditLoading(false);
                 setEditmodalShow(false);
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setEditLoading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
                 setUpdater(new Date());
                 setEditLoading(false);
               }
@@ -385,16 +385,16 @@ export default function ProjectDetails() {
                   clearInterval(interval);
                   if (response.status === true) {
                     toast.success(
-                      "success ! your last transaction is success 👍"
+                      "Success ! Your last transaction is success 👍"
                     );
                     setUpdater(new Date());
                     setLoading(false);
                   } else if (response.status === false) {
-                    toast.error("error ! Your last transaction is failed.");
+                    toast.error("Error ! Your last transaction is failed.");
                     setUpdater(new Date());
                     setLoading(false);
                   } else {
-                    toast.error("error ! something went wrong.");
+                    toast.error("Error ! something went wrong.");
                     setUpdater(new Date());
                     setLoading(false);
                   }
@@ -451,17 +451,17 @@ export default function ProjectDetails() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("success ! your last transaction is success 👍");
+                toast.success("Success ! Your last transaction is success 👍");
                 setUpdater(new Date());
                 setLoading(false);
                 accStats.allowance = "1000000000000000000000000000";
                 setAllowance(accStats.allowance);
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setLoading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
                 setUpdater(new Date());
                 setLoading(false);
               }
@@ -508,11 +508,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setFinalLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setFinalLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setFinalLoading(false);
             }
@@ -555,11 +555,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setWcLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setWcLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setWcLoading(false);
             }
@@ -602,11 +602,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setCtLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setCtLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setCtLoading(false);
             }
@@ -649,11 +649,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setLocklLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setLocklLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setLocklLoading(false);
             }
@@ -696,11 +696,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setLocklLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setLocklLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setLocklLoading(false);
             }
@@ -1020,7 +1020,7 @@ export default function ProjectDetails() {
                   style={{
                     borderBottom: "1px solid white",
                     borderRadius: "0",
-                    background: "url(" + social.bannerurl + ")",
+                    background: `url(${social.bannerurl})!important`,
                     height: "10vw",
                   }}
                 ></div>
@@ -1270,7 +1270,7 @@ export default function ProjectDetails() {
                   </React.Fragment>
                 ) : (
                   <div className="d-flex justify-content-center">
-                    <h5 className="mt-3">You are not onwer of pool</h5>
+                    <h5 className="mt-3">You are not owner of pool</h5>
                   </div>
                 )}
               </div>

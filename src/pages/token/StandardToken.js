@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
 import Context from "./context/Context";
-import { ethers } from "ethers";
-import Web3 from "web3";
+import { BigNumber, ethers } from "ethers";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import tokenByte from "../../bytecode/Tokens.json";
-import StandardTokenABI from "../../json/StandardToken.json";
 import Button from "react-bootstrap-button-loader";
 import { contract } from "../../hooks/constant";
+import { getContract } from "../../hooks/contractHelper";
+import { useWeb3React } from "@web3-react/core";
+import TokenFactoryABI from "../../json/tokenFactory.json"
+import { getWeb3 } from "../../hooks/connectors";
 
 export default function StandardToken(props) {
   const { createFee } = props;
@@ -20,6 +21,9 @@ export default function StandardToken(props) {
     decimals: "",
     supply: "",
   });
+
+  const context = useWeb3React();
+  const { account, chainId, library } = context;
 
   const checkStandardValidation = (input, inputValue) => {
     let terror = 0;
@@ -122,6 +126,7 @@ export default function StandardToken(props) {
       }
       return true;
     });
+
     if (terror > 0) {
       return false;
     } else {
@@ -141,57 +146,71 @@ export default function StandardToken(props) {
     if (check) {
       try {
         setCreateLoading(true);
+        if (account) {
+          if (chainId) {
+            let tokenFactoryAddress = contract[chainId]
+              ? contract[chainId].tokenfactory
+              : contract["default"].tokenfactory;
+            let feeAddress = contract[chainId]
+              ? contract[chainId].feeReceiver
+              : contract["default"].feeReceiver;
+            let factoryContract = getContract(
+              TokenFactoryABI,
+              tokenFactoryAddress,
+              library
+            );
 
-        window.web3 = new Web3(window.ethereum);
-        let accounts = await window.ethereum.request({
-          method: "eth_accounts",
-        });
+            let tx = await factoryContract.createStandard(
+              value.name,
+              value.symbol,
+              Number(value.decimals),
+              BigNumber.from(value.supply + "0".repeat(value["decimals"])),
+              0,
+              0,
+              feeAddress,
+              BigNumber.from(createFee.toString()),
+              {from:account, value:BigNumber.from(createFee.toString())}
+            );
+            const resolveAfter3Sec = new Promise((resolve) =>
+              setTimeout(resolve, 10000)
+            );
+            toast.promise(resolveAfter3Sec, {
+              pending: "Waiting for confirmation 👌",
+            });
 
-        let tokenContract = new window.web3.eth.Contract(StandardTokenABI);
-
-        if (accounts.length == 0) {
-          toast.error("error ! connect wallet! 👍");
+            var interval = setInterval(async function () {
+              let web3 = getWeb3(chainId);
+              var response = await web3.eth.getTransactionReceipt(tx.hash);
+              if (response != null) {
+                clearInterval(interval);
+                if (response.status === true) {
+                  toast.success("Success ! Your last transaction is success 👍");
+                  setCreateLoading(false);
+                  if (typeof response.logs[0] !== "undefined") {
+                    history.push(
+                      `/token-details?addr=${response.logs[0].address}`
+                    );
+                  } else {
+                    toast.error("Something went wrong !");
+                    history.push("/");
+                  }
+                } else if (response.status === false) {
+                  toast.error("Error ! Your last transaction is failed.");
+                  setCreateLoading(false);
+                } else {
+                  toast.error("Error ! something went wrong.");
+                  setCreateLoading(false);
+                }
+              }
+            }, 5000);
+          } else {
+            toast.error("Wrong network selected !");
+            setCreateLoading(false);
+          }
+        } else {
+          toast.error("Please Connect Wallet!");
           setCreateLoading(false);
-          return;
         }
-
-        const resolveAfter3Sec = new Promise((resolve) =>
-          setTimeout(resolve, 10000)
-        );
-
-        await tokenContract
-          .deploy({
-            data: tokenByte["StandardToken"],
-            arguments: [
-              value["name"],
-              value["symbol"],
-              value["decimals"],
-              value["supply"] + "0".repeat(value["decimals"]),
-              contract["default"]["feeReceiver"],
-              createFee.toString(),
-            ],
-          })
-          .send(
-            {
-              value: createFee.toString(),
-              from: accounts[0],
-            },
-            function (error, transactionHash) {
-              if (transactionHash != undefined)
-                toast.promise(resolveAfter3Sec, {
-                  pending: "Waiting for confirmation 👌",
-                });
-            }
-          )
-          .on("error", function (error) {
-            toast.error("error ! something went wrong! 👍");
-            setCreateLoading(false);
-          })
-          .on("receipt", function (receipt) {
-            toast.success("success ! your last transaction is success 👍");
-            setCreateLoading(false);
-            history.push(`/token-details?addr=${receipt.contractAddress}`);
-          });
       } catch (err) {
         toast.error(err.reason ? err.reason : err.message);
         setCreateLoading(false);

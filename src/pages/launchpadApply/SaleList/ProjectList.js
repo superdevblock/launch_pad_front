@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-import { usePoolListStats } from "./helper/useStats";
+import { usePoolListStats } from "../../helper/useStats";
 import ProjectCard from "../../../component/ProjectCard";
 
 export default function ProjectList() {
@@ -18,18 +18,18 @@ export default function ProjectList() {
         <section className="project-area explore-area">
           <div className="intro">
             <div className="intro-content text-center">
-              <span className="intro-text">Launchpad List</span>
+              <h1 className="color-primary">Launchpad List</h1>
             </div>
             <div
               className="explore-menu btn-group btn-group-toggle flex-wrap mt-5 pl-3"
               data-toggle="buttons"
             >
-              <label className="btn active d-table text-uppercase p-2">
+              <label className="btn active d-table text-uppercase p-2 border-radius-non">
                 <Link to="/sale-list" className="explore-btn">
                   <span>All</span>
                 </Link>
               </label>
-              <label className="btn d-table text-uppercase p-2">
+              <label className="btn d-table text-uppercase p-2 border-radius-non">
                 <Link to="/my-contribution" className="explore-btn">
                   <span>My Contribution</span>
                 </Link>
@@ -57,7 +57,12 @@ export default function ProjectList() {
                   .reverse()
                   .map((rowdata, index) => {
                     if (rowdata.poolType !== "1")
-                      return ProjectCard(stats.chainId, rowdata, index);
+                      return <ProjectCard
+                      chainId={stats.chainId}
+                      rowdata={rowdata}
+                      index={index} 
+                      key={index}/>
+                      // return (<></>)
                   })
               ) : (
                 <div className="col-12 item explore-item mt-5">

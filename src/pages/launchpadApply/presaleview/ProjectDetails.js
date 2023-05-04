@@ -3,10 +3,11 @@ import { useCommonStats, useAccountStats } from "./helper/useStats";
 import Countdown, { zeroPad } from "react-countdown";
 import { useWeb3React } from "@web3-react/core";
 import dateFormat from "dateformat";
-import { supportNetwork } from "../../../hooks/network";
+import { getChainId, supportNetwork } from "../../../hooks/network";
 import Button from "react-bootstrap-button-loader";
 import { formatPrice } from "../../../hooks/contractHelper";
 import poolAbi from "../../../json/presalePool.json";
+import distributeAbi from "../../../json/distribute.json";
 import ERC20Abi from "../../../json/ERC20.json";
 import { parseEther } from "ethers/lib/utils";
 import { toast } from "react-toastify";
@@ -17,8 +18,12 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { useLocation } from "react-router-dom";
-import { contract } from "../../../hooks/constant";
-import { AiFillEdit } from "react-icons/all";
+import { contract, trimAddress } from "../../../hooks/constant";
+import { AiFillEdit, RiDiscordFill, RiFacebookFill, RiGithubFill, RiGlobalFill, RiInstagramFill, RiRedditFill, RiTelegramFill, RiTwitterFill } from "react-icons/all";
+
+import question from "../../../images/question.png"
+import { async } from "q";
+import { ethers } from "ethers";
 
 export default function ProjectDetails() {
   const [updater, setUpdater] = useState(1);
@@ -36,6 +41,7 @@ export default function ProjectDetails() {
   const [finalLoading, setFinalLoading] = useState(false);
   const [wcLoading, setWcLoading] = useState(false);
   const [ctLoading, setCtLoading] = useState(false);
+  const [cbtLoading, setCbtLoading] = useState(false);
   const [locklLoading, setLocklLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
   const [refcopy1, setRefcopy1] = useState(false);
@@ -43,10 +49,13 @@ export default function ProjectDetails() {
   const [modalShow, setModalShow] = useState(false);
   const [unsetmodalShow, setUnsetmodalShow] = useState(false);
   const [editmodalShow, setEditmodalShow] = useState(false);
+  const [enableDistributeModal, setEnableDistributeModal] = useState(false);
   const [whitelistAddress, setWhitelistAddress] = useState("");
   const [removeWhitelistAddress, setRemoveWhitelistAddress] = useState("");
+  const [allowedDistributors, setAllowedDistributors] = useState("");
   const search = useLocation().search;
   const queryChainId = new URLSearchParams(search).get("chainId");
+  const _chainId_ = getChainId(queryChainId, chainId)
   const [error, setError] = useState({
     logourl: "",
     bannerurl: "",
@@ -77,8 +86,25 @@ export default function ProjectDetails() {
     brief: "",
   });
 
+  const [isValidLogoUrl, setIsValidLogoUrl] = useState(true);
+  const [isValidBannerUrl, setIsValidBannerUrl] = useState(true);
+
+  const handleLoadLogo = () => {
+    setIsValidLogoUrl(true);
+  };
+
+  const handleErrorLogo = () => {
+    setIsValidLogoUrl(false);
+  };
+  const handleLoadBanner = () => {
+    setIsValidBannerUrl(true);
+  };
+
+  const handleErrorBanner = () => {
+    setIsValidBannerUrl(false);
+  };
   useEffect(() => {
-    function getDetails() {
+    async function getDetails() {
       let details = stats.poolDetails.toString().split("$#$");
       const object = {
         logourl: details[0],
@@ -106,6 +132,41 @@ export default function ProjectDetails() {
 
   const startTime = new Date(stats.startTime * 1000);
   const endTime = new Date(stats.endTime * 1000);
+
+  const [distributionInfo, setDistributionInfo] = useState({
+    enabled: false,
+    allowed: false,
+    claimed: false,
+    claimable: 0
+  })
+  const [isOperator, setIsOperator] = useState(false)
+  useEffect(() => {
+    const fetchDistributionInfo = async (account) => {
+      try {
+        const web3 = getWeb3(_chainId_)
+        const distributeContract = new web3.eth.Contract(distributeAbi, contract[_chainId_]["distribute"]);
+        const result = await distributeContract.methods.getInfoForUser(stats.token, account).call();
+        setDistributionInfo({
+          enabled: result[0],
+          allowed: result[2],
+          claimed: result[1],
+          claimable: Number(ethers.utils.formatUnits(result[3], stats.tokenDecimal))
+        })
+
+        const _operator = await distributeContract.methods.operator().call()
+        if(_operator.toLowerCase() === account.toLowerCase()) {
+          setIsOperator(true);
+        } else {
+          setIsOperator(false)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    if(account) {
+      fetchDistributionInfo(account)
+    }
+  }, [_chainId_, account, library, stats.poolAddress, stats.token, stats.tokenDecimal, updater])
 
   const checkValidation = (input, inputValue) => {
     let terror = 0;
@@ -243,11 +304,11 @@ export default function ProjectDetails() {
                 setEditLoading(false);
                 setEditmodalShow(false);
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setEditLoading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
                 setUpdater(new Date());
                 setEditLoading(false);
               }
@@ -319,10 +380,10 @@ export default function ProjectDetails() {
       setBtndisabled(true);
     } else if (
       parseFloat(e.target.value) < parseFloat(stats.minContribution) ||
-      parseFloat(e.target.value) > parseFloat(stats.maxContribution)
+      parseFloat(e.target.value) > parseFloat(stats.userMaxAllocation)
     ) {
       setError_msg(
-        `amount must be between ${stats.minContribution} and ${stats.maxContribution}`
+        stats.userMaxAllocation > 0 ? `amount must be between ${stats.minContribution} and ${stats.userMaxAllocation}` : `you are unable to purchase because you are not a tier.`
       );
       setBtndisabled(true);
     } else {
@@ -340,10 +401,10 @@ export default function ProjectDetails() {
         : parseFloat(accStats.balance);
     if (
       parseFloat(maxamount) < parseFloat(stats.minContribution) ||
-      parseFloat(maxamount) > parseFloat(stats.maxContribution)
+      parseFloat(maxamount) > parseFloat(stats.userMaxAllocation)
     ) {
       setError_msg(
-        `amount must be between ${stats.minContribution} and ${stats.maxContribution}`
+        `amount must be between ${stats.minContribution} and ${stats.userMaxAllocation}`
       );
       setBtndisabled(true);
     }
@@ -397,16 +458,16 @@ export default function ProjectDetails() {
                   clearInterval(interval);
                   if (response.status === true) {
                     toast.success(
-                      "success ! your last transaction is success 👍"
+                      "Success ! Your last transaction is success 👍"
                     );
                     setUpdater(new Date());
                     setLoading(false);
                   } else if (response.status === false) {
-                    toast.error("error ! Your last transaction is failed.");
+                    toast.error("Error ! Your last transaction is failed.");
                     setUpdater(new Date());
                     setLoading(false);
                   } else {
-                    toast.error("error ! something went wrong.");
+                    toast.error("Error ! something went wrong.");
                     setUpdater(new Date());
                     setLoading(false);
                   }
@@ -463,17 +524,17 @@ export default function ProjectDetails() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("success ! your last transaction is success 👍");
+                toast.success("Success ! Your last transaction is success 👍");
                 setUpdater(new Date());
                 setLoading(false);
                 accStats.allowance = "1000000000000000000000000000";
                 setAllowance(accStats.allowance);
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setLoading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
                 setUpdater(new Date());
                 setLoading(false);
               }
@@ -518,13 +579,13 @@ export default function ProjectDetails() {
           if (response != null) {
             clearInterval(interval);
             if (response.status === true) {
-              toast.success("success ! your last transaction is success 👍");
+              toast.success("Success ! Your last transaction is success 👍");
               setUpdater(new Date());
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
             }
           }
@@ -568,15 +629,15 @@ export default function ProjectDetails() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("success ! your last transaction is success 👍");
+                toast.success("Success ! Your last transaction is success 👍");
                 setUpdater(new Date());
                 setWaddloading(false);
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setWaddloading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
                 setUpdater(new Date());
                 setWaddloading(false);
               }
@@ -621,15 +682,68 @@ export default function ProjectDetails() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("success ! your last transaction is success 👍");
+                toast.success("Success ! Your last transaction is success 👍");
                 setUpdater(new Date());
                 setWaddloading(false);
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setWaddloading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
+                setUpdater(new Date());
+                setWaddloading(false);
+              }
+            }
+          }, 5000);
+        } else {
+          toast.error("Please Connect to wallet !");
+          setWaddloading(false);
+        }
+      } else {
+        toast.error("Please Enter Valid Addess !");
+        setWaddloading(false);
+      }
+    } catch (err) {
+      toast.error(err.reason ? err.reason : err.message);
+      setWaddloading(false);
+    }
+  };
+  
+  const handleEnableDistribute = async (e) => {
+    e.preventDefault();
+    setWaddloading(true);
+    try {
+      const waddress = allowedDistributors.split(/\r?\n/);
+      if (waddress.length > 0) {
+        if (account) {
+          let distributeContract = getContract(distributeAbi, contract[_chainId_]["distribute"], library);
+console.log("sniper: w addresses: ", waddress, stats.token)
+          let tx = await distributeContract.enablePool(stats.token, waddress, {
+            from: account,
+          });
+          const resolveAfter3Sec = new Promise((resolve) =>
+            setTimeout(resolve, 5000)
+          );
+          toast.promise(resolveAfter3Sec, {
+            pending: "Waiting for confirmation 👌",
+          });
+
+          var interval = setInterval(async function () {
+            let web3 = getWeb3(chainId);
+            var response = await web3.eth.getTransactionReceipt(tx.hash);
+            if (response != null) {
+              clearInterval(interval);
+              if (response.status === true) {
+                toast.success("Success ! Your last transaction is success 👍");
+                setUpdater(new Date());
+                setWaddloading(false);
+              } else if (response.status === false) {
+                toast.error("Error ! Your last transaction is failed.");
+                setUpdater(new Date());
+                setWaddloading(false);
+              } else {
+                toast.error("Error ! something went wrong.");
                 setUpdater(new Date());
                 setWaddloading(false);
               }
@@ -676,11 +790,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setFinalLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setFinalLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setFinalLoading(false);
             }
@@ -723,11 +837,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setWcLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setWcLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setWcLoading(false);
             }
@@ -742,7 +856,7 @@ export default function ProjectDetails() {
       setWcLoading(false);
     }
   };
-
+  
   const handleClaimToken = async (e) => {
     e.preventDefault();
     setCtLoading(true);
@@ -770,11 +884,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setCtLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setCtLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setCtLoading(false);
             }
@@ -787,6 +901,53 @@ export default function ProjectDetails() {
     } catch (err) {
       toast.error(err.reason ? err.reason : err.message);
       setCtLoading(false);
+    }
+  };
+
+  const handleClaimBonusToken = async (e) => {
+    e.preventDefault();
+    setCbtLoading(true);
+    try {
+      if (account) {
+        let distributeContract = getContract(distributeAbi, contract[_chainId_]["distribute"], library);
+
+        let tx = await distributeContract.claimBonus(stats.token, {
+          from: account,
+        });
+        const resolveAfter3Sec = new Promise((resolve) =>
+          setTimeout(resolve, 5000)
+        );
+        toast.promise(resolveAfter3Sec, {
+          pending: "Waiting for confirmation",
+        });
+
+        var interval = setInterval(async function () {
+          let web3 = getWeb3(chainId);
+          var response = await web3.eth.getTransactionReceipt(tx.hash);
+          if (response != null) {
+            clearInterval(interval);
+            if (response.status === true) {
+              toast.success("success ! your last transaction is success");
+              setUpdater(new Date());
+              setCbtLoading(false);
+            } else if (response.status === false) {
+              toast.error("Error ! Your last transaction is failed.");
+              setUpdater(new Date());
+              setCbtLoading(false);
+            } else {
+              toast.error("Error ! something went wrong.");
+              setUpdater(new Date());
+              setCbtLoading(false);
+            }
+          }
+        }, 5000);
+      } else {
+        toast.error("Please Connect to wallet !");
+        setCbtLoading(false);
+      }
+    } catch (err) {
+      toast.error(err.reason ? err.reason : err.message);
+      setCbtLoading(false);
     }
   };
 
@@ -817,11 +978,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setLocklLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setLocklLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setLocklLoading(false);
             }
@@ -864,11 +1025,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setLocklLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setLocklLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setLocklLoading(false);
             }
@@ -883,7 +1044,6 @@ export default function ProjectDetails() {
       setLocklLoading(false);
     }
   };
-
   return (
     <React.Fragment>
       <div className="detail-page container mt-3">
@@ -892,15 +1052,26 @@ export default function ProjectDetails() {
             <div className="col-12 col-md-8">
               <div className="card project-card no-hover py-4 px-2">
                 <div className="row">
-                  <div className="col-12 col-md-2 text-center">
+                  {social.logourl && isValidLogoUrl && <div className="col-12 col-md-2 text-center">
                     <img
                       className="card-img-top avatar-max-lg mt-1 "
                       width="100%"
                       height="auto"
                       src={social.logourl}
+                      onLoad={handleLoadLogo}
+                      onError={handleErrorLogo}
                       alt="iconimage12"
                     />
-                  </div>
+                  </div>}
+                  {!isValidLogoUrl && <div className="col-12 col-md-2 text-center">
+                    <img
+                      className="card-img-top avatar-max-lg mt-1 "
+                      width="100%"
+                      height="auto"
+                      src={question}
+                      alt="iconimage12"
+                    />
+                  </div>}
                   <div className="col-12 col-md-10">
                     <div className="row align-items-center justify-content-md-start justify-content-center">
                       <h4 className="mt-1 mb-2 text-center text-md-left">
@@ -944,7 +1115,7 @@ export default function ProjectDetails() {
                               rel="noreferrer"
                               href={social.twitter}
                             >
-                              <i className="fab fa-twitter"></i>
+                              <RiTwitterFill />
                             </a>
                           </li>
                         )}
@@ -955,7 +1126,7 @@ export default function ProjectDetails() {
                               rel="noreferrer"
                               href={social.telegram}
                             >
-                              <i className="fab fa-telegram"></i>
+                              <RiTelegramFill />
                             </a>
                           </li>
                         )}
@@ -966,7 +1137,7 @@ export default function ProjectDetails() {
                               rel="noreferrer"
                               href={social.website}
                             >
-                              <i className="fas fa-globe"></i>
+                              <RiGlobalFill />
                             </a>
                           </li>
                         )}
@@ -977,7 +1148,7 @@ export default function ProjectDetails() {
                               rel="noreferrer"
                               href={social.discord}
                             >
-                              <i className="fab fa-discord"></i>
+                              <RiDiscordFill />
                             </a>
                           </li>
                         )}
@@ -988,7 +1159,7 @@ export default function ProjectDetails() {
                               rel="noreferrer"
                               href={social.facebook}
                             >
-                              <i className="fab fa-facebook"></i>
+                              <RiFacebookFill />
                             </a>
                           </li>
                         )}
@@ -999,7 +1170,7 @@ export default function ProjectDetails() {
                               rel="noreferrer"
                               href={social.github}
                             >
-                              <i className="fab fa-github"></i>
+                              <RiGithubFill />
                             </a>
                           </li>
                         )}
@@ -1011,7 +1182,7 @@ export default function ProjectDetails() {
                               rel="noreferrer"
                               href={social.instagram}
                             >
-                              <i className="fab fa-instagram"></i>
+                              <RiInstagramFill />
                             </a>
                           </li>
                         )}
@@ -1023,7 +1194,7 @@ export default function ProjectDetails() {
                               rel="noreferrer"
                               href={social.reddit}
                             >
-                              <i className="fab fa-reddit"></i>
+                              <RiRedditFill />
                             </a>
                           </li>
                         )}
@@ -1037,8 +1208,8 @@ export default function ProjectDetails() {
                 <div className="row mt-5">
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Presale Address</p>
-                    <p>
-                      {stats.poolAddress}
+                    <p className="text-right">
+                      {trimAddress(stats.poolAddress)}
                       <CopyToClipboard
                         text={stats.poolAddress}
                         onCopy={() => {
@@ -1059,20 +1230,20 @@ export default function ProjectDetails() {
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Token Name</p>
-                    <p>{stats.tokenName}</p>
+                    <p className="text-right">{stats.tokenName}</p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Token Symbol</p>
-                    <p>{stats.tokenSymbol}</p>
+                    <p className="text-right">{stats.tokenSymbol}</p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Token Decimals</p>
-                    <p>{stats.tokenDecimal}</p>
+                    <p className="text-right">{stats.tokenDecimal}</p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Token Address</p>
-                    <p>
-                      {stats.token}
+                    <p className="text-right">
+                      {trimAddress(stats.token)}
                       <CopyToClipboard
                         text={stats.token}
                         onCopy={() => {
@@ -1093,20 +1264,20 @@ export default function ProjectDetails() {
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Total Supply</p>
-                    <p>
+                    <p className="text-right">
                       {formatPrice(stats.tokenSupply)} {stats.tokenSymbol}
                     </p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Presale Rate </p>
-                    <p>
+                    <p className="text-right">
                       1 {stats.currencySymbol} = {formatPrice(stats.rate)}{" "}
                       {stats.tokenSymbol}
                     </p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Listing Rate </p>
-                    <p>
+                    <p className="text-right">
                       1 {stats.currencySymbol} ~{" "}
                       {formatPrice(stats.liquidityListingRate)}{" "}
                       {stats.tokenSymbol}
@@ -1114,31 +1285,31 @@ export default function ProjectDetails() {
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Soft Cap </p>
-                    <p>
+                    <p className="text-right">
                       {stats.softCap} {stats.currencySymbol}
                     </p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Hard Cap </p>
-                    <p>
+                    <p className="text-right">
                       {stats.hardCap} {stats.currencySymbol}
                     </p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Unsold Tokens </p>
-                    <p>{stats.refundType === "0" ? "Refund" : "Burn"}</p>
+                    <p className="text-right">{stats.refundType === "0" ? "Refund" : "Burn"}</p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Presale Start Time </p>
-                    <p>{dateFormat(startTime, "yyyy-mm-dd HH:MM")}</p>
+                    <p className="text-right">{dateFormat(startTime, "yyyy-mm-dd HH:MM")}</p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Presale End Time </p>
-                    <p>{dateFormat(endTime, "yyyy-mm-dd HH:MM")}</p>
+                    <p className="text-right">{dateFormat(endTime, "yyyy-mm-dd HH:MM")}</p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Listing On </p>
-                    <p>
+                    <p className="text-right">
                       {contract[queryChainId]
                         ? contract[queryChainId].routername
                         : contract[chainId]
@@ -1148,11 +1319,11 @@ export default function ProjectDetails() {
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Liquidity Percent </p>
-                    <p>{stats.liquidityPercent} %</p>
+                    <p className="text-right">{stats.liquidityPercent} %</p>
                   </div>
                   <div className="col-12 my-2 d-flex justify-content-between">
                     <p>Liquidity Unlocked Time </p>
-                    <p>{parseFloat(stats.liquidityLockDays) / 60} minutes</p>
+                    <p className="text-right">{parseFloat(stats.liquidityLockDays) / 60} minutes</p>
                   </div>
                 </div>
                 <div className="presale-status">
@@ -1189,15 +1360,32 @@ export default function ProjectDetails() {
             </div>
             <div className="col-12 col-md-4">
               <div className="card project-card no-hover">
-                <div
+                {isValidBannerUrl && <div
                   className="card-header"
                   style={{
-                    borderBottom: "1px solid white",
+                    borderBottom: `1px solid white`,
                     borderRadius: "0",
-                    background: "url(" + social.bannerurl + ")",
                     height: "10vw",
                   }}
-                ></div>
+                ><img
+                className=""
+                // width="100%"
+                // height="100vw"
+                src={social.bannerurl}
+                onLoad={handleLoadBanner}
+                onError={handleErrorBanner}
+                alt="iconimage12"
+              /></div>}
+                
+                {/* {isValidBannerUrl && <img
+                      className="card-img-top avatar-max-lg mt-1 "
+                      // width="100%"
+                      height="100vw"
+                      src={social.bannerurl}
+                      onLoad={handleLoadBanner}
+                      onError={handleErrorBanner}
+                      alt="iconimage12"
+                    />} */}
                 <div className="card-body">
                   <div className="mt-md-0 mt-3 d-flex justify-content-center">
                     <div className="countdown">
@@ -1345,6 +1533,25 @@ export default function ProjectDetails() {
                           </Button>
                         </React.Fragment>
                       )}
+                      {distributionInfo.enabled && distributionInfo.allowed && (
+                        <React.Fragment>
+                          <p className="mb-15">Your Claimble Bonus Token</p>
+                          <span className="mt-0 mb-3">
+                            {!distributionInfo.claimed
+                              ? formatPrice(distributionInfo.claimable)
+                              : "0"}{" "}
+                            {stats.tokenSymbol}
+                          </span>
+                          <Button
+                            loading={cbtLoading}
+                            variant="none"
+                            className="btn input-btn mt-2 mt-md-0 mr-md-3"
+                            onClick={(e) => handleClaimBonusToken(e)}
+                          >
+                            Claim Bonus Token
+                          </Button>
+                        </React.Fragment>
+                      )}
                       {accStats.contributionOf > 0 &&
                         (stats.poolState === "2" ||
                           stats.poolState === "0") && (
@@ -1370,22 +1577,58 @@ export default function ProjectDetails() {
                 <div className="card no-hover staking-card single-staking">
                   <div className="d-flex justify-content-between mb-2">
                     <p>Sale Type</p>
-                    <p>Presale</p>
+                    <p className="text-right">Presale</p>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
                     <p>Access type</p>
-                    <p>{stats.useWhitelisting ? "Whitelist" : "Public"}</p>
+                    <p className="text-right">{stats.useWhitelisting ? "Whitelist" : "Public"}</p>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
                     <p>Min. Allocation</p>
-                    <p>
+                    <p className="text-right">
                       {stats.minContribution} {stats.currencySymbol}
                     </p>
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
+                  {/* <div className="d-flex justify-content-between mb-2">
                     <p>Max. Allocation</p>
-                    <p>
-                      {stats.maxContribution} {stats.currencySymbol}
+                    <p className="text-right">
+                      {stats.userMaxAllocation} {stats.currencySymbol}
+                    </p>
+                  </div> */}
+                  <div className="d-flex justify-content-between mb-2 mt-3">
+                    <p>Tier0. Max. Allocation</p>
+                    <p className="text-right">
+                      {Number((stats.tokenSupply * (1 * stats.bonusRateperTier) / stats.rate).toFixed(4))} {stats.currencySymbol}
+                    </p>
+                  </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <p>Tier1. Max. Allocation</p>
+                    <p className="text-right">
+                      {Number((stats.tokenSupply * (2 * stats.bonusRateperTier) / stats.rate).toFixed(4))} {stats.currencySymbol}
+                    </p>
+                  </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <p>Tier2. Max. Allocation</p>
+                    <p className="text-right">
+                      {Number((stats.tokenSupply * (3 * stats.bonusRateperTier) / stats.rate).toFixed(4))} {stats.currencySymbol}
+                    </p>
+                  </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <p>Tier3. Max. Allocation</p>
+                    <p className="text-right">
+                      {Number((stats.tokenSupply * (4 * stats.bonusRateperTier) / stats.rate).toFixed(4))} {stats.currencySymbol}
+                    </p>
+                  </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <p>Tier4. Max. Allocation</p>
+                    <p className="text-right">
+                      {Number((stats.tokenSupply * (5 * stats.bonusRateperTier) / stats.rate).toFixed(4))} {stats.currencySymbol}
+                    </p>
+                  </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <p>Tier5. Max. Allocation</p>
+                    <p className="text-right">
+                      {Number((stats.tokenSupply * (6 * stats.bonusRateperTier) / stats.rate).toFixed(4))} {stats.currencySymbol}
                     </p>
                   </div>
                 </div>
@@ -1471,13 +1714,10 @@ export default function ProjectDetails() {
                             cancel
                           </Button>
                         )}
-                        {stats.poolState === "0" &&
-                          (stats.totalRaised === stats.hardCap ||
-                            parseFloat(stats.hardCap - stats.totalRaised) <
-                              parseFloat(stats.minContribution) ||
-                            stats.totalRaised >= stats.softCap) &&
-                          Math.floor(new Date().getTime() / 1000.0) >=
-                            stats.endTime && (
+                        { stats.poolState === "0" &&
+                          ((stats.totalRaised === stats.hardCap || parseFloat(stats.hardCap - stats.totalRaised) < parseFloat(stats.minContribution)) ||
+                            (stats.totalRaised >= stats.softCap && Math.floor(new Date().getTime() / 1000.0) >= stats.endTime)) && 
+                          (
                             <Button
                               variant="none"
                               type="button"
@@ -1505,10 +1745,28 @@ export default function ProjectDetails() {
                   </React.Fragment>
                 ) : (
                   <div className="d-flex justify-content-center">
-                    <h5 className="my-4">You are not onwer of pool</h5>
+                    <h5 className="my-4">You are not owner of pool</h5>
                   </div>
                 )}
               </div>
+              {isOperator && <div className="card project-card no-hover staking-card single-staking">
+                <div className="d-flex justify-content-between">
+                  <h5 className="m-3">Operator Zone</h5>
+                </div>
+                <React.Fragment>
+                  <div className="input-box my-1">
+                    <div className="input-area d-flex justify-content-center flex-column flex-md-row mb-3">
+                      <button
+                        type="button"
+                        className="btn input-btn mt-2 mt-md-0 ml-md-3"
+                        onClick={(e) => setEnableDistributeModal(!enableDistributeModal)}
+                      >
+                        Enable Distribute
+                      </button>
+                    </div>
+                  </div>
+                </React.Fragment>
+              </div>}
             </div>
           </div>
         </section>
@@ -1797,6 +2055,47 @@ export default function ProjectDetails() {
           </div>
         </Modal.Body>
       </Modal>
+
+      <Modal
+        show={enableDistributeModal}
+        onHide={() => setEnableDistributeModal(false)}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Add users to get distributed</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Control
+                as="textarea"
+                onChange={(e) => {
+                  setAllowedDistributors(e.target.value);
+                }}
+                rows={8}
+                placeholder="Insert address: separate with breaks line."
+                value={allowedDistributors}
+              />
+            </Form.Group>
+            <Button
+              variant="none"
+              className="btn btn-success"
+              loading={waddloading}
+              onClick={(e) => {
+                handleEnableDistribute(e);
+              }}
+            >
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
     </React.Fragment>
   );
 }

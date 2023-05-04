@@ -201,15 +201,15 @@ export default function Lock() {
                 clearInterval(interval);
                 if (response.status === true) {
                   toast.success(
-                    "success ! your last transaction is success 👍"
+                    "Success ! Your last transaction is success 👍"
                   );
                   setLoading(false);
                   setValue({ ...value, isApprove: true });
                 } else if (response.status === false) {
-                  toast.error("error ! Your last transaction is failed.");
+                  toast.error("Error ! Your last transaction is failed.");
                   setLoading(false);
                 } else {
-                  toast.error("error ! something went wrong.");
+                  toast.error("Error ! something went wrong.");
                   setLoading(false);
                 }
               }
@@ -297,13 +297,13 @@ export default function Lock() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("success ! your last transaction is success 👍");
+                toast.success("Success ! Your last transaction is success 👍");
                 setLockLoading(false);
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setLockLoading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
                 setLockLoading(false);
               }
             }
@@ -331,13 +331,13 @@ export default function Lock() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("success ! your last transaction is success 👍");
+                toast.success("Success ! Your last transaction is success 👍");
                 setLockLoading(false);
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setLockLoading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
                 setLockLoading(false);
               }
             }

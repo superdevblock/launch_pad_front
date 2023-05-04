@@ -7,6 +7,9 @@ import { formatPrice } from "../../../hooks/contractHelper";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { supportNetwork } from "../../../hooks/network";
+import { getWeb3 } from "../../../hooks/connectors";
+import poolFactoryAbi from "../../../json/poolfactory.json"
+import { contract } from "../../../hooks/constant";
 
 export default function Step2() {
   const { value, btnPrevStep, setValue } = useContext(Context);
@@ -17,7 +20,7 @@ export default function Step2() {
     softcap: "",
     hardcap: "",
     minbuy: "",
-    maxbuy: "",
+    // maxbuy: "",
     liquidity: "",
     listingrate: "",
     starttime: "",
@@ -28,6 +31,21 @@ export default function Step2() {
     eachcycleper: "",
   });
   const [totaltoken, setTotaltoken] = useState(0);
+
+  const [minRaiseEth, setMinRaiseEth] = useState(0)
+  useEffect(() => {
+    const fetchMinHardcap = async () => {
+      try {
+        let web3 = getWeb3(chainId);
+        let poolContract = new web3.eth.Contract(poolFactoryAbi, contract[chainId]["poolfactory"]);
+        const _minRaiseEth = await poolContract.methods.MIN_RAISE_ETH().call() / Math.pow(10, 18)
+        setMinRaiseEth(Number(_minRaiseEth.toFixed(10)))
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchMinHardcap()
+  }, [chainId])
 
   const checkValidation = (input, inputValue) => {
     let terror = 0;
@@ -53,13 +71,13 @@ export default function Step2() {
           terror += 1;
           message = "Please Enter Valid Amount!";
         } else if (
-          parseFloat(value.hardcap) > 0 &&
+          parseFloat(value.hardcap) >= minRaiseEth &&
           parseFloat(parseFloat(value.hardcap) / 2) > parseFloat(inputValue)
         ) {
           terror += 1;
           message = "Softcap must be greater than or equal 50% of Hardcap";
         } else if (
-          parseFloat(value.hardcap) > 0 &&
+          parseFloat(value.hardcap) > minRaiseEth &&
           parseFloat(inputValue) > parseFloat(value.hardcap)
         ) {
           terror += 1;
@@ -76,17 +94,20 @@ export default function Step2() {
           terror += 1;
           message = "Please Enter Valid Amount!";
         } else if (
-          parseFloat(value.softcap) > 0 &&
+          parseFloat(value.softcap) >= minRaiseEth &&
           parseFloat(parseFloat(inputValue) / 2) > parseFloat(value.softcap)
         ) {
           terror += 1;
           message = "Softcap must be greater than or equal 50% of Hardcap";
         } else if (
-          parseFloat(value.softcap) > 0 &&
+          parseFloat(value.softcap) >= minRaiseEth &&
           parseFloat(value.softcap) > parseFloat(inputValue)
         ) {
           terror += 1;
           message = "Softcap must be less than or equal Hardcap";
+        } else if (Number(inputValue) < minRaiseEth) {
+          terror += 1;
+          message = `Hardcap must be ${minRaiseEth} ETH at least`;
         } else {
           message = "";
         }
@@ -98,32 +119,34 @@ export default function Step2() {
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
           terror += 1;
           message = "Please Enter Valid Amount!";
-        } else if (
-          parseFloat(value.hardcap) > 0 &&
-          parseFloat(inputValue) >= parseFloat(value.maxbuy)
-        ) {
-          terror += 1;
-          message = "Min buy must be less than max buy";
-        } else {
+        } 
+        // else if (
+        //   parseFloat(value.hardcap) > 0 &&
+        //   parseFloat(inputValue) >= parseFloat(value.maxbuy)
+        // ) {
+        //   terror += 1;
+        //   message = "Min buy must be less than max buy";
+        // } 
+        else {
           message = "";
         }
         break;
-      case "maxbuy":
-        inputValue = parseFloat(inputValue);
-        reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
-        if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
-          terror += 1;
-          message = "Please Enter Valid Amount!";
-        } else if (
-          parseFloat(value.softcap) > 0 &&
-          parseFloat(inputValue) <= parseFloat(value.minbuy)
-        ) {
-          terror += 1;
-          message = "Min buy must be less than max buy";
-        } else {
-          message = "";
-        }
-        break;
+      // case "maxbuy":
+      //   inputValue = parseFloat(inputValue);
+      //   reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
+      //   if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+      //     terror += 1;
+      //     message = "Please Enter Valid Amount!";
+      //   } else if (
+      //     parseFloat(value.softcap) > 0 &&
+      //     parseFloat(inputValue) <= parseFloat(value.minbuy)
+      //   ) {
+      //     terror += 1;
+      //     message = "Min buy must be less than max buy";
+      //   } else {
+      //     message = "";
+      //   }
+      //   break;
       case "liquidity":
         reg = new RegExp(/^\d+$/);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
@@ -165,6 +188,13 @@ export default function Step2() {
         }
         break;
       case "llockup":
+        if (inputValue === "" || inputValue === null || Number(inputValue) < 43200) {
+          terror += 1;
+          message = "Lock time must be >= 43200 minutes(30 days)";
+        } else {
+          message = "";
+        }
+        break;
       case "firstrelease":
       case "cycle":
         reg = new RegExp(/^\d+$/);
@@ -198,8 +228,10 @@ export default function Step2() {
     } else {
       if (input === "hardcap" || input === "softcap") {
         setError({ ...error, hardcap: "", softcap: "" });
-      } else if (input === "minbuy" || input === "maxbuy") {
-        setError({ ...error, minbuy: "", maxbuy: "" });
+      // } else if (input === "minbuy" || input === "maxbuy") {
+      //   setError({ ...error, minbuy: "", maxbuy: "" });
+      } else if (input === "minbuy") {
+        setError({ ...error, minbuy: ""});
       } else if (input === "starttime" || input === "endtime") {
         setError({ ...error, starttime: "", endtime: "" });
       } else {
@@ -273,29 +305,30 @@ export default function Step2() {
             parseFloat(value[key]) <= 0
           ) {
             terror += 1;
-          } else if (
-            parseFloat(value.hardcap) > 0 &&
-            parseFloat(value[key]) >= parseFloat(value.maxbuy)
-          ) {
-            terror += 1;
-          }
+          } 
+          // else if (
+          //   parseFloat(value.hardcap) > 0 &&
+          //   parseFloat(value[key]) >= parseFloat(value.maxbuy)
+          // ) {
+          //   terror += 1;
+          // }
 
           break;
-        case "maxbuy":
-          reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
-          if (
-            !reg.test(parseFloat(value[key])) ||
-            parseFloat(value[key]) <= 0
-          ) {
-            terror += 1;
-          } else if (
-            parseFloat(value.softcap) > 0 &&
-            parseFloat(value[key]) <= parseFloat(value.minbuy)
-          ) {
-            terror += 1;
-          }
+        // case "maxbuy":
+        //   reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
+        //   if (
+        //     !reg.test(parseFloat(value[key])) ||
+        //     parseFloat(value[key]) <= 0
+        //   ) {
+        //     terror += 1;
+        //   } else if (
+        //     parseFloat(value.softcap) > 0 &&
+        //     parseFloat(value[key]) <= parseFloat(value.minbuy)
+        //   ) {
+        //     terror += 1;
+        //   }
 
-          break;
+          // break;
         case "liquidity":
           reg = new RegExp(/^\d+$/);
           if (!reg.test(value[key]) || parseFloat(value[key]) <= 0) {
@@ -348,7 +381,6 @@ export default function Step2() {
       }
       return true;
     });
-
     if (terror > 0) {
       return false;
     } else {
@@ -425,8 +457,7 @@ export default function Step2() {
             <label>
               Presale rate<span className="text-danger">*</span>
               <small className="text-danger">
-                (If I spend 1 {value.currencyTSymbol} how many tokens will I
-                receive?)
+              (Token amount per ETH)
               </small>
             </label>
             <input
@@ -507,7 +538,8 @@ export default function Step2() {
           <div className="form-group">
             <label>
               HardCap ({value.currencyTSymbol}){" "}
-              <span className="text-danger">*</span>
+              <span className="text-danger">*</span>(
+              <small className="text-danger">{`Hardcap must be >= ${minRaiseEth} ETH!`}</small>)
             </label>
             <input
               className="form-control"
@@ -521,25 +553,7 @@ export default function Step2() {
             <br />
           </div>
         </div>
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
-            <label>
-              Minimum buy ({value.currencyTSymbol})
-              <span className="text-danger">*</span>
-            </label>
-            <input
-              className="form-control"
-              onChange={(e) => onChangeInput(e)}
-              value={value.minbuy}
-              type="text"
-              name="minbuy"
-              placeholder="e.g. 0.1"
-            />
-            <small className="text-danger">{error.minbuy}</small>
-            <br />
-          </div>
-        </div>
-        <div className="col-md-6 mt-4 mb-0">
+        {/* <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
               Maximum buy ({value.currencyTSymbol})
@@ -556,7 +570,7 @@ export default function Step2() {
             <small className="text-danger">{error.maxbuy}</small>
             <br />
           </div>
-        </div>
+        </div> */}
 
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
@@ -603,11 +617,34 @@ export default function Step2() {
             <br />
           </div>
         </div>
-        <div className="col-md-6 mt-4 mb-3">
+        
+        <div className="col-md-12 mt-4 mb-0">
+          <div className="form-group">
+            <label>
+              Minimum buy ({value.currencyTSymbol})
+              <span className="text-danger">*</span>
+            </label>
+            <input
+              className="form-control"
+              onChange={(e) => onChangeInput(e)}
+              value={value.minbuy}
+              type="text"
+              name="minbuy"
+              placeholder="e.g. 0.1"
+            />
+            <small className="text-danger">{error.minbuy}</small>
+            <br />
+          </div>
+        </div>
+        <div className="col-md-12 mt-4 mb-3">
           <div className="form-group">
             <label>
               listing rate<span className="text-danger">*</span>
+              <small className="text-danger">
+              (Token amount per ETH)
+              </small>
             </label>
+            
             <input
               className="form-control"
               value={value.listingrate}
@@ -679,7 +716,9 @@ export default function Step2() {
         <div className="col-md-12 mt-4 mb-0">
           <div className="form-group">
             <label>
-              Liquidity lockup (minutes)<span className="text-danger">*</span>
+              Liquidity lockup (minutes)
+              <span className="text-danger">*</span>(
+              <small className="text-danger">{`Lock time must be >= ${minRaiseEth} days!`}</small>)
             </label>
             <input
               className="form-control"

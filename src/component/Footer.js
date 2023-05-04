@@ -1,64 +1,104 @@
 import React from "react";
-import { AiFillTwitterCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import {
   RiTelegramFill,
+  RiTwitterFill,
   RiDiscordFill,
   RiFacebookCircleFill,
   RiInstagramFill,
   RiRedditFill,
+  RiFacebookFill,
+  RiGithubFill,
+  RiMediumFill,
 } from "react-icons/ri";
-// import { Link } from 'react-router-dom';
+import logo from "../images/logo.png";
+import styled from "styled-components";
+
+const StyledNav = styled(Nav)`
+  justify-content: center;
+  padding-right: 10px;
+`;
 
 export default function Footer() {
   return (
-    <>
-      <footer className="footer-area">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-8 text-center">
-              <div className="footer-items">
-                <div className="social-icons d-flex justify-content-center my-4">
-                  <a
-                    className="facebook"
-                    href="https://www.facebook.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <RiFacebookCircleFill />
-                  </a>
-                  <a
-                    className="twitter"
-                    href="https://twitter.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <AiFillTwitterCircle />
-                  </a>
-                  <a
-                    className="reddit"
-                    href="https://www.reddit.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <RiRedditFill />
-                  </a>
-                  <a
-                    className="instagram"
-                    href="https://www.instagram.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <RiInstagramFill />
-                  </a>
-                </div>
-                <div className="copyright-area py-2">
-                  &copy;2022 0xLaunch, All Rights Reserved By 0xLaunch
-                </div>
-              </div>
-            </div>
+    <div>
+      <footer className='footer-area'>
+        <div className='footer-items m-footer-container'>
+          <img src={logo} width='150px' alt=''></img>
+          <StyledNav>
+            <NavDropdown
+              title='BDAI'
+              id='basic-nav-dropdown'
+              style={{ color: "white !important" }}
+            >
+              <NavDropdown.Item as={Link} to='/presale'>
+                Create Raise
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/token'>
+                Create Token
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/sale-list'>
+                Launchpad List
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown
+              title='Locker'
+              id='basic-nav-dropdown'
+              style={{ color: "white !important" }}
+            >
+              <NavDropdown.Item as={Link} to='/lock'>
+                Create Lock
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/token-locked'>
+                Token
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to='/liquidity-locked'>
+                Liquidity
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <Nav.Link href='#' target='_blank'>
+              WhitePaper
+            </Nav.Link>
+          </StyledNav>
+          <div>
+            <a
+              target='_blank'
+              rel='noreferrer'
+              href='https://twitter.com/BDAIPAD'
+              style={{ paddingRight: "5px" }}
+            >
+              <RiTwitterFill size={18} />
+            </a>
+            <a
+              target='_blank'
+              rel='noreferrer'
+              href='https://t.me/BDAIPAD'
+              style={{ paddingRight: "5px" }}
+            >
+              <RiTelegramFill size={18} />
+            </a>
+            <a
+              target='_blank'
+              rel='noreferrer'
+              href='https://medium.com/@BDAIpad'
+            >
+              <RiMediumFill size={18} />
+            </a>
+            {/* <a target="_blank" rel="noreferrer" href="https://telegram.org">
+              <RiInstagramFill />
+            </a>
+            <a target="_blank" rel="noreferrer" href="https://telegram.org">
+              <RiRedditFill />
+            </a>
+            <a target="_blank" rel="noreferrer" href="https://telegram.org">
+              <RiGithubFill />
+            </a> */}
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

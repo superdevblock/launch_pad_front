@@ -21,18 +21,18 @@ export default function LpLockList() {
         <section className="explore-area prev-project-area">
           <div className="intro">
             <div className="intro-content text-center">
-              <span className="intro-text">Locked LP Token List</span>
+              <h2 className="color-primary">Locked LP Token List</h2>
             </div>
             <div
               className="explore-menu btn-group btn-group-toggle flex-wrap mt-5 pl-3"
               data-toggle="buttons"
             >
-              <label className="btn active d-table text-uppercase p-2">
+              <label className="btn active d-table text-uppercase p-2 border-radius-non">
                 <Link to="/liquidity-locked" className="explore-btn">
                   <span>Lp Lock List</span>
                 </Link>
               </label>
-              <label className="btn d-table text-uppercase p-2">
+              <label className="btn d-table text-uppercase p-2 border-radius-non">
                 <Link to="/my-lp-lock" className="explore-btn">
                   <span>My Lock List</span>
                 </Link>

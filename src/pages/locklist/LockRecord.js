@@ -89,11 +89,11 @@ export default function LockRecord() {
               setUpdater(new Date());
               setCtLoading(false);
             } else if (response.status === false) {
-              toast.error("error ! Your last transaction is failed.");
+              toast.error("Error ! Your last transaction is failed.");
               setUpdater(new Date());
               setCtLoading(false);
             } else {
-              toast.error("error ! something went wrong.");
+              toast.error("Error ! something went wrong.");
               setUpdater(new Date());
               setCtLoading(false);
             }

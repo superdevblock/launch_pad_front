@@ -100,25 +100,25 @@ export default function Step5() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("success ! your last transaction is success 👍");
+                toast.success("Success ! Your last transaction is success 👍");
                 setLoading(false);
                 if (typeof response.logs[0] !== "undefined") {
                   history.push(`/private-details/${response.logs[0].address}`);
                 } else {
-                  toast.error("something went wrong !");
+                  toast.error("Something went wrong !");
                   history.push("/");
                 }
               } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
+                toast.error("Error ! Your last transaction is failed.");
                 setLoading(false);
               } else {
-                toast.error("error ! something went wrong.");
+                toast.error("Error ! something went wrong.");
                 setLoading(false);
               }
             }
           }, 5000);
         } else {
-          toast.error("wrong network selected !");
+          toast.error("Wrong network selected !");
           setLoading(false);
         }
       } else {

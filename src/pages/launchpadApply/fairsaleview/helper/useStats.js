@@ -161,7 +161,7 @@ export const useCommonStats = (update) => {
           auditLink: data[20],
         });
       } catch (err) {
-        toast.error("wrong network selected !");
+        toast.error("Wrong network selected !");
         history.push("/sale-list");
       }
     };

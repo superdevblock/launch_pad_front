@@ -1,17 +1,21 @@
 import React, { useContext, useState } from "react";
 import Context from "./context/Context";
-import Web3 from "web3";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import tokenByte from "../../bytecode/Tokens.json";
-import BabyTokenABI from "../../json/BabyToken.json";
 import Button from "react-bootstrap-button-loader";
 import { contract } from "../../hooks/constant";
+import { getContract } from "../../hooks/contractHelper";
+import { useWeb3React } from "@web3-react/core";
+import TokenFactoryABI from "../../json/tokenFactory.json"
+import { getWeb3 } from "../../hooks/connectors";
 
 export default function BabyToken(props) {
   const { createFee } = props;
   const history = useHistory();
   const { value, setValue } = useContext(Context);
+
+  const context = useWeb3React();
+  const { account, chainId, library } = context;
 
   const [createloading, setCreateLoading] = useState(false);
   const [error, setError] = useState({
@@ -239,34 +243,26 @@ export default function BabyToken(props) {
     if (check) {
       try {
         setCreateLoading(true);
+        if (account) {
+          if (chainId) {
+            let tokenFactoryAddress = contract[chainId]
+              ? contract[chainId].tokenfactory
+              : contract["default"].tokenfactory;
+            let factoryContract = getContract(
+              TokenFactoryABI,
+              tokenFactoryAddress,
+              library
+            );
 
-        window.web3 = new Web3(window.ethereum);
-        let tokenContract = new window.web3.eth.Contract(BabyTokenABI);
-        let accounts = await window.ethereum.request({
-          method: "eth_accounts",
-        });
-
-        if (accounts.length == 0) {
-          toast.error("error ! connect wallet! 👍");
-          setCreateLoading(false);
-          return;
-        }
-
-        const resolveAfter3Sec = new Promise((resolve) =>
-          setTimeout(resolve, 10000)
-        );
-        await tokenContract
-          .deploy({
-            data: tokenByte["BabyToken"],
-            arguments: [
+            let tx = await factoryContract.createBaby(
               value["name"],
               value["symbol"],
               value["supply"] + "0".repeat(18),
               [
                 value["rewardAddr"],
-                contract["default"]["routeraddress"],
+                contract[chainId]["routeraddress"],
                 value["marketingWallet"],
-                contract["default"]["dividendTracker"],
+                contract[chainId]["dividendTracker"],
               ],
               [
                 value["marketingFee"],
@@ -274,31 +270,49 @@ export default function BabyToken(props) {
                 value["liquidityFee"],
               ],
               value["minDividends"],
-              contract["default"]["feeReceiver"],
+              contract[chainId]["feeReceiver"],
               createFee.toString(),
-            ],
-          })
-          .send(
-            {
-              value: createFee.toString(),
-              from: accounts[0],
-            },
-            function (error, transactionHash) {
-              if (transactionHash != undefined)
-                toast.promise(resolveAfter3Sec, {
-                  pending: "Waiting for confirmation 👌",
-                });
-            }
-          )
-          .on("error", function (error) {
-            toast.error("error ! something went wrong! 👍");
+              {from:account, value:createFee.toString()}
+            );
+            const resolveAfter3Sec = new Promise((resolve) =>
+              setTimeout(resolve, 10000)
+            );
+            toast.promise(resolveAfter3Sec, {
+              pending: "Waiting for confirmation 👌",
+            });
+            var interval = setInterval(async function () {
+              let web3 = getWeb3(chainId);
+              var response = await web3.eth.getTransactionReceipt(tx.hash);
+              if (response != null) {
+                clearInterval(interval);
+                if (response.status === true) {
+                  toast.success("Success ! Your last transaction is success 👍");
+                  setCreateLoading(false);
+                  if (typeof response.logs[0] !== "undefined") {
+                    history.push(
+                      `/token-details?addr=${response.logs[0].address}`
+                    );
+                  } else {
+                    toast.error("Something went wrong !");
+                    history.push("/");
+                  }
+                } else if (response.status === false) {
+                  toast.error("Error ! Your last transaction is failed.");
+                  setCreateLoading(false);
+                } else {
+                  toast.error("Error ! something went wrong.");
+                  setCreateLoading(false);
+                }
+              }
+            }, 5000);
+          } else {
+            toast.error("Wrong network selected !");
             setCreateLoading(false);
-          })
-          .on("receipt", function (receipt) {
-            toast.success("success ! your last transaction is success 👍");
-            setCreateLoading(false);
-            history.push(`/token-details?addr=${receipt.contractAddress}`);
-          });
+          }
+        } else {
+          toast.error("Please Connect Wallet!");
+          setCreateLoading(false);
+        }
       } catch (err) {
         toast.error(err.reason ? err.reason : err.message);
         setCreateLoading(false);

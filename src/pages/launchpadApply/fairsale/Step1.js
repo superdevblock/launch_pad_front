@@ -90,15 +90,15 @@ export default function Step1() {
                 clearInterval(interval);
                 if (response.status === true) {
                   toast.success(
-                    "success ! your last transaction is success 👍"
+                    "Success ! Your last transaction is success 👍"
                   );
                   setLoading(false);
                   setValue({ ...value, isApprove: true });
                 } else if (response.status === false) {
-                  toast.error("error ! Your last transaction is failed.");
+                  toast.error("Error ! Your last transaction is failed.");
                   setLoading(false);
                 } else {
-                  toast.error("error ! something went wrong.");
+                  toast.error("Error ! something went wrong.");
                   setLoading(false);
                 }
               }
@@ -138,7 +138,7 @@ export default function Step1() {
                 <input
                   type="radio"
                   style={{ width: "auto" }}
-                  className="form-check-input"
+                  className="form-control"
                   name="currency"
                   value={currency.address}
                   onChange={(e) => handleCurrencyChange(e)}
@@ -158,7 +158,7 @@ export default function Step1() {
               <input
                 type="radio"
                 style={{ width: "auto" }}
-                className="form-check-input"
+                className="form-control"
                 name="fees"
                 value="1"
                 onChange={(e) => handleFeesChange(e)}
@@ -172,7 +172,7 @@ export default function Step1() {
               <input
                 type="radio"
                 style={{ width: "auto" }}
-                className="form-check-input"
+                className="form-control"
                 name="fees"
                 value="2"
                 onChange={(e) => handleFeesChange(e)}
