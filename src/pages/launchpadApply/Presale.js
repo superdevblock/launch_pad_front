@@ -49,7 +49,7 @@ export default function PreSale() {
           <div className="container px-3">
             <div className="intro">
               <div className="intro-content text-center">
-                <h2 className="color-primary">Create Raise</h2>
+                <span className="intro-text">Create Launchpad</span>
               </div>
             </div>
             <div className="signup-step-container my-5">
@@ -76,7 +76,7 @@ export default function PreSale() {
                     >
                       <a href="#step2">
                         <span className="round-tab">2</span>{" "}
-                        <i>Token Info</i>
+                        <i>DeFi Launchpad Info</i>
                       </a>
                     </li>
                     <li
@@ -114,29 +114,25 @@ export default function PreSale() {
                   </ul>
                 </div>
               </div>
-              <div className="d-flex justify-content-center align-items-center">
-                <div className="card stepcard mt-5 pt-5">
-                  <div className="card-body">
-                    <form className="login-box">
-                      <div className="tab-content" id="main_form">
-                        <Step1 />
-                        <Step2 />
-                        <Step3 />
-                        <Step4 />
-                        <Step5 />
-                      </div>
-                    </form>
-                  </div>
+              <div className="card stepcard mt-5 pt-5">
+                <div className="card-body">
+                  <form className="login-box">
+                    <div className="tab-content" id="main_form">
+                      <Step1 />
+                      <Step2 />
+                      <Step3 />
+                      <Step4 />
+                      <Step5 />
+                    </div>
+                  </form>
                 </div>
               </div>
-              <div className="d-flex w-100 align-items-center justify-content-center">
-                <div className="mt-4 text-white mx-2 text-center" style={{maxWidth: "800px", fontSize: "12px", fontWeight: "200", color: "#d7b0b0c7"}}>
-                  Disclaimer: The information provided shall not in any way
-                  constitute a recommendation as to whether you should invest in
-                  any product discussed. We accept no liability for any loss
-                  occasioned to any person acting or refraining from action as a
-                  result of any material provided or published.
-                </div>
+              <div className="mt-4 text-white">
+                Disclaimer: The information provided shall not in any way
+                constitute a recommendation as to whether you should invest in
+                any product discussed. We accept no liability for any loss
+                occasioned to any person acting or refraining from action as a
+                result of any material provided or published.
               </div>
             </div>
           </div>

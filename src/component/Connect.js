@@ -9,7 +9,7 @@ import { trimAddress } from "../hooks/constant";
 import { supportNetwork } from "../hooks/network";
 import useEagerConnect from "../hooks/useWeb3";
 
-export const Connect = function ({mobile}) {
+export const Connect = function () {
   const context = useWeb3React();
   const { connector, account, activate, deactivate, chainId, active, error } =
     context;
@@ -27,7 +27,7 @@ export const Connect = function ({mobile}) {
 
   function getErrorMessage(error) {
     if (error instanceof NoEthereumProviderError) {
-      return "Metamask not detected";
+      return "Metamask not deteced";
     }
     if (error instanceof UnsupportedChainIdError) {
       return (
@@ -67,8 +67,8 @@ export const Connect = function ({mobile}) {
 
   return (
     <React.Fragment>
-      <div className={`${mobile ? "" : "m-connect"}`}>
-        {/* <div
+      <div className="d-flex justify-content-between align-items-center">
+        <div
           className="badge badge-outline"
           // onClick={() => {
           //   setNetworkshow(!networkshow);
@@ -78,9 +78,9 @@ export const Connect = function ({mobile}) {
             src={require("../images/logo.png").default}
             alt="Brand Logo"
             width="50px"
-            className="show-on-mobile"
+            className="show-on-mobile mr-3"
           />
-          <img
+          {/* <img
             src={
               supportNetwork[chainId]
                 ? supportNetwork[chainId].image
@@ -89,13 +89,13 @@ export const Connect = function ({mobile}) {
             alt="Switch Network"
             className="mr-2 hide-on-mobile"
             width="10"
-          />
+          /> */}
           <span className="hide-on-mobile">
             {chainId && supportNetwork[chainId]
               ? supportNetwork[chainId].name
               : supportNetwork["default"].name}
           </span>
-        </div> */}
+        </div>
         {error && (
           <button
             type="button"

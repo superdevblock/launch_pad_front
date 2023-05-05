@@ -19,6 +19,8 @@ export const useCommonStats = (update) => {
   const { chainId } = context;
   let history = useHistory();
 
+  // let poolAddress = "0x6816e27bca20fbbe779ca9725d48c1e01a02943c";
+
   const location = useLocation();
   let urlAddress = location.pathname.split("/").pop();
   const search = useLocation().search;
@@ -161,7 +163,7 @@ export const useCommonStats = (update) => {
           auditLink: data[20],
         });
       } catch (err) {
-        toast.error("Wrong network selected !");
+        toast.error("wrong network selected !");
         history.push("/sale-list");
       }
     };

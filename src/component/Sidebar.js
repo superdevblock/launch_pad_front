@@ -80,26 +80,25 @@ const MainLayout = (props) => {
       <ProSidebar collapsed={collapsed}>
         <SidebarHeader>
           <img
-            src={require("../images/logo.png").default}
-            alt='Brand Logo'
-            width='50px'
+            src={require("../images/logo_main.png").default}
+            alt="Brand Logo"
+            height="40px"
           />
-          <h3>BDAI</h3>
-          <div className='toggleMenu' onClick={onClickMenuIcon}>
+          <div className="toggleMenu" onClick={onClickMenuIcon}>
             <AiOutlineMenu />
           </div>
         </SidebarHeader>
-        <Menu iconShape='square'>
+        <Menu iconShape="square">
           <Menuitem
             icon={<FaHome />}
             className={`${router.pathname === "/" ? "active" : ""}`}
           >
-            <Link to='/' onClick={onClickMenuItem}>
+            <Link to="/" onClick={onClickMenuItem}>
               Home
             </Link>
           </Menuitem>
           <SubMenu
-            title='Launchpads'
+            title="Launchpads"
             icon={<FaRocket />}
             className={`${
               router.pathname === "/presale" ||
@@ -114,21 +113,21 @@ const MainLayout = (props) => {
             <Menuitem
               className={`${router.pathname === "/presale" ? "active" : ""}`}
             >
-              <Link to='/presale' onClick={onClickMenuItem}>
-                Create Raise
+              <Link to="/presale" onClick={onClickMenuItem}>
+                Create launchpad
               </Link>
             </Menuitem>
             <MenuItem
               className={`${router.pathname === "/fairlaunch" ? "active" : ""}`}
             >
-              <Link to='/fairlaunch' onClick={onClickMenuItem}>
+              <Link to="/fairlaunch" onClick={onClickMenuItem}>
                 Create fair launch
               </Link>
             </MenuItem>
             <MenuItem
               className={`${router.pathname === "/token" ? "active" : ""}`}
             >
-              <Link to='/token' onClick={onClickMenuItem}>
+              <Link to="/token" onClick={onClickMenuItem}>
                 Create token
               </Link>
             </MenuItem>
@@ -140,13 +139,13 @@ const MainLayout = (props) => {
                   : ""
               }`}
             >
-              <Link to='/sale-list' onClick={onClickMenuItem}>
+              <Link to="/sale-list" onClick={onClickMenuItem}>
                 Launchpad list
               </Link>
             </MenuItem>
           </SubMenu>
           <SubMenu
-            title='Private Sale'
+            title="Private Sale"
             icon={<FaShieldAlt />}
             className={`${
               router.pathname === "/privatesale" ||
@@ -161,7 +160,7 @@ const MainLayout = (props) => {
                 router.pathname === "/privatesale" ? "active" : ""
               }`}
             >
-              <Link to='/privatesale' onClick={onClickMenuItem}>
+              <Link to="/privatesale" onClick={onClickMenuItem}>
                 Create Private Sale
               </Link>
             </Menuitem>
@@ -173,13 +172,13 @@ const MainLayout = (props) => {
                   : ""
               }`}
             >
-              <Link to='/prvsale-list' onClick={onClickMenuItem}>
+              <Link to="/prvsale-list" onClick={onClickMenuItem}>
                 Private Sale list
               </Link>
             </MenuItem>
           </SubMenu>
           <SubMenu
-            title='Elevate Lock'
+            title="BDAI Lock"
             icon={<FaLock />}
             className={`${
               router.pathname === "/lock" ||
@@ -192,7 +191,7 @@ const MainLayout = (props) => {
             <Menuitem
               className={`${router.pathname === "/lock" ? "active" : ""}`}
             >
-              <Link to='/lock' onClick={onClickMenuItem}>
+              <Link to="/lock" onClick={onClickMenuItem}>
                 Create Lock
               </Link>
             </Menuitem>
@@ -201,7 +200,7 @@ const MainLayout = (props) => {
                 router.pathname === "/token-locked" ? "active" : ""
               }`}
             >
-              <Link to='/token-locked' onClick={onClickMenuItem}>
+              <Link to="/token-locked" onClick={onClickMenuItem}>
                 Token
               </Link>
             </MenuItem>
@@ -210,31 +209,31 @@ const MainLayout = (props) => {
                 router.pathname === "/liquidity-locked" ? "active" : ""
               }`}
             >
-              <Link to='/liquidity-locked' onClick={onClickMenuItem}>
+              <Link to="/liquidity-locked" onClick={onClickMenuItem}>
                 Liquidity
               </Link>
             </MenuItem>
           </SubMenu>
           <Menuitem icon={<SiAdobeaudition />}>
-            <a href='https://t.me/king_arthuree' target='_blank'>
+            <a href="#" target="_blank">
               KYC & Audit
             </a>
           </Menuitem>
           <Menuitem icon={<FaDochub />}>
             <a
-              href='https://drive.google.com/file/d/1VVMXOF8N-FCZgsmhBx5GLL_a6cfqq3n0/view?usp=share_link'
-              target='_blank'
+              href="#"
+              target="_blank"
             >
               Docs
             </a>
           </Menuitem>
           <Menuitem icon={<FaTelegramPlane />}>
-            <a href='https://t.me/' target='_blank'>
+            <a href="#" target="_blank">
               Telegram
             </a>
           </Menuitem>
           <Menuitem icon={<FaTwitter />}>
-            <a href='https://twitter.com/' target='_blank'>
+            <a href="#" target="_blank">
               Twitter
             </a>
           </Menuitem>
@@ -242,7 +241,7 @@ const MainLayout = (props) => {
       </ProSidebar>
       {collapsed && (
         <div
-          className='mobile-toggleMenu show-on-mobile'
+          className="mobile-toggleMenu show-on-mobile"
           onClick={onClickMenuIcon}
         >
           <AiOutlineMenu />

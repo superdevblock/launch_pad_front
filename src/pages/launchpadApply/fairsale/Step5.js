@@ -98,27 +98,27 @@ export default function Step5() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("Success ! Your last transaction is success 👍");
+                toast.success("success ! your last transaction is success 👍");
                 setLoading(false);
                 if (typeof response.logs[0] !== "undefined") {
                   history.push(
                     `/fairlaunch-details/${response.logs[0].address}`
                   );
                 } else {
-                  toast.error("Something went wrong !");
+                  toast.error("something went wrong !");
                   history.push("/");
                 }
               } else if (response.status === false) {
-                toast.error("Error ! Your last transaction is failed.");
+                toast.error("error ! Your last transaction is failed.");
                 setLoading(false);
               } else {
-                toast.error("Error ! something went wrong.");
+                toast.error("error ! something went wrong.");
                 setLoading(false);
               }
             }
           }, 5000);
         } else {
-          toast.error("Wrong network selected !");
+          toast.error("wrong network selected !");
           setLoading(false);
         }
       } else {

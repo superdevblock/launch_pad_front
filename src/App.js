@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./pages/home/Home";
-import Landing from "./pages/Landing/Landing";
 import PreSale from "./pages/launchpadApply/Presale";
 import PrivateSale from "./pages/launchpadApply/PrivateSale";
 import DetailsComp from "./pages/launchpadApply/presaleview/DetailsComp";
@@ -27,10 +26,6 @@ import LockRecord from "./pages/locklist/LockRecord";
 import MyTokenLock from "./pages/locklist/MyTokenLock";
 import MyLpLock from "./pages/locklist/MyLpLock";
 import LpLockList from "./pages/locklist/LpLockList";
-import Pad from "./pages/Pad/Pad";
-import Dao from "./pages/Dao/Dao";
-import ProposalDetails from "./pages/Dao/ProposalDetails";
-import CreateProposal from "./pages/Dao/CreateProposal";
 
 function App() {
   return (
@@ -42,14 +37,35 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
+            <Route path="/presale-details">
+              <DetailsComp />
+            </Route>
+            <Route path="/private-details">
+              <DetailsCompPrivatesale />
+            </Route>
+            <Route path="/fairlaunch-details">
+              <DetailsFairComp />
+            </Route>
             <Route exact path="/presale">
               <PreSale />
+            </Route>
+            <Route exact path="/privatesale">
+              <PrivateSale />
+            </Route>
+            <Route exact path="/fairlaunch">
+              <Fairsale />
             </Route>
             <Route exact path="/sale-list">
               <ProjectList />
             </Route>
+            <Route exact path="/prvsale-list">
+              <PrvProjectList />
+            </Route>
             <Route exact path="/my-contribution">
               <MyContributions />
+            </Route>
+            <Route exact path="/prv-contribution">
+              <PrvContributions />
             </Route>
             <Route exact path="/lock">
               <MainLock />
@@ -65,6 +81,18 @@ function App() {
             </Route>
             <Route exact path="/liquidity-locked">
               <LpLockList />
+            </Route>
+            <Route exact path="/lock-details/:id">
+              <LockView />
+            </Route>
+            <Route exact path="/lock-record/:id">
+              <LockRecord />
+            </Route>
+            <Route exact path="/my-token-lock">
+              <MyTokenLock />
+            </Route>
+            <Route exact path="/my-lp-lock">
+              <MyLpLock />
             </Route>
           </Switch>
         </MainLayout>

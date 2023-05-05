@@ -12,7 +12,7 @@ export const defaultValue = {
   tokenSymbol: "",
   tokenName: "",
   tokenDecimal: "",
-  feesType: "2",
+  feesType: "1",
   isApprove: false,
   presalerate: 0,
   whitelist: "2",
@@ -66,12 +66,12 @@ export default defaultContext;
 export const feesSetting = {
   1: {
     token: 0,
-    bnb: 5,
+    eth: 5,
     extra: 0,
   },
   2: {
-    token: 5,
-    bnb: 5,
+    token: 2,
+    eth: 2,
     extra: 0,
   },
 };

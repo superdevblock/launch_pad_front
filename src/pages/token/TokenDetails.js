@@ -15,10 +15,10 @@ export default function TokenDetails(props) {
           <div className="container px-3">
             <div className="intro">
               <div className="intro-content text-center">
-                <h2 className="color-primary">Create Token</h2>
+                <span className="intro-text">Create Token</span>
               </div>
             </div>
-            <div className="d-flex justify-content-center align-items-center">
+            <div className="my-5">
               <div className="card stepcard">
                 <div className="card-body">
                   <h5 className="text-center">
@@ -30,24 +30,23 @@ export default function TokenDetails(props) {
                   <div className="d-flex justify-content-center">
                     <button className="btn">
                       <a
-                        className="text-white"
-                        href={`https://etherscan.io/token/${params.get("addr")}`}
+                        className="text-dark"
+                        href={`https://bscscan.com/token/${params.get("addr")}`}
                         target="_blank"
-                        rel="noreferrer"
                       >
-                        View on Etherscan
+                        View on BSCScan
                       </a>
                     </button>
                     <button className="btn">
-                      <Link className="text-white" to="/presale">
+                      <Link className="text-dark" to="/presale">
                         Create Presale
                       </Link>
                     </button>
-                    {/* <button className="btn">
-                      <Link className="text-white" to="/fairlaunch">
+                    <button className="btn">
+                      <Link className="text-dark" to="/fairlaunch">
                         Create Fairlaunch
                       </Link>
-                    </button> */}
+                    </button>
                   </div>
                 </div>
               </div>

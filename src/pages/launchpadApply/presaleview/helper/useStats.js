@@ -12,12 +12,13 @@ import { useLocation, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { supportNetwork } from "../../../../hooks/network";
 import { currencies } from "../../../../hooks/currencies";
-import { ethers } from "ethers";
 
 export const useCommonStats = (update) => {
   const context = useWeb3React();
-  const { chainId, account } = context;
+  const { chainId } = context;
   let history = useHistory();
+
+  // let poolAddress = "0x6816e27bca20fbbe779ca9725d48c1e01a02943c";
 
   const location = useLocation();
   let urlAddress = location.pathname.split("/").pop();
@@ -51,14 +52,14 @@ export const useCommonStats = (update) => {
     liquidityPercent: 0,
     liquidityUnlockTime: 0,
     maxContribution: 0,
-    poolDetails: "",
+    poolDetails: 0,
     poolState: 0,
     rate: 0,
     remainingContribution: 0,
     tgeDate: 0,
     tgeBps: 0,
     cycleBps: 0,
-    token: "",
+    token: 0,
     totalClaimed: 0,
     totalRaised: 0,
     totalVestedTokens: 0,
@@ -81,8 +82,6 @@ export const useCommonStats = (update) => {
     currencySymbol: supportNetwork[queryChainId ? queryChainId : chainId]
       ? supportNetwork[queryChainId ? queryChainId : chainId].symbol
       : supportNetwork["default"].symbol,
-    userMaxAllocation: 0,
-    bonusRateperTier: 0
   });
 
   const mc = MulticallContractWeb3(queryChainId ? queryChainId : chainId);
@@ -120,7 +119,6 @@ export const useCommonStats = (update) => {
           poolContract.methods.auditStatus(), //26
           poolContract.methods.kycStatus(), //27
           poolContract.methods.currency(),
-          poolContract.methods.BONUS_RATE_PER_TIER(),
         ]);
 
         let tokenContract = new web3.eth.Contract(tokenAbi, data[17]);
@@ -132,23 +130,6 @@ export const useCommonStats = (update) => {
           tokenContract.methods.totalSupply(),
         ]);
 
-        let userMaxAlloc = 0;
-        let _bonusRateperTier =  data[29];
-
-        if (account) {
-          userMaxAlloc = await poolContract.methods.getMaxContribution(account).call();
-        } else {
-          userMaxAlloc = ethers.constants.MaxUint256
-        }
-        
-        if(urlAddress.toLowerCase() === "0xe1d6e9F871581c3F698482eAe9390685B14C53DD".toLowerCase()) {
-          userMaxAlloc = userMaxAlloc / Math.pow(10, 18) / 100
-          _bonusRateperTier = _bonusRateperTier / 1000000
-        } else {
-          userMaxAlloc = userMaxAlloc / Math.pow(10, 18)
-          _bonusRateperTier = _bonusRateperTier / 10000
-        }
-console.log("sniper: tokendata[3], tokendata[1]: ", tokendata[3], tokendata[1])
         setStats({
           endTime: data[0],
           startTime: data[1],
@@ -176,7 +157,7 @@ console.log("sniper: tokendata[3], tokendata[1]: ", tokendata[3], tokendata[1])
           tokenSymbol: tokendata[2],
           percentageRaise:
             (data[19] / Math.pow(10, 18) / (data[2] / Math.pow(10, 18))) * 100,
-          tokenSupply: ethers.utils.formatUnits(tokendata[3], tokendata[1]), // tokendata[3] / Math.pow(10, tokendata[1]),
+          tokenSupply: tokendata[3] / Math.pow(10, tokendata[1]),
           refundType: data[22],
           cycle: data[15],
           poolAddress: urlAddress,
@@ -187,11 +168,9 @@ console.log("sniper: tokendata[3], tokendata[1]: ", tokendata[3], tokendata[1])
           kycStatus: data[27],
           currencyAddress: data[28],
           currencySymbol: currencyList[data[28].toLowerCase()],
-          userMaxAllocation: userMaxAlloc,
-          bonusRateperTier: _bonusRateperTier
         });
       } catch (err) {
-        toast.error("Wrong network selected !");
+        toast.error("wrong network selected !");
         history.push("/sale-list");
       }
     };
@@ -209,7 +188,7 @@ console.log("sniper: tokendata[3], tokendata[1]: ", tokendata[3], tokendata[1])
         liquidityPercent: 0,
         liquidityUnlockTime: 0,
         maxContribution: 0,
-        poolDetails: "",
+        poolDetails: 0,
         poolState: 0,
         rate: 0,
         remainingContribution: 0,
@@ -239,12 +218,10 @@ console.log("sniper: tokendata[3], tokendata[1]: ", tokendata[3], tokendata[1])
         currencySymbol: supportNetwork[queryChainId ? queryChainId : chainId]
           ? supportNetwork[queryChainId ? queryChainId : chainId].symbol
           : supportNetwork["default"].symbol,
-        userMaxAllocation: 0,
-        bonusRateperTier: 0
       });
     }
     // eslint-disable-next-line
-  }, [update, chainId, account]);
+  }, [update, chainId]);
 
   return stats;
 };

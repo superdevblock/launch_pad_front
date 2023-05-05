@@ -76,7 +76,7 @@ export default function Fairsale() {
                     >
                       <a href="#step2">
                         <span className="round-tab">2</span>{" "}
-                        <i>Token Info</i>
+                        <i>DeFi Launchpad Info</i>
                       </a>
                     </li>
                     <li

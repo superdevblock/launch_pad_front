@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
-import { usePoolListUser } from "../../../helper/useStats";
+import { usePoolListUser } from "../helper/useStats";
 import ProjectCard from "../../../../component/ProjectCard";
 
 export default function MyContributions() {
@@ -11,25 +11,24 @@ export default function MyContributions() {
     loading: true,
   });
   const stats = usePoolListUser(updater);
-
   return (
     <div className="container">
       <React.Fragment>
         <section className="project-area explore-area">
           <div className="intro">
             <div className="intro-content text-center">
-              <h1 className="color-primary">Launchpad List</h1>
+              <span className="intro-text">Launchpad List</span>
             </div>
             <div
               className="explore-menu btn-group btn-group-toggle flex-wrap mt-5 pl-3"
               data-toggle="buttons"
             >
-              <label className="btn d-table text-uppercase p-2 border-radius-non">
+              <label className="btn d-table text-uppercase p-2">
                 <Link to="/sale-list" className="explore-btn">
                   <span>All</span>
                 </Link>
               </label>
-              <label className="btn active d-table text-uppercase p-2 border-radius-non">
+              <label className="btn active d-table text-uppercase p-2">
                 <Link to="/my-contribution" className="explore-btn">
                   <span>My Contribution</span>
                 </Link>
@@ -57,12 +56,7 @@ export default function MyContributions() {
                   .reverse()
                   .map((rowdata, index) => {
                     if (rowdata.poolType !== "1")
-                    return <ProjectCard
-                    chainId={stats.chainId}
-                    rowdata={rowdata}
-                    index={index} 
-                    key={index}/>
-                    // return (<></>)
+                      return ProjectCard(stats.chainId, rowdata, index);
                   })
               ) : (
                 <div className="col-12 item explore-item mt-5">

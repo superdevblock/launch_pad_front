@@ -31,10 +31,10 @@ export default function MainLock() {
           <div className="container px-3">
             <div className="intro">
               <div className="intro-content text-center">
-                <h2 className="color-primary">Create Lock</h2>
+                <span className="intro-text">Create Lock</span>
               </div>
             </div>
-            <div className="d-flex justify-content-center align-items-center">
+            <div className="my-5">
               <div className="card stepcard">
                 <div className="card-body">
                   <form className="login-box">

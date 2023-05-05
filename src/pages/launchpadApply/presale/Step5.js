@@ -3,9 +3,7 @@ import { formatPrice } from "../../../hooks/contractHelper";
 import Context from "./context/Context";
 import Button from "react-bootstrap-button-loader";
 import { getContract, mulDecimal } from "../../../hooks/contractHelper";
-import { FaLink } from 'react-icons/fa';
 import { contract } from "../../../hooks/constant";
-import { trimLink } from "../../../hooks/constant";
 import { useWeb3React } from "@web3-react/core";
 import { feesSetting } from "./context/defaults";
 import poolFactoryAbi from "../../../json/poolfactory.json";
@@ -16,7 +14,6 @@ import { useCommonStats } from "./hooks/useStats";
 import { parseEther } from "ethers/lib/utils";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { supportNetwork } from "../../../hooks/network";
-import { ethers } from "ethers";
 
 export default function Step5() {
   const { value, btnPrevStep } = useContext(Context);
@@ -46,23 +43,22 @@ export default function Step5() {
             ], // 1
 
             [
-              mulDecimal(value.presalerate, value.tokenDecimal).toString(), // 0
-              mulDecimal(value.listingrate, value.tokenDecimal).toString(), // 1
-              mulDecimal(value.minbuy, 18).toString(), // 2
-              // mulDecimal(value.maxbuy, 18).toString(), // 0
-              ethers.constants.MaxUint256.toString(), // 3
-              mulDecimal(value.softcap, 18).toString(), // 4
-              mulDecimal(value.hardcap, 18).toString(), // 5
-              Math.floor(new Date(value.starttime).getTime() / 1000.0), // 6
-              Math.floor(new Date(value.endtime).getTime() / 1000.0), // 7
-              value.llockup * 60, // 8
-              value.whitelist, // 9
-              value.audit === true ? "1" : "2", // 10
-              value.kyc === true ? "1" : "2", // 11
-              feesSetting[value.feesType].token, // 12
-              feesSetting[value.feesType].bnb, // 13
-              value.liquidity, // 14
-              value.refund, // 15
+              mulDecimal(value.presalerate, value.tokenDecimal).toString(),
+              mulDecimal(value.listingrate, value.tokenDecimal).toString(),
+              mulDecimal(value.minbuy, 18).toString(),
+              mulDecimal(value.maxbuy, 18).toString(),
+              mulDecimal(value.softcap, 18).toString(),
+              mulDecimal(value.hardcap, 18).toString(),
+              Math.floor(new Date(value.starttime).getTime() / 1000.0),
+              Math.floor(new Date(value.endtime).getTime() / 1000.0),
+              value.llockup * 60,
+              value.whitelist,
+              value.audit === true ? "1" : "2",
+              value.kyc === true ? "1" : "2",
+              feesSetting[value.feesType].token,
+              feesSetting[value.feesType].bnb,
+              value.liquidity,
+              value.refund,
             ],
             `${value.logourl}$#$${value.bannerurl}$#$${value.website}$#$$#$${value.facebook}$#$${value.twitter}$#$${value.github}$#$${value.telegram}$#$${value.instagram}$#$${value.discord}$#$${value.reddit}$#$${value.youtube}$#$${value.brief}`, //9
             [
@@ -81,7 +77,7 @@ export default function Step5() {
             poolfactoryAddress,
             library
           );
-          
+
           let feesCal =
             parseFloat(value.totalCost) + parseFloat(commonStats.poolPrice);
           let tx = await factoryContract.createSale(
@@ -105,25 +101,25 @@ export default function Step5() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("Success ! Your last transaction is success 👍");
+                toast.success("success ! your last transaction is success 👍");
                 setLoading(false);
                 if (typeof response.logs[0] !== "undefined") {
                   history.push(`/presale-details/${response.logs[0].address}`);
                 } else {
-                  toast.error("Something went wrong !");
+                  toast.error("something went wrong !");
                   history.push("/");
                 }
               } else if (response.status === false) {
-                toast.error("Error ! Your last transaction is failed.");
+                toast.error("error ! Your last transaction is failed.");
                 setLoading(false);
               } else {
-                toast.error("Error ! something went wrong.");
+                toast.error("error ! something went wrong.");
                 setLoading(false);
               }
             }
           }, 5000);
         } else {
-          toast.error("Wrong network selected !");
+          toast.error("wrong network selected !");
           setLoading(false);
         }
       } else {
@@ -201,12 +197,12 @@ export default function Step5() {
           {value.minbuy} {value.currencyTSymbol}
         </span>
       </div>
-      {/* <div className="mt-2 d-flex justify-content-between card-span">
+      <div className="mt-2 d-flex justify-content-between card-span">
         <span>Maximum buy</span>
         <span className="step-input-value">
           {value.maxbuy} {value.currencyTSymbol}
         </span>
-      </div> */}
+      </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Liquidity</span>
         <span className="step-input-value">{value.liquidity}%</span>
@@ -229,68 +225,68 @@ export default function Step5() {
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Website</span>
-        <a href={value.website} target="_blank" rel="noreferrer">{trimLink(value.website)}<FaLink /></a>
+        <span className="step-input-value">{value.website}</span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Logo Url</span>
-        <a href={value.logourl} target="_blank" rel="noreferrer">{trimLink(value.logourl)}<FaLink /></a>
+        <span className="step-input-value">{value.logourl}</span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Banner Image Url</span>
-        <a href={value.bannerurl} target="_blank" rel="noreferrer">{trimLink(value.bannerurl)}<FaLink /></a>
+        <span className="step-input-value">{value.bannerurl}</span>
       </div>
       {value.facebook && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Facebook</span>
-          <a href={value.facebook} target="_blank" rel="noreferrer">{trimLink(value.facebook)}<FaLink /></a>
+          <span className="step-input-value">{value.facebook}</span>
         </div>
       )}
       {value.twitter && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Twitter</span>
-        <a href={value.twitter} target="_blank" rel="noreferrer">{trimLink(value.twitter)}<FaLink /></a>
+          <span className="step-input-value">{value.twitter}</span>
         </div>
       )}
       {value.github && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Github</span>
-        <a href={value.github} target="_blank" rel="noreferrer">{trimLink(value.github)}<FaLink /></a>
+          <span className="step-input-value">{value.github}</span>
         </div>
       )}
       {value.telegram && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Telegram</span>
-        <a href={value.telegram} target="_blank" rel="noreferrer">{trimLink(value.telegram)}<FaLink /></a>
+          <span className="step-input-value">{value.telegram}</span>
         </div>
       )}
       {value.instagram && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Instagram</span>
-        <a href={value.instagram} target="_blank" rel="noreferrer">{trimLink(value.instagram)}<FaLink /></a>
+          <span className="step-input-value">{value.instagram}</span>
         </div>
       )}
       {value.discord && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Discord</span>
-        <a href={value.discord} target="_blank" rel="noreferrer">{trimLink(value.discord)}<FaLink /></a>
+          <span className="step-input-value">{value.discord}</span>
         </div>
       )}
       {value.reddit && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Reddit</span>
-        <a href={value.reddit} target="_blank" rel="noreferrer">{trimLink(value.reddit)}<FaLink /></a>
+          <span className="step-input-value">{value.reddit}</span>
         </div>
       )}
       {value.blockstart && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Blockstar Group</span>
-        <a href={value.blockstart} target="_blank" rel="noreferrer">{trimLink(value.blockstart)}<FaLink /></a>
+          <span className="step-input-value">{value.blockstart}</span>
         </div>
       )}
       {value.youtube && (
         <div className="mt-2 d-flex justify-content-between card-span">
           <span>Youtube Video</span>
-        <a href={value.youtube} target="_blank" rel="noreferrer">{trimLink(value.youtube)}<FaLink /></a>
+          <span className="step-input-value">{value.youtube}</span>
         </div>
       )}
 

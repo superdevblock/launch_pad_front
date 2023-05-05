@@ -90,15 +90,15 @@ export default function Step1() {
                 clearInterval(interval);
                 if (response.status === true) {
                   toast.success(
-                    "Success ! Your last transaction is success 👍"
+                    "success ! your last transaction is success 👍"
                   );
                   setLoading(false);
                   setValue({ ...value, isApprove: true });
                 } else if (response.status === false) {
-                  toast.error("Error ! Your last transaction is failed.");
+                  toast.error("error ! Your last transaction is failed.");
                   setLoading(false);
                 } else {
-                  toast.error("Error ! something went wrong.");
+                  toast.error("error ! something went wrong.");
                   setLoading(false);
                 }
               }
@@ -153,7 +153,7 @@ export default function Step1() {
         </div>
         <div className="col-md-12 mt-4 mb-0">
           <label>Fee Options</label>
-          {/* <div className="form-check">
+          <div className="form-check">
             <input
               type="radio"
               style={{ width: "auto" }}
@@ -163,8 +163,8 @@ export default function Step1() {
               onChange={(e) => handleFeesChange(e)}
               checked={value.feesType === "1" ? true : false}
             />
-            0.5 ETH + 5% {symbol} raised only
-          </div> */}
+            0.5 BNB + 5% {symbol} raised only
+          </div>
           <div className="form-check">
             <input
               type="radio"
@@ -175,7 +175,7 @@ export default function Step1() {
               onChange={(e) => handleFeesChange(e)}
               checked={value.feesType === "2" ? true : false}
             />
-            0.1 ETH + 5% {symbol} raised + 5% token sold
+            0.5 BNB + 2% {symbol} raised + 2% token sold
           </div>
         </div>
       </div>
@@ -184,7 +184,7 @@ export default function Step1() {
           <li>
             <button
               type="button"
-              className="btn default-btn"
+              className="btn default-btn next-step"
               onClick={(e) => firstStepSubmit(e)}
             >
               Continue to next step
@@ -195,7 +195,7 @@ export default function Step1() {
             <Button
               type="button"
               variant="none"
-              className="btn default-btn"
+              className="btn default-btn next-step"
               onClick={(e) => handleApprove(e)}
               loading={loading}
             >

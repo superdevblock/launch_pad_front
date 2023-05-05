@@ -1,21 +1,17 @@
 import React, { useContext, useState } from "react";
 import Context from "./context/Context";
+import Web3 from "web3";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import tokenByte from "../../bytecode/Tokens.json";
+import BuyBackBabyTokenABI from "../../json/BuyBackBabyToken.json";
 import Button from "react-bootstrap-button-loader";
 import { contract } from "../../hooks/constant";
-import { getContract } from "../../hooks/contractHelper";
-import { useWeb3React } from "@web3-react/core";
-import TokenFactoryABI from "../../json/tokenFactory.json"
-import { getWeb3 } from "../../hooks/connectors";
 
 export default function BuyBackBabyToken(props) {
   const { createFee } = props;
   const history = useHistory();
   const { value, setValue } = useContext(Context);
-
-  const context = useWeb3React();
-  const { account, chainId, library } = context;
 
   const [createloading, setCreateLoading] = useState(false);
   const [error, setError] = useState({
@@ -219,27 +215,35 @@ export default function BuyBackBabyToken(props) {
 
   const handleCreateBuyBackToken = async (e) => {
     e.preventDefault();
-    let check = checkBuyBackValidation();
+    let check = checkBuyBackAllValidation();
     if (check) {
       try {
         setCreateLoading(true);
-        if (account) {
-          if (chainId) {
-            let tokenFactoryAddress = contract[chainId]
-              ? contract[chainId].tokenfactory
-              : contract["default"].tokenfactory;
-            let factoryContract = getContract(
-              TokenFactoryABI,
-              tokenFactoryAddress,
-              library
-            );
 
-            let tx = await factoryContract.createBuyback(
+        window.web3 = new Web3(window.ethereum);
+        let tokenContract = new window.web3.eth.Contract(BuyBackBabyTokenABI);
+        let accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+
+        if (accounts.length == 0) {
+          toast.error("error ! connect wallet! 👍");
+          setCreateLoading(false);
+          return;
+        }
+
+        const resolveAfter3Sec = new Promise((resolve) =>
+          setTimeout(resolve, 10000)
+        );
+        await tokenContract
+          .deploy({
+            data: tokenByte["BuybackBabyToken"],
+            arguments: [
               value["name"],
               value["symbol"],
               value["supply"] + "0".repeat(9),
               value["rewardAddr"],
-              contract[chainId]["routeraddress"],
+              contract["default"]["routeraddress"],
               [
                 (value["liquidityFee"] * 100).toString(),
                 (value["buybackFee"] * 100).toString(),
@@ -254,50 +258,31 @@ export default function BuyBackBabyToken(props) {
                   4
                 ).toString(),
               ],
-              contract[chainId]["feeReceiver"],
+              contract["default"]["feeReceiver"],
               createFee.toString(),
-              {from:account, value:createFee.toString()}
-            );
-            const resolveAfter3Sec = new Promise((resolve) =>
-              setTimeout(resolve, 10000)
-            );
-            toast.promise(resolveAfter3Sec, {
-              pending: "Waiting for confirmation 👌",
-            });
-
-            var interval = setInterval(async function () {
-              let web3 = getWeb3(chainId);
-              var response = await web3.eth.getTransactionReceipt(tx.hash);
-              if (response != null) {
-                clearInterval(interval);
-                if (response.status === true) {
-                  toast.success("Success ! Your last transaction is success 👍");
-                  setCreateLoading(false);
-                  if (typeof response.logs[0] !== "undefined") {
-                    history.push(
-                      `/token-details?addr=${response.logs[1].address}`
-                    );
-                  } else {
-                    toast.error("Something went wrong !");
-                    history.push("/");
-                  }
-                } else if (response.status === false) {
-                  toast.error("Error ! Your last transaction is failed.");
-                  setCreateLoading(false);
-                } else {
-                  toast.error("Error ! something went wrong.");
-                  setCreateLoading(false);
-                }
-              }
-            }, 5000);
-          } else {
-            toast.error("Wrong network selected !");
+            ],
+          })
+          .send(
+            {
+              value: createFee.toString(),
+              from: accounts[0],
+            },
+            function (error, transactionHash) {
+              if (transactionHash != undefined)
+                toast.promise(resolveAfter3Sec, {
+                  pending: "Waiting for confirmation 👌",
+                });
+            }
+          )
+          .on("error", function (error) {
+            toast.error("error ! something went wrong! 👍");
             setCreateLoading(false);
-          }
-        } else {
-          toast.error("Please Connect Wallet!");
-          setCreateLoading(false);
-        }
+          })
+          .on("receipt", function (receipt) {
+            toast.success("success ! your last transaction is success 👍");
+            setCreateLoading(false);
+            history.push(`/token-details?addr=${receipt.contractAddress}`);
+          });
       } catch (err) {
         toast.error(err.reason ? err.reason : err.message);
         setCreateLoading(false);
@@ -373,7 +358,7 @@ export default function BuyBackBabyToken(props) {
               value={value.rewardAddr}
               type="text"
               name="rewardAddr"
-              placeholder="Ex: 0x20"
+              placeholder="Ex: 0x208013b056978e76913efdF7F15EaB5130B7647B"
             />
             <small className="text-danger">{error.rewardAddr}</small>
             <br />
@@ -382,7 +367,7 @@ export default function BuyBackBabyToken(props) {
         <div className="col-12 col-md-6 mb-0">
           <div className="">
             <label>
-              Liquidity Fee (%)
+              Liquidity Fee
               <span className="text-danger">*</span>
             </label>
             <input
@@ -436,7 +421,7 @@ export default function BuyBackBabyToken(props) {
         <div className="col-12 col-md-6 mb-0">
           <div className="">
             <label>
-              Marketing Fee (%)
+              Marketing Fee
               <span className="text-danger">*</span>
             </label>
             <input

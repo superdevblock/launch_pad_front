@@ -245,11 +245,11 @@ export default function ProjectDetails() {
                 setEditLoading(false);
                 setEditmodalShow(false);
               } else if (response.status === false) {
-                toast.error("Error ! Your last transaction is failed.");
+                toast.error("error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setEditLoading(false);
               } else {
-                toast.error("Error ! something went wrong.");
+                toast.error("error ! something went wrong.");
                 setUpdater(new Date());
                 setEditLoading(false);
               }
@@ -399,16 +399,16 @@ export default function ProjectDetails() {
                   clearInterval(interval);
                   if (response.status === true) {
                     toast.success(
-                      "Success ! Your last transaction is success 👍"
+                      "success ! your last transaction is success 👍"
                     );
                     setUpdater(new Date());
                     setLoading(false);
                   } else if (response.status === false) {
-                    toast.error("Error ! Your last transaction is failed.");
+                    toast.error("error ! Your last transaction is failed.");
                     setUpdater(new Date());
                     setLoading(false);
                   } else {
-                    toast.error("Error ! something went wrong.");
+                    toast.error("error ! something went wrong.");
                     setUpdater(new Date());
                     setLoading(false);
                   }
@@ -465,17 +465,17 @@ export default function ProjectDetails() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("Success ! Your last transaction is success 👍");
+                toast.success("success ! your last transaction is success 👍");
                 setUpdater(new Date());
                 setLoading(false);
                 accStats.allowance = "1000000000000000000000000000";
                 setAllowance(accStats.allowance);
               } else if (response.status === false) {
-                toast.error("Error ! Your last transaction is failed.");
+                toast.error("error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setLoading(false);
               } else {
-                toast.error("Error ! something went wrong.");
+                toast.error("error ! something went wrong.");
                 setUpdater(new Date());
                 setLoading(false);
               }
@@ -520,13 +520,13 @@ export default function ProjectDetails() {
           if (response != null) {
             clearInterval(interval);
             if (response.status === true) {
-              toast.success("Success ! Your last transaction is success 👍");
+              toast.success("success ! your last transaction is success 👍");
               setUpdater(new Date());
             } else if (response.status === false) {
-              toast.error("Error ! Your last transaction is failed.");
+              toast.error("error ! Your last transaction is failed.");
               setUpdater(new Date());
             } else {
-              toast.error("Error ! something went wrong.");
+              toast.error("error ! something went wrong.");
               setUpdater(new Date());
             }
           }
@@ -570,15 +570,15 @@ export default function ProjectDetails() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("Success ! Your last transaction is success 👍");
+                toast.success("success ! your last transaction is success 👍");
                 setUpdater(new Date());
                 setWaddloading(false);
               } else if (response.status === false) {
-                toast.error("Error ! Your last transaction is failed.");
+                toast.error("error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setWaddloading(false);
               } else {
-                toast.error("Error ! something went wrong.");
+                toast.error("error ! something went wrong.");
                 setUpdater(new Date());
                 setWaddloading(false);
               }
@@ -623,15 +623,15 @@ export default function ProjectDetails() {
             if (response != null) {
               clearInterval(interval);
               if (response.status === true) {
-                toast.success("Success ! Your last transaction is success 👍");
+                toast.success("success ! your last transaction is success 👍");
                 setUpdater(new Date());
                 setWaddloading(false);
               } else if (response.status === false) {
-                toast.error("Error ! Your last transaction is failed.");
+                toast.error("error ! Your last transaction is failed.");
                 setUpdater(new Date());
                 setWaddloading(false);
               } else {
-                toast.error("Error ! something went wrong.");
+                toast.error("error ! something went wrong.");
                 setUpdater(new Date());
                 setWaddloading(false);
               }
@@ -678,11 +678,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setFinalLoading(false);
             } else if (response.status === false) {
-              toast.error("Error ! Your last transaction is failed.");
+              toast.error("error ! Your last transaction is failed.");
               setUpdater(new Date());
               setFinalLoading(false);
             } else {
-              toast.error("Error ! something went wrong.");
+              toast.error("error ! something went wrong.");
               setUpdater(new Date());
               setFinalLoading(false);
             }
@@ -725,11 +725,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setWcLoading(false);
             } else if (response.status === false) {
-              toast.error("Error ! Your last transaction is failed.");
+              toast.error("error ! Your last transaction is failed.");
               setUpdater(new Date());
               setWcLoading(false);
             } else {
-              toast.error("Error ! something went wrong.");
+              toast.error("error ! something went wrong.");
               setUpdater(new Date());
               setWcLoading(false);
             }
@@ -772,11 +772,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setCtLoading(false);
             } else if (response.status === false) {
-              toast.error("Error ! Your last transaction is failed.");
+              toast.error("error ! Your last transaction is failed.");
               setUpdater(new Date());
               setCtLoading(false);
             } else {
-              toast.error("Error ! something went wrong.");
+              toast.error("error ! something went wrong.");
               setUpdater(new Date());
               setCtLoading(false);
             }
@@ -819,11 +819,11 @@ export default function ProjectDetails() {
               setUpdater(new Date());
               setLocklLoading(false);
             } else if (response.status === false) {
-              toast.error("Error ! Your last transaction is failed.");
+              toast.error("error ! Your last transaction is failed.");
               setUpdater(new Date());
               setLocklLoading(false);
             } else {
-              toast.error("Error ! something went wrong.");
+              toast.error("error ! something went wrong.");
               setUpdater(new Date());
               setLocklLoading(false);
             }
@@ -1448,7 +1448,7 @@ export default function ProjectDetails() {
                   </React.Fragment>
                 ) : (
                   <div className="d-flex justify-content-center">
-                    <h5 className="my-4">You are not owner of pool</h5>
+                    <h5 className="my-4">You are not onwer of pool</h5>
                   </div>
                 )}
               </div>
@@ -1478,7 +1478,11 @@ export default function ProjectDetails() {
                   setWhitelistAddress(e.target.value);
                 }}
                 rows={8}
-                placeholder="Insert address: separate with breaks line."
+                placeholder="Insert address: separate with breaks line.
+            Ex:
+            0x34E7f6A4d0BB1fa7aFe548582c47Df337FC337E6
+            0xd8Ebc66f0E3D638156D6F5eFAe9f43B1eBc113B1
+            0x968136BB860D9534aF1563a7c7BdDa02B1A979C2"
                 value={whitelistAddress}
               />
             </Form.Group>
@@ -1518,7 +1522,11 @@ export default function ProjectDetails() {
                   setRemoveWhitelistAddress(e.target.value);
                 }}
                 rows={8}
-                placeholder="Insert address: separate with breaks line."
+                placeholder="Insert address: separate with breaks line.
+            Ex:
+            0x34E7f6A4d0BB1fa7aFe548582c47Df337FC337E6
+            0xd8Ebc66f0E3D638156D6F5eFAe9f43B1eBc113B1
+            0x968136BB860D9534aF1563a7c7BdDa02B1A979C2"
                 value={removeWhitelistAddress}
               />
             </Form.Group>
