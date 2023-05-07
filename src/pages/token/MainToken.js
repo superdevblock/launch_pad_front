@@ -8,7 +8,7 @@ import Context from "./context/Context";
 import { useWeb3React } from "@web3-react/core";
 import { defaultValue } from "./context/defaults";
 
-const createFee = 10 ** 17;
+const createFee = 10; // ** 17
 
 export default function MainToken() {
   const appContext = useContext(Context);

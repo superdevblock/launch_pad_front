@@ -11,7 +11,6 @@ export const getContract = (abi, address, library) => {
   }
 }
 
-
 export const formatPrice = (num) => {
   //return parseFloat(num.toFixed(decimals)).toLocaleString();
   return new Intl.NumberFormat('ja-JP').format(parseFloat(num).toFixed(3));
