@@ -80,10 +80,11 @@ const MainLayout = (props) => {
       <ProSidebar collapsed={collapsed}>
         <SidebarHeader>
           <img
-            src={require("../images/logo_main.png").default}
+            src={require("../images/logo.png").default}
             alt="Brand Logo"
-            height="40px"
+            width="50px"
           />
+          <h3>NovaPad</h3>
           <div className="toggleMenu" onClick={onClickMenuIcon}>
             <AiOutlineMenu />
           </div>
@@ -178,7 +179,7 @@ const MainLayout = (props) => {
             </MenuItem>
           </SubMenu>
           <SubMenu
-            title="BDAI Lock"
+            title="Nova Lock"
             icon={<FaLock />}
             className={`${
               router.pathname === "/lock" ||
@@ -215,25 +216,25 @@ const MainLayout = (props) => {
             </MenuItem>
           </SubMenu>
           <Menuitem icon={<SiAdobeaudition />}>
-            <a href="#" target="_blank">
+            <a href="https://t.me/king_arthuree" target="_blank">
               KYC & Audit
             </a>
           </Menuitem>
           <Menuitem icon={<FaDochub />}>
             <a
-              href="#"
+              href="https://drive.google.com/file/d/1VVMXOF8N-FCZgsmhBx5GLL_a6cfqq3n0/view?usp=share_link"
               target="_blank"
             >
               Docs
             </a>
           </Menuitem>
           <Menuitem icon={<FaTelegramPlane />}>
-            <a href="#" target="_blank">
+            <a href="https://t.me/novacoinbsc" target="_blank">
               Telegram
             </a>
           </Menuitem>
           <Menuitem icon={<FaTwitter />}>
-            <a href="#" target="_blank">
+            <a href="https://twitter.com/NovaCoinBSC" target="_blank">
               Twitter
             </a>
           </Menuitem>

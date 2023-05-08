@@ -5,24 +5,24 @@ export const trimAddress = (addr) => {
 //Launchpad Contract
 
 export const contract = {
-  84531: {
-    poolfactory:      "0x86841b1Edc2e85188463b04294f969B263C41eA2",
-    poolmanager:      "0x0c70E854F57b38561E72f82e4Fd29eE696441fE9",
-    routeraddress:    "0x48ec46497ad59acaba41545363cf36fe77786fa7",
-    multicallAddress: "0x18540e2a38e3f7eae2a543b572e80304c70965a3",
-    lockAddress:      "0xb526ee481682698a04ef4711d9b979f1d25254b1",
-    routername:       "Pancakeswap",
-    feeReceiver:      "0x60557846DAc1820A504F525E355f1695B330a539",
-    dividendTracker:  "0xa2532b333215a3330a79609bba0d6a21c9d188f1",
+  56: {
+    poolfactory: "0xf25973cfB2641F9759b65D9844C7543218B2a79b",
+    poolmanager: "0xac6F1432101ffdA9056609Ba374F749757F40590",
+    routeraddress: "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+    multicallAddress: "0x1Ee38d535d541c55C9dae27B12edf090C608E6Fb",
+    lockAddress: "0xAB989B51776f49f874D7E143010805E6B57Cb80a",
+    routername: "Pancakeswap",
+    feeReceiver: "0xC3FB36f461d1010f0eC831dF4e5706C5C90F7867",
+    dividendTracker: "0xa461A00fC2F9F3B1c6b222bDB7E825bcC07D90bd",
   },
   default: {
-    poolfactory:      "0x86841b1Edc2e85188463b04294f969B263C41eA2",
-    poolmanager:      "0x0c70E854F57b38561E72f82e4Fd29eE696441fE9",
-    routeraddress:    "0x48ec46497ad59acaba41545363cf36fe77786fa7",
-    multicallAddress: "0x18540e2a38e3f7eae2a543b572e80304c70965a3",
-    lockAddress:      "0xb526ee481682698a04ef4711d9b979f1d25254b1",
-    routername:       "Pancakeswap",
-    feeReceiver:      "0x60557846DAc1820A504F525E355f1695B330a539",
-    dividendTracker:  "0xa2532b333215a3330a79609bba0d6a21c9d188f1",
+    poolfactory: "0xf25973cfB2641F9759b65D9844C7543218B2a79b",
+    poolmanager: "0xac6F1432101ffdA9056609Ba374F749757F40590",
+    routeraddress: "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+    multicallAddress: "0x1Ee38d535d541c55C9dae27B12edf090C608E6Fb",
+    lockAddress: "0xAB989B51776f49f874D7E143010805E6B57Cb80a",
+    routername: "Pancakeswap",
+    feeReceiver: "0xC3FB36f461d1010f0eC831dF4e5706C5C90F7867",
+    dividendTracker: "0xa461A00fC2F9F3B1c6b222bDB7E825bcC07D90bd",
   },
 };

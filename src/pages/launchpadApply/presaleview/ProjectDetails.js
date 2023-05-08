@@ -894,10 +894,10 @@ export default function ProjectDetails() {
                 <div className="row">
                   <div className="col-12 col-md-2 text-center">
                     <img
-                      className="mt-1 "
-                      width="40px"
-                      height="40px"
-                      src="/assets/images/logo.png"
+                      className="card-img-top avatar-max-lg mt-1 "
+                      width="100%"
+                      height="auto"
+                      src={social.logourl}
                       alt="iconimage12"
                     />
                   </div>
@@ -906,6 +906,128 @@ export default function ProjectDetails() {
                       <h4 className="mt-1 mb-2 text-center text-md-left">
                         {stats.tokenName} Presale
                       </h4>
+                      <div className="d-flex gap-1 justify-content-center audit-status">
+                        {stats.audit &&
+                          (stats.auditStatus ||
+                            (stats.auditLink && (
+                              <a
+                                target="_blank"
+                                rel="noreferrer"
+                                href={stats.auditLink}
+                              >
+                                <h4 className="tag-btn text-uppercase text-center bg-yellow">
+                                  Audit
+                                </h4>
+                              </a>
+                            )))}
+                        {stats.kyc &&
+                          (stats.kycStatus ||
+                            (stats.kycLink && (
+                              <a
+                                target="_blank"
+                                rel="noreferrer"
+                                href={stats.kycLink}
+                              >
+                                <h4 className="tag-btn text-uppercase text-center bg-purple">
+                                  KYC
+                                </h4>
+                              </a>
+                            )))}
+                      </div>
+                    </div>
+                    <div className="social-share d-flex justify-content-center justify-content-md-start">
+                      <ul className="d-flex list-unstyled">
+                        {social.twitter && (
+                          <li>
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={social.twitter}
+                            >
+                              <i className="fab fa-twitter"></i>
+                            </a>
+                          </li>
+                        )}
+                        {social.telegram && (
+                          <li>
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={social.telegram}
+                            >
+                              <i className="fab fa-telegram"></i>
+                            </a>
+                          </li>
+                        )}
+                        {social.website && (
+                          <li>
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={social.website}
+                            >
+                              <i className="fas fa-globe"></i>
+                            </a>
+                          </li>
+                        )}
+                        {social.discord && (
+                          <li>
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={social.discord}
+                            >
+                              <i className="fab fa-discord"></i>
+                            </a>
+                          </li>
+                        )}
+                        {social.facebook && (
+                          <li>
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={social.facebook}
+                            >
+                              <i className="fab fa-facebook"></i>
+                            </a>
+                          </li>
+                        )}
+                        {social.github && (
+                          <li>
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={social.github}
+                            >
+                              <i className="fab fa-github"></i>
+                            </a>
+                          </li>
+                        )}
+
+                        {social.instagram && (
+                          <li>
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={social.instagram}
+                            >
+                              <i className="fab fa-instagram"></i>
+                            </a>
+                          </li>
+                        )}
+
+                        {social.reddit && (
+                          <li>
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={social.reddit}
+                            >
+                              <i className="fab fa-reddit"></i>
+                            </a>
+                          </li>
+                        )}
+                      </ul>
                     </div>
                     <p className="text-center text-md-left">
                       {editSocial.brief}

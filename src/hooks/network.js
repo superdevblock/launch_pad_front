@@ -1,24 +1,24 @@
 // import binanceCoin from '../images/binance-coin.png';
 import dyno from "../images/dyno.png";
-import ethCoin from "../images/eth-coin.png";
+import binanceCoin from "../images/binance-coin.png";
 
 export const supportNetwork = {
-  84531: {
-    name: "Base Chain",
-    chainId: 84531,
-    rpc: "https://base-goerli.public.blastapi.io",
-    image: ethCoin,
-    symbol: "ETH",
+  56: {
+    name: "Binance Smart Chain",
+    chainId: 56,
+    rpc: "https://bsc-dataseed.binance.org",
+    image: binanceCoin,
+    symbol: "BNB",
   },
   default: {
-    name: "Base Chain",
-    chainId: 84531,
-    rpc: "https://base-goerli.public.blastapi.io",
-    image: ethCoin,
-    symbol: "ETH",
+    name: "Binance Smart Chain",
+    chainId: 56,
+    rpc: "https://bsc-dataseed.binance.org",
+    image: binanceCoin,
+    symbol: "BNB",
   },
 };
 
 export const RPC_URLS = {
-  84531: "https://base-goerli.public.blastapi.io",
+  56: "https://bsc-dataseed.binance.org",
 };

@@ -13,7 +13,7 @@ export default function Home() {
               The launchpad you deserve is here!
             </h3>
             <p>
-              InBDAIting the BASE ecosystem through the BDAI Defi Launchpad
+              Innovating the EVM ecosystem through the NovaPad Defi Launchpad
             </p>
           </div>
           <div className="text-center mt-5">
@@ -121,7 +121,7 @@ export default function Home() {
                 />
                 <h4 className="my-2">Branding</h4>
                 <p className="">
-                  Adding logo, social links, description, listing on BDAI.
+                  Adding logo, social links, description, listing on NovaPad.
                 </p>
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function Home() {
                   width="50px"
                 />
                 <h4 className="my-2">Community</h4>
-                <p>Promote your launchpad to thousands of buyers on BDAI.</p>
+                <p>Promote your launchpad to thousands of buyers on NovaPad.</p>
               </div>
             </div>
             <div className="col-12 col-md-3">
@@ -159,7 +159,7 @@ export default function Home() {
                 />
                 <h4 className="my-2">Locking</h4>
                 <p>
-                  Lock your liquidity to BDAISwap, PancakeSwap after presale.
+                  Lock your liquidity to NovaSwap, PancakeSwap after presale.
                 </p>
               </div>
             </div>

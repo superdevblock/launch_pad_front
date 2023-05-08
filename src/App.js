@@ -26,59 +26,13 @@ import LockRecord from "./pages/locklist/LockRecord";
 import MyTokenLock from "./pages/locklist/MyTokenLock";
 import MyLpLock from "./pages/locklist/MyLpLock";
 import LpLockList from "./pages/locklist/LpLockList";
-import Modal from 'react-modal';
-// import Modal from 'react-bootstrap'
-
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    background: '#FFFFFF',
-  },
-};
 
 function App() {
-  let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(true);
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    subtitle.style.color = '#f00';
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-
   return (
     <div className="App">
       <Router>
         <ToastContainer pauseOnFocusLoss={false} />
-          <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
-            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-            <div style={{ color: 'black' }}>
-              My telegram: @hellenistic00<br/>
-              My Discord: arsinoe#0866 <br/>
-              My Gmail: hellenistic00@gmail.com <br/>
-              Thank you for contacting me.
-            </div>
-            <button onClick={closeModal}>close</button>
-          </Modal>
-          <MainLayout>
+        <MainLayout>
           <Switch>
             <Route exact path="/">
               <Home />

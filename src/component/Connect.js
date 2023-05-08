@@ -78,9 +78,9 @@ export const Connect = function () {
             src={require("../images/logo.png").default}
             alt="Brand Logo"
             width="50px"
-            className="show-on-mobile mr-3"
+            className="show-on-mobile"
           />
-          {/* <img
+          <img
             src={
               supportNetwork[chainId]
                 ? supportNetwork[chainId].image
@@ -89,7 +89,7 @@ export const Connect = function () {
             alt="Switch Network"
             className="mr-2 hide-on-mobile"
             width="10"
-          /> */}
+          />
           <span className="hide-on-mobile">
             {chainId && supportNetwork[chainId]
               ? supportNetwork[chainId].name

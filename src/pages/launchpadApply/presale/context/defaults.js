@@ -7,7 +7,7 @@ export const defaultValue = {
   step: 1,
   maxStep: 5,
   currencyAddress: "0x0000000000000000000000000000000000000000",
-  currencyTSymbol: "ETH",
+  currencyTSymbol: "BNB",
   tokenAddress: "",
   tokenSymbol: "",
   tokenName: "",
@@ -66,12 +66,12 @@ export default defaultContext;
 export const feesSetting = {
   1: {
     token: 0,
-    eth: 5,
+    bnb: 5,
     extra: 0,
   },
   2: {
     token: 2,
-    eth: 2,
+    bnb: 2,
     extra: 0,
   },
 };

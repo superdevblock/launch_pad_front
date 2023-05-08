@@ -5,12 +5,12 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import { supportNetwork, RPC_URLS } from "./network";
 
-export const CHAIN_ID = 84531;
+export const CHAIN_ID = 56;
 export const infura_Id = "84842078b09946638c03157f83405213";
 
 export const getRpcUrl = () => {
   return {
-    84531: "https://goerli.basescan.org",
+    56: "https://bsc-dataseed.binance.org",
   }[CHAIN_ID];
 };
 
@@ -36,8 +36,8 @@ export const walletconnect = new WalletConnectConnector({
 });
 
 export const coinbaseWallet = new WalletLinkConnector({
-  url: `https://goerli.basescan.org`,
-  appName: "BDAI",
+  url: `https://bsc-dataseed.binance.org`,
+  appName: "NovaPad",
   supportedChainIds: supportChainId,
 });
 
