@@ -195,6 +195,8 @@ export default function LiquidityToken(props) {
   };
 
   const handleCreateLiquidityToken = async (e) => {
+    console.log("handleCreateLiquidityToken");
+    
     e.preventDefault();
     let check = checkLiquidityTokenAllValidation();
     if (check) {

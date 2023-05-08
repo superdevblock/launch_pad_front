@@ -32,6 +32,9 @@ export default function Step5() {
         if (chainId) {
           let web3 = getWeb3(chainId);
 
+          console.log("value : ", value);
+          console.log(mulDecimal(value.presalerate, value.tokenDecimal).toString());
+
           let para = [
             [
               value.tokenAddress,
@@ -51,14 +54,14 @@ export default function Step5() {
               mulDecimal(value.hardcap, 18).toString(),
               Math.floor(new Date(value.starttime).getTime() / 1000.0),
               Math.floor(new Date(value.endtime).getTime() / 1000.0),
-              value.llockup * 60,
+              (value.llockup * 60).toString(),
               value.whitelist,
               value.audit === true ? "1" : "2",
               value.kyc === true ? "1" : "2",
               feesSetting[value.feesType].token,
               feesSetting[value.feesType].bnb,
               value.liquidity,
-              value.refund,
+              (value.refund).toString(),
             ],
             `${value.logourl}$#$${value.bannerurl}$#$${value.website}$#$$#$${value.facebook}$#$${value.twitter}$#$${value.github}$#$${value.telegram}$#$${value.instagram}$#$${value.discord}$#$${value.reddit}$#$${value.youtube}$#$${value.brief}`, //9
             [
@@ -68,56 +71,58 @@ export default function Step5() {
             ],
             [value.usermail, value.auditlink, value.kyclink],
           ];
-
+          
           let poolfactoryAddress = contract[chainId]
-            ? contract[chainId].poolfactory
-            : contract["default"].poolfactory;
+          ? contract[chainId].poolfactory
+          : contract["default"].poolfactory;
+          
           let factoryContract = getContract(
             poolFactoryAbi,
             poolfactoryAddress,
             library
-          );
+            );
+            
+            let feesCal = parseFloat(value.totalCost) + parseFloat(commonStats.poolPrice);
 
-          let feesCal =
-            parseFloat(value.totalCost) + parseFloat(commonStats.poolPrice);
-          let tx = await factoryContract.createSale(
-            para[0],
-            para[1],
-            para[2],
-            para[3],
-            para[4],
-            { from: account, value: parseEther(feesCal.toFixed(8).toString()) }
-          );
+            let tx = await factoryContract.createSale(
+              para[0],
+              para[1],
+              para[2],
+              para[3],
+              para[4],
+              { from: account, value: parseEther(feesCal.toFixed(18).toString()) }
+            );
+            
+            const resolveAfter3Sec = new Promise((resolve) => 
+              setTimeout(resolve, 10000)
+            );
 
-          const resolveAfter3Sec = new Promise((resolve) =>
-            setTimeout(resolve, 10000)
-          );
-          toast.promise(resolveAfter3Sec, {
-            pending: "Waiting for confirmation 👌",
-          });
+            toast.promise(resolveAfter3Sec, {
+              pending: "Waiting for confirmation 👌",
+            });
 
-          var interval = setInterval(async function () {
-            var response = await web3.eth.getTransactionReceipt(tx.hash);
-            if (response != null) {
-              clearInterval(interval);
-              if (response.status === true) {
-                toast.success("success ! your last transaction is success 👍");
-                setLoading(false);
-                if (typeof response.logs[0] !== "undefined") {
-                  history.push(`/presale-details/${response.logs[0].address}`);
+            var interval = setInterval(async function () {
+              var response = await web3.eth.getTransactionReceipt(tx.hash);
+              if (response != null) {
+                clearInterval(interval);
+                if (response.status === true) {
+                  toast.success("success ! your last transaction is success 👍");
+                  setLoading(false);
+                  if (typeof response.logs[0] !== "undefined") {
+                    history.push(`/presale-details/${response.logs[0].address}`);
+                  } else {
+                    toast.error("something went wrong !");
+                    history.push("/");
+                  }
+                } else if (response.status === false) {
+                  toast.error("error ! Your last transaction is failed.");
+                  setLoading(false);
                 } else {
-                  toast.error("something went wrong !");
-                  history.push("/");
+                  toast.error("error ! something went wrong.");
+                  setLoading(false);
                 }
-              } else if (response.status === false) {
-                toast.error("error ! Your last transaction is failed.");
-                setLoading(false);
-              } else {
-                toast.error("error ! something went wrong.");
-                setLoading(false);
               }
-            }
-          }, 5000);
+            }, 5000);
         } else {
           toast.error("wrong network selected !");
           setLoading(false);
@@ -127,6 +132,7 @@ export default function Step5() {
         setLoading(false);
       }
     } catch (err) {
+      console.log(" --------------------------- error --------------------------- ");
       toast.error(err.reason ? err.reason : err.message);
       setLoading(false);
     }

@@ -74,7 +74,7 @@
   --nav-brand-height: 45px;
   --top-nav-item-color: #f5f5f5;
   --nav-item-color: #121117;
-  --primary-color: #f7e38d;
+  --primary-color: #7f56fe;
   --secondary-color: #daad54;
   --third-color: #7e93b3;
   --yellow-color: #ffca62;
@@ -1051,7 +1051,6 @@ aside {
   border-radius: 5px;
   outline: 0 none;
   cursor: pointer;
-  z-index: 1;
   width: fit-content;
   background-color: var(--primary-color);
 }
@@ -4206,6 +4205,7 @@ header {
   border: 1px solid rgba(173, 173, 173, 0.2);
   border-radius: 5px;
   transition: left 0.3s;
+  cursor: pointer;
 }
 
 .pro-sidebar.collapsed .pro-sidebar-header .toggleMenu {

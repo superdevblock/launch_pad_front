@@ -74,8 +74,8 @@ export default function IcoApply() {
                         <div className="radio-button">
                             <h5 className="mt-35">Blockchain/Platform</h5>
                             <div className="input-list">
-                                <input type="radio" id="binance" name="platform" value="Binance Smart Chain" onChange={(e)=>setPlatform(e.target.value)} />
-                                <label for="binance">Binance Smart Chain</label>
+                                <input type="radio" id="binance" name="platform" value="Base Chain" onChange={(e)=>setPlatform(e.target.value)} />
+                                <label for="binance">Base Chain</label>
                                 <div className="check"></div>
                             </div>
                             <div className="input-list">

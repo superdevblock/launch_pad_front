@@ -31,10 +31,10 @@ export default function TokenDetails(props) {
                     <button className="btn">
                       <a
                         className="text-dark"
-                        href={`https://bscscan.com/token/${params.get("addr")}`}
+                        href={`https://goerli.basescan.org/address/${params.get("addr")}`}
                         target="_blank"
                       >
-                        View on BSCScan
+                        View on Basescan
                       </a>
                     </button>
                     <button className="btn">

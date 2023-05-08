@@ -25,14 +25,15 @@ import LockView from "./pages/locklist/LockView";
 import LockRecord from "./pages/locklist/LockRecord";
 import MyTokenLock from "./pages/locklist/MyTokenLock";
 import MyLpLock from "./pages/locklist/MyLpLock";
+import KycAudit from "./component/KycAudit";
 import LpLockList from "./pages/locklist/LpLockList";
-
+// #7f56fe
 function App() {
   return (
     <div className="App">
       <Router>
         <ToastContainer pauseOnFocusLoss={false} />
-        <MainLayout>
+          <MainLayout>
           <Switch>
             <Route exact path="/">
               <Home />
@@ -93,6 +94,12 @@ function App() {
             </Route>
             <Route exact path="/my-lp-lock">
               <MyLpLock />
+            </Route>
+            <Route exact path="/my-lp-lock">
+              <MyLpLock />
+            </Route>
+            <Route exact path="/kycaudit">
+              <KycAudit />
             </Route>
           </Switch>
         </MainLayout>

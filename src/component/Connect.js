@@ -11,8 +11,7 @@ import useEagerConnect from "../hooks/useWeb3";
 
 export const Connect = function () {
   const context = useWeb3React();
-  const { connector, account, activate, deactivate, chainId, active, error } =
-    context;
+  const { connector, account, activate, deactivate, chainId, active, error } = context;
   const [show, setShow] = useState(false);
   const [networkshow, setNetworkshow] = useState(false);
 
@@ -78,9 +77,9 @@ export const Connect = function () {
             src={require("../images/logo.png").default}
             alt="Brand Logo"
             width="50px"
-            className="show-on-mobile"
+            className="show-on-mobile mr-3"
           />
-          <img
+          {/* <img
             src={
               supportNetwork[chainId]
                 ? supportNetwork[chainId].image
@@ -89,7 +88,7 @@ export const Connect = function () {
             alt="Switch Network"
             className="mr-2 hide-on-mobile"
             width="10"
-          />
+          /> */}
           <span className="hide-on-mobile">
             {chainId && supportNetwork[chainId]
               ? supportNetwork[chainId].name

@@ -66,7 +66,7 @@ const ProjectCard = (chainId, rowdata, index, cs) => {
         <div className="card-header py-4 px-2">
           <div className="d-flex">
             <div className="project-logo mr-3">
-              <img src={social.logourl} width="50px" />
+              <img src="/assets/images/logo.png" width="50px" />
             </div>
             <div>
               <div>
@@ -89,48 +89,6 @@ const ProjectCard = (chainId, rowdata, index, cs) => {
                     {rowdata.name ? rowdata.name : ""}
                   </h5>
                 </Link>
-              </div>
-              <div className="social-icons">
-                {social.website && (
-                  <a target="_blank" rel="noreferrer" href={social.website}>
-                    <RiEarthFill />
-                  </a>
-                )}
-                {social.twitter && (
-                  <a target="_blank" rel="noreferrer" href={social.twitter}>
-                    <AiFillTwitterCircle />
-                  </a>
-                )}
-                {social.facebook && (
-                  <a target="_blank" rel="noreferrer" href={social.facebook}>
-                    <RiFacebookCircleFill />
-                  </a>
-                )}
-                {social.instagram && (
-                  <a target="_blank" rel="noreferrer" href={social.instagram}>
-                    <RiInstagramFill />
-                  </a>
-                )}
-                {social.reddit && (
-                  <a target="_blank" rel="noreferrer" href={social.reddit}>
-                    <RiRedditFill />
-                  </a>
-                )}
-                {social.telegram && (
-                  <a target="_blank" rel="noreferrer" href={social.telegram}>
-                    <RiTelegramFill />
-                  </a>
-                )}
-                {social.discord && (
-                  <a target="_blank" rel="noreferrer" href={social.discord}>
-                    <RiDiscordFill />
-                  </a>
-                )}
-                {social.github && (
-                  <a target="_blank" rel="noreferrer" href={social.github}>
-                    <RiGithubFill />
-                  </a>
-                )}
               </div>
             </div>
           </div>

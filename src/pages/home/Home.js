@@ -16,16 +16,16 @@ export default function Home() {
               The launchpad you deserve is here!
             </h3>
             <p>
-              Innovating the EVM ecosystem through the NovaPad Defi Launchpad
+            Innovating the BASE ecosystem through the BDAI Defi Launchpad
             </p>
           </div>
           <div className="text-center mt-5">
             <Link to="/presale">
               <button className="btn">Create Now</button>
             </Link>
-            <a href="https://www.novacoin.finance/" target="_blank">
+            {/* <a href="#" target="_blank">
               <button className="btn">Learn more</button>
-            </a>
+            </a> */}
           </div>
           <div className="row my-5">
             <div className="col-12 col-md-6 col-xl-3">
@@ -104,7 +104,7 @@ export default function Home() {
                 <img src={logo} alt="Brand Logo" width="50px" />
                 <h4 className="my-2">Branding</h4>
                 <p className="">
-                  Adding logo, social links, description, listing on NovaPad.
+                  Adding logo, social links, description, listing on BDAI.
                 </p>
               </div>
             </div>
@@ -122,7 +122,7 @@ export default function Home() {
               <div className="card d-flex flex-column justify-content-center align-items-center text-center my-2 pt-4 pb-4">
                 <img src={logo} alt="Brand Logo" width="50px" />
                 <h4 className="my-2">Community</h4>
-                <p>Promote your launchpad to thousands of buyers on NovaPad.</p>
+                <p>Promote your launchpad to thousands of buyers on BDAI.</p>
               </div>
             </div>
             <div className="col-12 col-md-6 col-xl-3">
@@ -130,7 +130,7 @@ export default function Home() {
                 <img src={logo} alt="Brand Logo" width="50px" />
                 <h4 className="my-2">Locking</h4>
                 <p>
-                  Lock your liquidity to NovaSwap, PancakeSwap after presale.
+                  Lock your liquidity to BDAISwap, PancakeSwap after presale.
                 </p>
               </div>
             </div>

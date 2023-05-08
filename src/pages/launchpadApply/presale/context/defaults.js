@@ -7,7 +7,7 @@ export const defaultValue = {
   step: 1,
   maxStep: 5,
   currencyAddress: "0x0000000000000000000000000000000000000000",
-  currencyTSymbol: "BNB",
+  currencyTSymbol: "ETH",
   tokenAddress: "",
   tokenSymbol: "",
   tokenName: "",

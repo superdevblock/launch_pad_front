@@ -22,7 +22,6 @@ export default function MainToken() {
 
   useEffect(() => {
     setContext({ ...context, value: { ...defaultValue } });
-    // eslint-disable-next-line
   }, [chainId, account]);
 
   const state = {
