@@ -447,7 +447,7 @@ export default function Step2() {
             <label>
               Softcap ({value.currencyTSymbol})
               <span className="text-danger">*</span>(
-              <small className="text-danger">{`Softcap must be >= 50% of Hardcap!`}</small>
+              <small className="text-danger">{`Softcap must be >= 85% of Hardcap!`}</small>
               )
             </label>
             <input
