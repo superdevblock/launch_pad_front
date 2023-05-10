@@ -54,10 +54,10 @@ export default function Step2() {
           message = "Please Enter Valid Amount!";
         } else if (
           parseFloat(value.hardcap) > 0 &&
-          parseFloat(parseFloat(value.hardcap) / 2) > parseFloat(inputValue)
+          parseFloat(parseFloat(value.hardcap) * 0.85) > parseFloat(inputValue)
         ) {
           terror += 1;
-          message = "Softcap must be greater than or equal 50% of Hardcap";
+          message = "Softcap must be greater than or equal 85% of Hardcap";
         } else if (
           parseFloat(value.hardcap) > 0 &&
           parseFloat(inputValue) > parseFloat(value.hardcap)
