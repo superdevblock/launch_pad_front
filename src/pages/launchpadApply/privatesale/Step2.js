@@ -50,10 +50,10 @@ export default function Step2() {
           message = "Please Enter Valid Amount!";
         } else if (
           parseFloat(value.hardcap) > 0 &&
-          parseFloat(parseFloat(value.hardcap) * 0.85) > parseFloat(inputValue)
+          parseFloat(parseFloat(value.hardcap) * 0.15) > parseFloat(inputValue)
         ) {
           terror += 1;
-          message = "Softcap must be greater than or equal 85% of Hardcap";
+          message = "Softcap must be greater than or equal 15% of Hardcap";
         } else if (
           parseFloat(value.hardcap) > 0 &&
           parseFloat(inputValue) > parseFloat(value.hardcap)
@@ -447,7 +447,7 @@ export default function Step2() {
             <label>
               Softcap ({value.currencyTSymbol})
               <span className="text-danger">*</span>(
-              <small className="text-danger">{`Softcap must be >= 85% of Hardcap!`}</small>
+              <small className="text-danger">{`Softcap must be >= 15% of Hardcap!`}</small>
               )
             </label>
             <input
