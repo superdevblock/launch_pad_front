@@ -47,48 +47,57 @@ export default function Step2() {
         break;
 
       case "softcap":
+        if (inputValue === '')
+          value.hardcap = '';      
+
         reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
         inputValue = parseFloat(inputValue);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
           terror += 1;
           message = "Please Enter Valid Amount!";
-        } else if (
-          parseFloat(value.hardcap) > 0 &&
-          parseFloat(parseFloat(value.hardcap) * 0.15) > parseFloat(inputValue)
-        ) {
-          terror += 1;
-          message = "Softcap must be greater than or equal 15% of Hardcap";
-        } else if (
-          parseFloat(value.hardcap) > 0 &&
-          parseFloat(inputValue) > parseFloat(value.hardcap)
-        ) {
-          terror += 1;
-          message = "Softcap must be less than or equal Hardcap";
+        // } else if (
+        //   parseFloat(value.hardcap) > 0 &&
+        //   parseFloat(parseFloat(value.hardcap) * 0.15) > parseFloat(inputValue)
+        // ) {
+        //   terror += 1;
+        //   message = "Softcap must be greater than or equal 15% of Hardcap";
+        // } else if (
+        //   parseFloat(value.hardcap) > 0 &&
+        //   parseFloat(inputValue) > parseFloat(value.hardcap)
+        // ) {
+        //   terror += 1;
+        //   message = "Softcap must be less than or equal Hardcap";
         } else {
-          message = "";
+          // message = "";
+          value.hardcap = ( inputValue / 15 ) * 100;
         }
         break;
 
       case "hardcap":
+        if (inputValue === '')
+          value.softcap = '';      
+        
         reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
         inputValue = parseFloat(inputValue);
+
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
           terror += 1;
           message = "Please Enter Valid Amount!";
-        } else if (
-          parseFloat(value.softcap) > 0 &&
-          parseFloat(parseFloat(inputValue) / 2) > parseFloat(value.softcap)
-        ) {
-          terror += 1;
-          message = "Softcap must be greater than or equal 50% of Hardcap";
-        } else if (
-          parseFloat(value.softcap) > 0 &&
-          parseFloat(value.softcap) > parseFloat(inputValue)
-        ) {
-          terror += 1;
-          message = "Softcap must be less than or equal Hardcap";
+        // } else if (
+        //   parseFloat(value.softcap) > 0 &&
+        //   parseFloat(parseFloat(inputValue) / 2) > parseFloat(value.softcap)
+        // ) {
+        //   terror += 1;
+        //   message = "Softcap must be greater than or equal 50% of Hardcap";
+        // } else if (
+        //   parseFloat(value.softcap) > 0 &&
+        //   parseFloat(value.softcap) > parseFloat(inputValue)
+        // ) {
+        //   terror += 1;
+        //   message = "Softcap must be less than or equal Hardcap";
         } else {
-          message = "";
+          // message = "";
+          value.softcap = inputValue * 0.15;
         }
         break;
 
@@ -488,7 +497,7 @@ export default function Step2() {
             <label>
               Softcap ({value.currencyTSymbol})
               <span className="text-danger">*</span>(
-              <small className="text-danger">{`Softcap must be >= 50% of Hardcap!`}</small>
+              <small className="text-danger">{`Softcap must be >= 15% of Hardcap!`}</small>
               )
             </label>
             <input
