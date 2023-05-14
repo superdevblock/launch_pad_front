@@ -99,7 +99,7 @@ export const Connect = function () {
           <span className="hide-on-mobile">
             {chainId && supportNetwork[chainId]
               ? supportNetwork[chainId].name
-              : supportNetwork["default"].name}
+              : ""}
           </span>
         </div>
         <div className="d-flex">
