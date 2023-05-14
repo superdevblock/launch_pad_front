@@ -16,7 +16,6 @@ export const formatPrice = (num) => {
   return new Intl.NumberFormat('ja-JP').format(parseFloat(num).toFixed(3));
 }
 
-
 export const getWeb3Contract = (abi, address, chainId) => {
   let web3 = getWeb3(chainId);
   return new web3.eth.Contract(abi, address);

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { injected, walletconnect, coinbaseWallet } from "../hooks/connectors";
 import Modal from "react-bootstrap/Modal";
 import { trimAddress } from "../hooks/constant";
-import { supportNetwork } from "../hooks/network";
+import { supportNetwork, networkLists } from "../hooks/network";
 import useEagerConnect from "../hooks/useWeb3";
 
 export const Connect = function () {
@@ -53,6 +53,7 @@ export const Connect = function () {
   const connected = (connection) => connection === connector;
 
   const switchNetwork = (networkid) => {
+    console.log("switchNetwork");
     try {
       // @ts-ignore
       window.ethereum.request({
@@ -64,14 +65,18 @@ export const Connect = function () {
     }
   };
 
+  const handleChainList = () => {
+
+  }
+
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between align-items-center">
         <div
           className="badge badge-outline"
-          // onClick={() => {
-          //   setNetworkshow(!networkshow);
-          // }}
+          onClick={() => {
+            setNetworkshow(!networkshow);
+          }}
         >
           <img
             src={require("../images/logo.png").default}
@@ -79,77 +84,111 @@ export const Connect = function () {
             width="50px"
             className="show-on-mobile mr-3"
           />
-          {/* <img
+          <img
             src={
               supportNetwork[chainId]
                 ? supportNetwork[chainId].image
-                : supportNetwork["default"].image
+                : ""
             }
-            alt="Switch Network"
-            className="mr-2 hide-on-mobile"
-            width="10"
-          /> */}
+            alt=""
+            className="mx-2"
+            width="20"
+            id="chain-id"
+            onClick={handleChainList()}
+          />
           <span className="hide-on-mobile">
             {chainId && supportNetwork[chainId]
               ? supportNetwork[chainId].name
               : supportNetwork["default"].name}
           </span>
         </div>
-        {error && (
-          <button
-            type="button"
-            className="btn"
-            onClick={() => {
-              setActivatingConnector();
-            }}
-          >
-            {getErrorMessage(error)}
-          </button>
-        )}
-        {!error && (
-          <>
-            {active &&
-              (connected(injected) ||
-                connected(walletconnect) ||
-                connected(coinbaseWallet)) && (
-                <button
-                  type="button"
-                  className="btn"
-                  onClick={() => {
-                    setActivatingConnector();
-                    deactivate(injected);
-                    deactivate(walletconnect);
-                    deactivate(coinbaseWallet);
-                  }}
-                >
-                  {account && trimAddress(account)}
-                </button>
-              )}
-            {!active &&
-              (!connected(injected) ||
-                !connected(walletconnect) ||
-                !connected(coinbaseWallet)) && (
-                <button
-                  type="button"
-                  className="btn"
-                  onClick={() => {
-                    setShow(!show);
-                  }}
-                >
-                  {(activating(injected) ||
-                    activating(walletconnect) ||
-                    activating(coinbaseWallet)) && (
-                    <span className="btn-text">Connecting...</span>
+        <div className="d-flex">
+          <div>
+            {error && (
+              <button
+                type="button"
+                className="btn"
+                onClick={() => {
+                  setActivatingConnector();
+                }}
+              >
+                {getErrorMessage(error)}
+              </button>
+            )}
+            {!error && (
+              <>
+                {active &&
+                  (connected(injected) ||
+                    connected(walletconnect) ||
+                    connected(coinbaseWallet)) && (
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => {
+                        setActivatingConnector();
+                        deactivate(injected);
+                        deactivate(walletconnect);
+                        deactivate(coinbaseWallet);
+                      }}
+                    >
+                      {account && trimAddress(account)}
+                    </button>
                   )}
-                  {(!activating(injected) ||
-                    !activating(walletconnect) ||
-                    !activating(coinbaseWallet)) && (
-                    <span className="btn-text">Connect</span>
+                {!active &&
+                  (!connected(injected) ||
+                    !connected(walletconnect) ||
+                    !connected(coinbaseWallet)) && (
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => {
+                        setShow(!show);
+                      }}
+                    >
+                      {(activating(injected) ||
+                        activating(walletconnect) ||
+                        activating(coinbaseWallet)) && (
+                        <span className="btn-text">Connecting...</span>
+                      )}
+                      {(!activating(injected) ||
+                        !activating(walletconnect) ||
+                        !activating(coinbaseWallet)) && (
+                        <span className="btn-text">Connect</span>
+                      )}
+                    </button>
                   )}
-                </button>
-              )}
-          </>
-        )}
+              </>
+            )}
+          </div>
+          {/* <div style={{paddingTop: '10px', position: 'relative'}}>
+            <img
+              src={
+                supportNetwork[chainId]
+                  ? supportNetwork[chainId].image
+                  : ""
+              }
+              alt=""
+              className="mx-2"
+              width="20"
+              id="chain-id"
+              onClick={handleChainList()}
+            />
+            <ul className="chain-ul">
+              {
+                networkLists.map((network) => (
+                  <li className="chain-list" chainId={ network.chainId } onClick={switchNetwork(network.chainId)} >
+                    <img
+                      src={ network.image }
+                      alt=""
+                      className="mx-2"
+                      width="20"
+                    />
+                </li>
+                ))
+              }
+            </ul>
+          </div> */}
+        </div>
       </div>
 
       <Modal

@@ -4234,3 +4234,15 @@ header {
 .badge {
   padding: 0px;
 }
+
+.chain-ul {
+  position: absolute;
+  top: 31px;
+  left: -20px;
+}
+
+.chain-list {
+  list-style: none;
+  cursor: pointer;
+  text-align: left;
+}
