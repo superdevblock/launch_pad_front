@@ -73,6 +73,7 @@ export const Connect = function () {
     <React.Fragment>
       <div className="d-flex justify-content-between align-items-center">
         <div
+          style={{cursor: "pointer"}}
           className="badge badge-outline"
           onClick={() => {
             setNetworkshow(!networkshow);
