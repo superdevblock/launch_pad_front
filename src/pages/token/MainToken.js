@@ -7,6 +7,7 @@ import LiquidityToken from "./LiquidityToken";
 import Context from "./context/Context";
 import { useWeb3React } from "@web3-react/core";
 import { defaultValue } from "./context/defaults";
+import { coinArray } from "../../hooks/constant";
 
 const createFee = 10 ** 17;
 
@@ -67,7 +68,7 @@ export default function MainToken() {
                               <option value="2">Baby Token</option>
                               <option value="3">BuyBackBaby Token</option>
                             </select>
-                            <small>Fee : 0.1 BNB</small>
+                            <small>Fee : 0.1 { coinArray[chainId] }</small>
                           </div>
                         </div>
                       </div>

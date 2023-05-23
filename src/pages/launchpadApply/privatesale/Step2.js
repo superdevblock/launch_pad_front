@@ -7,6 +7,7 @@ import { formatPrice } from "../../../hooks/contractHelper";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { supportNetwork } from "../../../hooks/network";
+import { coinArray } from "../../../hooks/constant";
 
 export default function Step2() {
   const { value, btnPrevStep, setValue } = useContext(Context);
@@ -221,11 +222,11 @@ export default function Step2() {
             parseFloat(value[key]) <= 0
           ) {
             terror += 1;
-          } else if (
-            parseFloat(value.hardcap) > 0 &&
-            parseFloat(parseFloat(value.hardcap) / 2) > parseFloat(value[key])
-          ) {
-            terror += 1;
+          // } else if (
+          //   parseFloat(value.hardcap) > 0 &&
+          //   parseFloat(parseFloat(value.hardcap) / 2) > parseFloat(value[key])
+          // ) {
+          //   terror += 1;
           } else if (
             parseFloat(value.hardcap) > 0 &&
             parseFloat(value[key]) > parseFloat(value.hardcap)
@@ -241,11 +242,11 @@ export default function Step2() {
             parseFloat(value[key]) <= 0
           ) {
             terror += 1;
-          } else if (
-            parseFloat(value.softcap) > 0 &&
-            parseFloat(parseFloat(value[key]) / 2) > parseFloat(value.softcap)
-          ) {
-            terror += 1;
+          // } else if (
+          //   parseFloat(value.softcap) > 0 &&
+          //   parseFloat(parseFloat(value[key]) / 2) > parseFloat(value.softcap)
+          // ) {
+          //   terror += 1;
           } else if (
             parseFloat(value.softcap) > 0 &&
             parseFloat(value.softcap) > parseFloat(value[key])
@@ -393,7 +394,7 @@ export default function Step2() {
             <label>
               Presale rate<span className="text-danger">*</span>
               <small className="text-danger">
-                (If I spend 1 {value.currencyTSymbol} how many tokens will I
+                (If I spend 1 {coinArray[chainId]} how many tokens will I
                 receive?)
               </small>
             </label>
@@ -454,7 +455,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              Softcap ({value.currencyTSymbol})
+              Softcap ({coinArray[chainId]})
               <span className="text-danger">*</span>(
               <small className="text-danger">{`Softcap must be >= 15% of Hardcap!`}</small>
               )
@@ -474,7 +475,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              HardCap ({value.currencyTSymbol}){" "}
+              HardCap ({coinArray[chainId]}){" "}
               <span className="text-danger">*</span>
             </label>
             <input
@@ -492,7 +493,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              Minimum buy ({value.currencyTSymbol})
+              Minimum buy ({coinArray[chainId]})
               <span className="text-danger">*</span>
             </label>
             <input
@@ -510,7 +511,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              Maximum buy ({value.currencyTSymbol})
+              Maximum buy ({coinArray[chainId]})
               <span className="text-danger">*</span>
             </label>
             <input

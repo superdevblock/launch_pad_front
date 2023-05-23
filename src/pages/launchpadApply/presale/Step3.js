@@ -153,7 +153,7 @@ export default function Step3() {
               onChange={(e) => onChangeInput(e)}
               type="text"
               name="logourl"
-              placeholder="e.g. https://picsum.photos/200/300"
+              placeholder="e.g. https://i.ibb.co/pvyN7PB/testimage.png"
             />
             <small className="text-danger">{error.logourl}</small>
             <br />
@@ -169,7 +169,7 @@ export default function Step3() {
               onChange={(e) => onChangeInput(e)}
               type="text"
               name="bannerurl"
-              placeholder="e.g. https://picsum.photos/200/300"
+              placeholder="e.g. https://i.ibb.co/QjW6pvx/banner.png"
             />
             <small className="text-danger">{error.bannerurl}</small>
             <br />
@@ -301,7 +301,7 @@ export default function Step3() {
               onChange={(e) => onChangeInput(e)}
               type="text"
               name="youtube"
-              placeholder="e.g. https://www.youtube.com/watch?v=BHACKCNDMW8"
+              placeholder="e.g. https://youtube.com/watch"
             />
             <small className="text-danger">{error.youtube}</small>
             <br />

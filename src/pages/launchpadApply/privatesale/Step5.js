@@ -14,6 +14,7 @@ import { useCommonStats } from "./hooks/useStats";
 import { parseEther } from "ethers/lib/utils";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { supportNetwork } from "../../../hooks/network";
+import { coinArray } from "../../../hooks/constant";
 
 export default function Step5() {
   const { value, btnPrevStep } = useContext(Context);
@@ -43,7 +44,7 @@ export default function Step5() {
               mulDecimal(value.presalerate, value.tokenDecimal).toString(),
               mulDecimal(value.minbuy, 18).toString(),
               mulDecimal(value.maxbuy, 18).toString(),
-              mulDecimal(value.softcap, 18).toString(),
+              mulDecimal(value.hardcap / 2, 18).toString(),
               mulDecimal(value.hardcap, 18).toString(),
               Math.floor(new Date(value.starttime).getTime() / 1000.0),
               Math.floor(new Date(value.endtime).getTime() / 1000.0),
@@ -94,6 +95,8 @@ export default function Step5() {
             pending: "Waiting for confirmation 👌",
           });
 
+          console.log("interval");
+
           var interval = setInterval(async function () {
             let web3 = getWeb3(chainId);
             var response = await web3.eth.getTransactionReceipt(tx.hash);
@@ -135,7 +138,7 @@ export default function Step5() {
     <div
       className={`tab-pane ${value.step === 5 ? "active" : ""}`}
       role="tabpanel"
-      id="step4"
+      id="step5"
     >
       <h4 className="text-center">Review your information</h4>
       <div className="mt-3 d-flex justify-content-between card-span">
@@ -169,13 +172,13 @@ export default function Step5() {
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Softcap</span>
         <span className="step-input-value">
-          {value.softcap} ({value.currencyTSymbol})
+          {value.softcap} ({coinArray[chainId]})
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Hardcap</span>
         <span className="step-input-value">
-          {value.hardcap} ({value.currencyTSymbol})
+          {value.hardcap} ({coinArray[chainId]})
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
@@ -187,13 +190,13 @@ export default function Step5() {
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Minimum buy</span>
         <span className="step-input-value">
-          {value.minbuy} ({value.currencyTSymbol})
+          {value.minbuy} ({coinArray[chainId]})
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Maximum buy</span>
         <span className="step-input-value">
-          {value.maxbuy} ({value.currencyTSymbol})
+          {value.maxbuy} ({coinArray[chainId]})
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
@@ -321,12 +324,11 @@ export default function Step5() {
           <span className="step-input-value">{value.eachcycleper}</span>
         </div>
       )}
-
       <ul className="list-inline text-center">
-        <li>
+        <li style={{ verticalAlign: 'bottom' }}>
           <button
             type="button"
-            className="default-btn prev-step mr-4 mt-3"
+            className="btn default-btn prev-step mr-4"
             onClick={(e) => btnPrevStep(e)}
           >
             Back

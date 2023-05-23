@@ -17,7 +17,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { useLocation } from "react-router-dom";
-import { contract } from "../../../hooks/constant";
+import { contract, convertDay, coinArray } from "../../../hooks/constant";
 import { AiFillEdit } from "react-icons/all";
 
 export default function ProjectDetails() {
@@ -841,36 +841,36 @@ export default function ProjectDetails() {
 
   return (
     <React.Fragment>
-      <div className="detail-page container mt-3">
-        <section className="item-details-area">
-          <div className="row">
-            <div className="col-12 col-md-8">
-              <div className="card project-card no-hover py-4 px-2">
-                <div className="row">
-                  <div className="col-12 col-md-2 text-center">
+      <div className='detail-page container mt-3'>
+        <section className='item-details-area'>
+          <div className='row'>
+            <div className='col-12 col-md-8'>
+              <div className='card project-card no-hover py-4 px-2'>
+                <div className='row'>
+                  <div className='col-12 col-md-2 text-center'>
                     <img
-                      className="card-img-top avatar-max-lg mt-1 "
-                      width="100%"
-                      height="auto"
+                      className='card-img-top avatar-max-lg mt-1 '
+                      width='100%'
+                      height='auto'
                       src={social.logourl}
-                      alt="iconimage12"
+                      alt='iconimage12'
                     />
                   </div>
-                  <div className="col-12 col-md-10">
-                    <div className="row align-items-center justify-content-md-start justify-content-center">
-                      <h4 className="mt-1 mb-2 text-center text-md-left">
+                  <div className='col-12 col-md-10'>
+                    <div className='row align-items-center justify-content-md-start justify-content-center'>
+                      <h4 className='mt-1 mb-2 text-center text-md-left'>
                         {stats.tokenName} Privatesale
                       </h4>
-                      <div className="d-flex gap-1 justify-content-center audit-status">
+                      <div className='d-flex gap-1 justify-content-center audit-status'>
                         {stats.audit &&
                           (stats.auditStatus ||
                             (stats.auditLink && (
                               <a
-                                target="_blank"
-                                rel="noreferrer"
+                                target='_blank'
+                                rel='noreferrer'
                                 href={stats.auditLink}
                               >
-                                <h4 className="tag-btn text-uppercase text-center bg-yellow">
+                                <h4 className='tag-btn text-uppercase text-center bg-yellow'>
                                   Audit
                                 </h4>
                               </a>
@@ -879,82 +879,82 @@ export default function ProjectDetails() {
                           (stats.kycStatus ||
                             (stats.kycLink && (
                               <a
-                                target="_blank"
-                                rel="noreferrer"
+                                target='_blank'
+                                rel='noreferrer'
                                 href={stats.kycLink}
                               >
-                                <h4 className="tag-btn text-uppercase text-center bg-purple">
+                                <h4 className='tag-btn text-uppercase text-center bg-purple'>
                                   KYC
                                 </h4>
                               </a>
                             )))}
                       </div>
                     </div>
-                    <div className="social-share d-flex justify-content-center justify-content-md-start">
-                      <ul className="d-flex list-unstyled">
+                    <div className='social-share d-flex justify-content-center justify-content-md-start'>
+                      <ul className='d-flex list-unstyled'>
                         {social.twitter && (
                           <li>
                             <a
-                              target="_blank"
-                              rel="noreferrer"
+                              target='_blank'
+                              rel='noreferrer'
                               href={social.twitter}
                             >
-                              <i className="fab fa-twitter"></i>
+                              <i className='fab fa-twitter'></i>
                             </a>
                           </li>
                         )}
                         {social.telegram && (
                           <li>
                             <a
-                              target="_blank"
-                              rel="noreferrer"
+                              target='_blank'
+                              rel='noreferrer'
                               href={social.telegram}
                             >
-                              <i className="fab fa-telegram"></i>
+                              <i className='fab fa-telegram'></i>
                             </a>
                           </li>
                         )}
                         {social.website && (
                           <li>
                             <a
-                              target="_blank"
-                              rel="noreferrer"
+                              target='_blank'
+                              rel='noreferrer'
                               href={social.website}
                             >
-                              <i className="fas fa-globe"></i>
+                              <i className='fas fa-globe'></i>
                             </a>
                           </li>
                         )}
                         {social.discord && (
                           <li>
                             <a
-                              target="_blank"
-                              rel="noreferrer"
+                              target='_blank'
+                              rel='noreferrer'
                               href={social.discord}
                             >
-                              <i className="fab fa-discord"></i>
+                              <i className='fab fa-discord'></i>
                             </a>
                           </li>
                         )}
                         {social.facebook && (
                           <li>
                             <a
-                              target="_blank"
-                              rel="noreferrer"
+                              target='_blank'
+                              rel='noreferrer'
                               href={social.facebook}
                             >
-                              <i className="fab fa-facebook"></i>
+                              <i className='fab fa-facebook'></i>
                             </a>
                           </li>
                         )}
                         {social.github && (
                           <li>
                             <a
-                              target="_blank"
-                              rel="noreferrer"
+                              target='_blank'
+                              rel='noreferrer'
                               href={social.github}
                             >
-                              <i className="fab fa-github"></i>
+                              <i className='fab fa-github'></i>
                             </a>
                           </li>
                         )}
@@ -962,11 +962,11 @@ export default function ProjectDetails() {
                         {social.instagram && (
                           <li>
                             <a
-                              target="_blank"
-                              rel="noreferrer"
+                              target='_blank'
+                              rel='noreferrer'
                               href={social.instagram}
                             >
-                              <i className="fab fa-instagram"></i>
+                              <i className='fab fa-instagram'></i>
                             </a>
                           </li>
                         )}
@@ -974,23 +974,23 @@ export default function ProjectDetails() {
                         {social.reddit && (
                           <li>
                             <a
-                              target="_blank"
-                              rel="noreferrer"
+                              target='_blank'
+                              rel='noreferrer'
                               href={social.reddit}
                             >
-                              <i className="fab fa-reddit"></i>
+                              <i className='fab fa-reddit'></i>
                             </a>
                           </li>
                         )}
                       </ul>
                     </div>
-                    <p className="text-center text-md-left">
+                    <p className='text-center text-md-left'>
                       {editSocial.brief}
                     </p>
                   </div>
                 </div>
-                <div className="row mt-5">
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                <div className='row mt-5'>
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Privatesale Address</p>
                     <p>
                       {stats.poolAddress}
@@ -1004,27 +1004,27 @@ export default function ProjectDetails() {
                         }}
                       >
                         <img
-                          className="ml-2"
+                          className='ml-2'
                           src={require("../../../images/icon.png").default}
-                          alt="project"
+                          alt='project'
                         />
                       </CopyToClipboard>
                       <span>{refcopy1 && "copied"}</span>
                     </p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Token Name</p>
                     <p>{stats.tokenName}</p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Token Symbol</p>
                     <p>{stats.tokenSymbol}</p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Token Decimals</p>
                     <p>{stats.tokenDecimal}</p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Token Address</p>
                     <p>
                       {stats.token}
@@ -1038,60 +1038,60 @@ export default function ProjectDetails() {
                         }}
                       >
                         <img
-                          className="ml-2"
+                          className='ml-2'
                           src={require("../../../images/icon.png").default}
-                          alt="project"
+                          alt='project'
                         />
                       </CopyToClipboard>
                       <span>{refcopy2 && "copied"}</span>
                     </p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Total Supply</p>
                     <p>
                       {formatPrice(stats.tokenSupply)} {stats.tokenSymbol}
                     </p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Privatesale Rate </p>
                     <p>
-                      1 {stats.currencySymbol} = {formatPrice(stats.rate)}{" "}
+                      1 {coinArray[chainId]} = {formatPrice(stats.rate)}{" "}
                       {stats.tokenSymbol}
                     </p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Listing Rate </p>
                     <p>
-                      1 {stats.currencySymbol} ~{" "}
+                      1 {coinArray[chainId]} ~{" "}
                       {formatPrice(stats.liquidityListingRate)}{" "}
                       {stats.tokenSymbol}
                     </p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Soft Cap </p>
                     <p>
-                      {stats.softCap} {stats.currencySymbol}
+                      {stats.softCap} {coinArray[chainId]}
                     </p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Hard Cap </p>
                     <p>
-                      {stats.hardCap} {stats.currencySymbol}
+                      {stats.hardCap} {coinArray[chainId]}
                     </p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Unsold Tokens </p>
                     <p>{stats.refundType === "0" ? "Refund" : "Burn"}</p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Privatesale Start Time </p>
                     <p>{dateFormat(startTime, "yyyy-mm-dd HH:MM")}</p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Privatesale End Time </p>
                     <p>{dateFormat(endTime, "yyyy-mm-dd HH:MM")}</p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Listing On </p>
                     <p>
                       {contract[queryChainId]
@@ -1101,39 +1101,39 @@ export default function ProjectDetails() {
                         : contract["default"].routername}
                     </p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Liquidity Percent </p>
                     <p>{stats.liquidityPercent} %</p>
                   </div>
-                  <div className="col-12 my-2 d-flex justify-content-between">
+                  <div className='col-12 my-2 d-flex justify-content-between'>
                     <p>Liquidity Unlocked Time </p>
-                    <p>{parseFloat(stats.liquidityLockDays) / 60} minutes</p>
+                    <p>{ convertDay(parseFloat(stats.liquidityLockDays) / 60) }</p>
                   </div>
                 </div>
-                <div className="presale-status">
+                <div className='presale-status'>
                   {stats.poolState === "1" ? (
-                    <h4 className="tag-btn text-uppercase text-center bg-completed">
+                    <h4 className='tag-btn text-uppercase text-center bg-completed'>
                       Completed
                     </h4>
                   ) : stats.poolState === "2" ? (
-                    <h4 className="tag-btn text-uppercase text-center bg-canceled">
+                    <h4 className='tag-btn text-uppercase text-center bg-canceled'>
                       Canceled
                     </h4>
                   ) : parseInt(stats.endTime) <
                     Math.floor(new Date().getTime() / 1000.0) ? (
-                    <h4 className="tag-btn text-uppercase text-center bg-ended">
+                    <h4 className='tag-btn text-uppercase text-center bg-ended'>
                       Ended
                     </h4>
                   ) : parseInt(stats.startTime) >
                     Math.floor(new Date().getTime() / 1000.0) ? (
-                    <h4 className="tag-btn text-uppercase text-center bg-upcoming">
+                    <h4 className='tag-btn text-uppercase text-center bg-upcoming'>
                       Upcoming
                     </h4>
                   ) : parseInt(stats.startTime) <
                       Math.floor(new Date().getTime() / 1000.0) &&
                     parseInt(stats.endTime) >
                       Math.floor(new Date().getTime() / 1000.0) ? (
-                    <h4 className="tag-btn text-uppercase text-center bg-active">
+                    <h4 className='tag-btn text-uppercase text-center bg-active'>
                       Active
                     </h4>
                   ) : (
@@ -1142,10 +1142,10 @@ export default function ProjectDetails() {
                 </div>
               </div>
             </div>
-            <div className="col-12 col-md-4">
-              <div className="card project-card no-hover">
+            <div className='col-12 col-md-4'>
+              <div className='card project-card no-hover'>
                 <div
-                  className="card-header"
+                  className='card-header'
                   style={{
                     borderBottom: "1px solid white",
                     borderRadius: "0",
@@ -1153,11 +1153,11 @@ export default function ProjectDetails() {
                     height: "10vw",
                   }}
                 ></div>
-                <div className="card-body">
-                  <div className="mt-md-0 mt-3 d-flex justify-content-center">
-                    <div className="countdown">
+                <div className='card-body'>
+                  <div className='mt-md-0 mt-3 d-flex justify-content-center'>
+                    <div className='countdown'>
                       <div
-                        className="text-center"
+                        className='text-center'
                         style={{ fontSize: "1.1rem" }}
                       >
                         {parseInt(stats.endTime) <
@@ -1184,11 +1184,11 @@ export default function ProjectDetails() {
                       />
                     </div>
                   </div>
-                  <div className="item-progress">
-                    <div className="progress mb-1">
+                  <div className='item-progress'>
+                    <div className='progress mb-1'>
                       <div
-                        className="progress-bar"
-                        role="progressbar"
+                        className='progress-bar'
+                        role='progressbar'
                         style={{
                           width: `${parseFloat(stats.percentageRaise).toFixed(
                             2
@@ -1197,35 +1197,35 @@ export default function ProjectDetails() {
                         aria-valuenow={parseFloat(
                           stats.percentageRaise
                         ).toFixed(2)}
-                        aria-valuemin="0"
-                        aria-valuemax="100"
+                        aria-valuemin='0'
+                        aria-valuemax='100'
                       >
                         {parseFloat(stats.percentageRaise).toFixed(2)}%
                       </div>
                     </div>
-                    <div className="progress-sale d-flex justify-content-between">
-                      <span>0 {stats.currencySymbol}</span>
+                    <div className='progress-sale d-flex justify-content-between'>
+                      <span>0 {coinArray[chainId]}</span>
                       <span>
-                        {stats.hardCap} {stats.currencySymbol}
+                        {stats.hardCap} {coinArray[chainId]}
                       </span>
                     </div>
                   </div>
-                  <div className="staking-area mt-4">
-                    <div className="staking-card single-staking">
+                  <div className='staking-area mt-4'>
+                    <div className='staking-card single-staking'>
                       <p>Amount</p>
-                      <div className="input-box my-1">
-                        <div className="input-area d-flex flex-column">
-                          <div className="input-text">
+                      <div className='input-box my-1'>
+                        <div className='input-area d-flex flex-column'>
+                          <div className='input-text'>
                             <input
-                              type="text"
+                              type='text'
                               value={amount}
                               onChange={(e) => {
                                 handleChangeAmount(e);
                               }}
-                              placeholder="0.00"
+                              placeholder='0.00'
                             />
                             <a
-                              href="#sec"
+                              href='#sec'
                               onClick={(e) => {
                                 handleMaxAmount(e);
                               }}
@@ -1233,58 +1233,58 @@ export default function ProjectDetails() {
                               Max
                             </a>
                           </div>
-                          <div className="mt-2">
+                          <div className='mt-2'>
                             {stats.currencyAddress ===
                               "0x0000000000000000000000000000000000000000" ||
                             accStats.allowance > 0 ||
                             allowance > 0 ? (
                               <Button
-                                variant="none"
+                                variant='none'
                                 disabled={btndisabled}
                                 loading={loading}
-                                type="button"
+                                type='button'
                                 onClick={(e) => {
                                   handleSubmitContribution(e);
                                 }}
-                                className="btn btn-bordered-white"
+                                className='btn btn-bordered-white'
                               >
                                 SUBMIT
                               </Button>
                             ) : (
                               <Button
-                                variant="none"
+                                variant='none'
                                 loading={loading}
-                                type="button"
+                                type='button'
                                 onClick={(e) => {
                                   handleApprove(e);
                                 }}
-                                className="btn btn-bordered-white"
+                                className='btn btn-bordered-white'
                               >
                                 Approve
                               </Button>
                             )}
                           </div>
                         </div>
-                        <span className="text-danger">
+                        <span className='text-danger'>
                           <small>{error_msg}</small>
                         </span>
                       </div>
                       {(stats.poolState === "2" || stats.poolState === "0") && (
                         <React.Fragment>
-                          <p className="mt-4">Your Contribution</p>
-                          <span className="mt-0 mb-3">
+                          <p className='mt-4'>Your Contribution</p>
+                          <span className='mt-0 mb-3'>
                             {accStats.contributionOf
                               ? formatPrice(accStats.contributionOf)
                               : "0"}{" "}
-                            {stats.currencySymbol}
+                            {coinArray[chainId]}
                           </span>
                         </React.Fragment>
                       )}
                       {/* <div className="input-area d-flex flex-column flex-md-row mb-3"> */}
                       {stats.poolState === "1" && (
                         <React.Fragment>
-                          <p className="mb-15">Your Claimble Token</p>
-                          <span className="mt-0 mb-3">
+                          <p className='mb-15'>Your Claimble Token</p>
+                          <span className='mt-0 mb-3'>
                             {accStats.userAvalibleClaim
                               ? formatPrice(accStats.userAvalibleClaim)
                               : "0"}{" "}
@@ -1292,8 +1292,8 @@ export default function ProjectDetails() {
                           </span>
                           <Button
                             loading={ctLoading}
-                            variant="none"
-                            className="btn input-btn mt-2 mt-md-0 mr-md-3"
+                            variant='none'
+                            className='btn input-btn mt-2 mt-md-0 mr-md-3'
                             onClick={(e) => handleClaimToken(e)}
                           >
                             Claim Token
@@ -1306,12 +1306,12 @@ export default function ProjectDetails() {
                           <>
                             <Button
                               loading={wcLoading}
-                              className="btn input-btn mt-4 mt-md-0 mr-md-3"
+                              className='btn input-btn mt-4 mt-md-0 mr-md-3'
                               onClick={(e) => handleWithdrawContribution(e)}
                             >
                               Withdraw Contribution
                             </Button>
-                            <small className="text-danger">
+                            <small className='text-danger'>
                               *Early withdrawal of 10% penalty
                             </small>
                           </>
@@ -1321,42 +1321,42 @@ export default function ProjectDetails() {
                   </div>
                 </div>
               </div>
-              <div className="card project-card no-hover">
-                <div className="card no-hover staking-card single-staking">
-                  <div className="d-flex justify-content-between mb-2">
+              <div className='card project-card no-hover'>
+                <div className='card no-hover staking-card single-staking'>
+                  <div className='d-flex justify-content-between mb-2'>
                     <p>Sale Type</p>
                     <p>Privatesale</p>
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
+                  <div className='d-flex justify-content-between mb-2'>
                     <p>Access type</p>
                     <p>{stats.useWhitelisting ? "Whitelist" : "Public"}</p>
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
+                  <div className='d-flex justify-content-between mb-2'>
                     <p>Min. Allocation</p>
                     <p>
-                      {stats.minContribution} {stats.currencySymbol}
+                      {stats.minContribution} {coinArray[chainId]}
                     </p>
                   </div>
-                  <div className="d-flex justify-content-between mb-2">
+                  <div className='d-flex justify-content-between mb-2'>
                     <p>Max. Allocation</p>
                     <p>
-                      {stats.maxContribution} {stats.currencySymbol}
+                      {stats.maxContribution} {coinArray[chainId]}
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="card project-card no-hover staking-card single-staking">
-                <div className="d-flex justify-content-between">
-                  <h5 className="m-3">Admin Zone</h5>
+              <div className='card project-card no-hover staking-card single-staking'>
+                <div className='d-flex justify-content-between'>
+                  <h5 className='m-3'>Admin Zone</h5>
                   {stats.governance &&
                     account &&
                     stats.governance.toLowerCase() ===
                       account.toLowerCase() && (
                       <a
-                        href="#sec"
+                        href='#sec'
                         onClick={(e) => setEditmodalShow(!editmodalShow)}
                       >
-                        <AiFillEdit fill="black" />
+                        <AiFillEdit fill='black' />
                       </a>
                     )}
                 </div>
@@ -1365,63 +1365,63 @@ export default function ProjectDetails() {
                 stats.governance.toLowerCase() === account.toLowerCase() ? (
                   <React.Fragment>
                     <ul
-                      className="nav nav-tabs staking-tabs border-0 my-3 my-md-4 justify-content-center"
-                      role="tablist"
+                      className='nav nav-tabs staking-tabs border-0 my-3 my-md-4 justify-content-center'
+                      role='tablist'
                     >
-                      <li className="nav-item mr-1" role="presentation">
+                      <li className='nav-item mr-1' role='presentation'>
                         <button
-                          value="1"
+                          value='1'
                           onClick={(e) => handleWhitelistStatus(e)}
                           className={`btn tab-link ${
                             stats.useWhitelisting ? "active" : ""
                           }`}
-                          href="#tab-one"
-                          role="tab"
+                          href='#tab-one'
+                          role='tab'
                         >
                           Whitelist
                         </button>
                       </li>
-                      <li className="nav-item" role="presentation">
+                      <li className='nav-item' role='presentation'>
                         <button
-                          value="2"
+                          value='2'
                           onClick={(e) => handleWhitelistStatus(e)}
                           className={`btn tab-link ${
                             stats.useWhitelisting ? "" : "active"
                           }`}
-                          href="#tab-two"
+                          href='#tab-two'
                         >
                           Public
                         </button>
                       </li>
                     </ul>
 
-                    <div className="input-box my-1">
-                      <div className="input-area d-flex justify-content-center flex-column flex-md-row mb-3">
+                    <div className='input-box my-1'>
+                      <div className='input-area d-flex justify-content-center flex-column flex-md-row mb-3'>
                         <button
-                          type="button"
-                          className="btn input-btn mt-2 mt-md-0 ml-md-3"
+                          type='button'
+                          className='btn input-btn mt-2 mt-md-0 ml-md-3'
                           onClick={(e) => setModalShow(!modalShow)}
                         >
                           Add users whitelist
                         </button>
                         <button
-                          type="button"
-                          className="btn input-btn mt-2 mt-md-0 ml-md-3"
+                          type='button'
+                          className='btn input-btn mt-2 mt-md-0 ml-md-3'
                           onClick={(e) => setUnsetmodalShow(!unsetmodalShow)}
                         >
                           Remove whitelist users
                         </button>
                       </div>
                     </div>
-                    <div className="input-box my-1">
-                      <div className="input-area d-flex justify-content-center flex-column flex-md-row mb-3">
+                    <div className='input-box my-1'>
+                      <div className='input-area d-flex justify-content-center flex-column flex-md-row mb-3'>
                         {stats.poolState === "0" && (
                           <Button
-                            variant="none"
+                            variant='none'
                             loading={locklLoading}
                             onClick={(e) => handleCancel(e)}
-                            type="button"
-                            className="btn btn-bordered-white mt-2 mt-md-0 ml-md-3"
+                            type='button'
+                            className='btn btn-bordered-white mt-2 mt-md-0 ml-md-3'
                           >
                             cancel
                           </Button>
@@ -1434,11 +1434,11 @@ export default function ProjectDetails() {
                           Math.floor(new Date().getTime() / 1000.0) >=
                             stats.endTime && (
                             <Button
-                              variant="none"
-                              type="button"
+                              variant='none'
+                              type='button'
                               loading={finalLoading}
                               onClick={(e) => handleFinalize(e)}
-                              className="btn btn-bordered-white mt-2 mt-md-0 ml-md-3"
+                              className='btn btn-bordered-white mt-2 mt-md-0 ml-md-3'
                             >
                               Finalize
                             </Button>
@@ -1447,8 +1447,8 @@ export default function ProjectDetails() {
                     </div>
                   </React.Fragment>
                 ) : (
-                  <div className="d-flex justify-content-center">
-                    <h5 className="my-4">You are not onwer of pool</h5>
+                  <div className='d-flex justify-content-center'>
+                    <h5 className='my-4'>You are not onwer of pool</h5>
                   </div>
                 )}
               </div>
@@ -1459,8 +1459,8 @@ export default function ProjectDetails() {
       <Modal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
+        size='lg'
+        aria-labelledby='contained-modal-title-vcenter'
         centered
       >
         <Modal.Header closeButton>
@@ -1469,26 +1469,26 @@ export default function ProjectDetails() {
         <Modal.Body>
           <Form>
             <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
+              className='mb-3'
+              controlId='exampleForm.ControlTextarea1'
             >
               <Form.Control
-                as="textarea"
+                as='textarea'
                 onChange={(e) => {
                   setWhitelistAddress(e.target.value);
                 }}
                 rows={8}
-                placeholder="Insert address: separate with breaks line.
+                placeholder='Insert address: separate with breaks line.
             Ex:
             0x34E7f6A4d0BB1fa7aFe548582c47Df337FC337E6
             0xd8Ebc66f0E3D638156D6F5eFAe9f43B1eBc113B1
-            0x968136BB860D9534aF1563a7c7BdDa02B1A979C2"
+            0x968136BB860D9534aF1563a7c7BdDa02B1A979C2'
                 value={whitelistAddress}
               />
             </Form.Group>
             <Button
-              variant="none"
-              className="btn btn-success"
+              variant='none'
+              className='btn btn-success'
               loading={waddloading}
               onClick={(e) => {
                 handleSetWhitelist(e);
@@ -1503,8 +1503,8 @@ export default function ProjectDetails() {
       <Modal
         show={unsetmodalShow}
         onHide={() => setUnsetmodalShow(false)}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
+        size='lg'
+        aria-labelledby='contained-modal-title-vcenter'
         centered
       >
         <Modal.Header closeButton>
@@ -1513,26 +1513,26 @@ export default function ProjectDetails() {
         <Modal.Body>
           <Form>
             <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
+              className='mb-3'
+              controlId='exampleForm.ControlTextarea1'
             >
               <Form.Control
-                as="textarea"
+                as='textarea'
                 onChange={(e) => {
                   setRemoveWhitelistAddress(e.target.value);
                 }}
                 rows={8}
-                placeholder="Insert address: separate with breaks line.
+                placeholder='Insert address: separate with breaks line.
             Ex:
             0x34E7f6A4d0BB1fa7aFe548582c47Df337FC337E6
             0xd8Ebc66f0E3D638156D6F5eFAe9f43B1eBc113B1
-            0x968136BB860D9534aF1563a7c7BdDa02B1A979C2"
+            0x968136BB860D9534aF1563a7c7BdDa02B1A979C2'
                 value={removeWhitelistAddress}
               />
             </Form.Group>
             <Button
-              variant="none"
-              className="btn btn-success"
+              variant='none'
+              className='btn btn-success'
               loading={waddloading}
               onClick={(e) => {
                 handleRemoveWhitelist(e);
@@ -1547,8 +1547,8 @@ export default function ProjectDetails() {
       <Modal
         show={editmodalShow}
         onHide={() => setEditmodalShow(false)}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
+        size='lg'
+        aria-labelledby='contained-modal-title-vcenter'
         centered
       >
         <Modal.Header closeButton>
@@ -1556,214 +1556,214 @@ export default function ProjectDetails() {
         </Modal.Header>
 
         <Modal.Body>
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+          <div className='container'>
+            <div className='row'>
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>
-                    Logo URL<span className="text-danger">*</span>
+                    Logo URL<span className='text-danger'>*</span>
                   </label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
+                    type='text'
                     value={editSocial.logourl}
-                    name="logourl"
-                    placeholder="e.g. https://blockstar.site/pwa_image/blockstar_pwa.png"
+                    name='logourl'
+                    placeholder='e.g. https://i.ibb.co/pvyN7PB/testimage.png'
                   />
-                  <small className="text-danger">{error.logourl}</small>
+                  <small className='text-danger'>{error.logourl}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>
-                    Banner Image URL<span className="text-danger">*</span>
+                    Banner Image URL<span className='text-danger'>*</span>
                   </label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
+                    type='text'
                     value={editSocial.bannerurl}
-                    name="bannerurl"
-                    placeholder="e.g. https://blockstar.site/pwa_image/blockstar_pwa.png"
+                    name='bannerurl'
+                    placeholder='e.g. https://i.ibb.co/QjW6pvx/testbanner.png'
                   />
-                  <small className="text-danger">{error.bannerurl}</small>
+                  <small className='text-danger'>{error.bannerurl}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>
-                    Website*<span className="text-danger">*</span>
+                    Website*<span className='text-danger'>*</span>
                   </label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
+                    type='text'
                     value={editSocial.website}
-                    name="website"
-                    placeholder="e.g. https://blockstar.site"
+                    name='website'
+                    placeholder='e.g. https://basedex.ai'
                   />
-                  <small className="text-danger">{error.website}</small>
+                  <small className='text-danger'>{error.website}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>BlockStar Group</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
+                    type='text'
                     value={editSocial.blockstart}
-                    name="blockstart"
-                    placeholder="e.g. https://blockstar.site/page/view-group-profile"
+                    name='blockstart'
+                    placeholder='e.g. https://basedex.ai/page/view-group-profile'
                   />
-                  <small className="text-danger">{error.blockstart}</small>
+                  <small className='text-danger'>{error.blockstart}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>Facebook</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
+                    type='text'
                     value={editSocial.facebook}
-                    name="facebook"
-                    placeholder="e.g. https://www.facebook.com/"
+                    name='facebook'
+                    placeholder='e.g. https://www.facebook.com/'
                   />
-                  <small className="text-danger">{error.facebook}</small>
+                  <small className='text-danger'>{error.facebook}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>Twitter</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
+                    type='text'
                     value={editSocial.twitter}
-                    name="twitter"
-                    placeholder="e.g. https://twitter.com/"
+                    name='twitter'
+                    placeholder='e.g. https://twitter.com/'
                   />
-                  <small className="text-danger">{error.twitter}</small>
+                  <small className='text-danger'>{error.twitter}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>Github</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
+                    type='text'
                     value={editSocial.github}
-                    name="github"
-                    placeholder="e.g. https://github.com/"
+                    name='github'
+                    placeholder='e.g. https://github.com/'
                   />
-                  <small className="text-danger">{error.github}</small>
+                  <small className='text-danger'>{error.github}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>Telegram</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
-                    name="telegram"
+                    type='text'
+                    name='telegram'
                     value={editSocial.telegram}
-                    placeholder="e.g. https://t.me/BlockStar_Social_Media"
+                    placeholder='e.g. https://t.me/BlockStar_Social_Media'
                   />
-                  <small className="text-danger">{error.telegram}</small>
+                  <small className='text-danger'>{error.telegram}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>Instagram</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
-                    name="instagram"
+                    type='text'
+                    name='instagram'
                     value={editSocial.instagram}
-                    placeholder="e.g. https://www.instagram.com/"
+                    placeholder='e.g. https://www.instagram.com/'
                   />
-                  <small className="text-danger">{error.instagram}</small>
+                  <small className='text-danger'>{error.instagram}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>Discord</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
-                    name="discord"
+                    type='text'
+                    name='discord'
                     value={editSocial.discord}
-                    placeholder="e.g. https://discord.com/"
+                    placeholder='e.g. https://discord.com/'
                   />
-                  <small className="text-danger">{error.discord}</small>
+                  <small className='text-danger'>{error.discord}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>Reddit</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
-                    name="reddit"
+                    type='text'
+                    name='reddit'
                     value={editSocial.reddit}
-                    placeholder="e.g. https://reddit.com/"
+                    placeholder='e.g. https://reddit.com/'
                   />
-                  <small className="text-danger">{error.reddit}</small>
+                  <small className='text-danger'>{error.reddit}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-6 mb-0">
-                <div className="form-group">
+              <div className='col-md-6 mb-0'>
+                <div className='form-group'>
                   <label>Youtube Video</label>
                   <input
-                    className="form-control"
+                    className='form-control'
                     onChange={(e) => onChangeInput(e)}
-                    type="text"
-                    name="youtube"
+                    type='text'
+                    name='youtube'
                     value={editSocial.youtube}
-                    placeholder="e.g. https://www.youtube.com/watch?v=BHACKCNDMW8"
+                    placeholder='e.g. https://youtube.com/watch'
                   />
-                  <small className="text-danger">{error.youtube}</small>
+                  <small className='text-danger'>{error.youtube}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-12 mb-0">
-                <div className="form-group">
+              <div className='col-md-12 mb-0'>
+                <div className='form-group'>
                   <label>Description</label>
                   <textarea
-                    type="text"
+                    type='text'
                     style={{ height: "167px" }}
-                    name="brief"
+                    name='brief'
                     onChange={(e) => onChangeInput(e)}
-                    className="brief"
-                    placeholder="Project Brief"
+                    className='brief'
+                    placeholder='Project Brief'
                   >
                     {editSocial.brief}
                   </textarea>
-                  <small className="text-danger">{error.brief}</small>
+                  <small className='text-danger'>{error.brief}</small>
                   <br />
                 </div>
               </div>
-              <div className="col-md-12 mt-4 mb-0 d-flex justify-content-center">
+              <div className='col-md-12 mt-4 mb-0 d-flex justify-content-center'>
                 <Button
-                  className="btn btn-success"
+                  className='btn btn-success'
                   loading={editLoading}
                   onClick={(e) => handleEditSubmit(e)}
                 >

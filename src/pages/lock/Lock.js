@@ -265,6 +265,9 @@ export default function Lock() {
   const handleLockToken = async (e) => {
     e.preventDefault();
     let check = checkAllValidation();
+
+    console.log("check : ", check);
+
     if (check) {
       try {
         let web3 = getWeb3(chainId);
@@ -273,6 +276,9 @@ export default function Lock() {
           ? contract[chainId].lockAddress
           : contract["default"].lockAddress;
         let lockContract = getContract(lockAbi, lockAddress, library);
+
+        console.log("values : ", value);
+        
         if (value.isvesting) {
           let tx = await lockContract.vestingLock(
             value.owner ? value.owner : account,
@@ -286,6 +292,7 @@ export default function Lock() {
             value.title,
             { from: account }
           );
+
           const resolveAfter3Sec = new Promise((resolve) =>
             setTimeout(resolve, 5000)
           );
@@ -318,7 +325,7 @@ export default function Lock() {
               Math.floor(new Date(value.TGEDate).getTime() / 1000.0)
             ),
             value.title,
-            { from: account }
+            // { from: account }
           );
           const resolveAfter3Sec = new Promise((resolve) =>
             setTimeout(resolve, 5000)

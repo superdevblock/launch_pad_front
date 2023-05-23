@@ -7,6 +7,7 @@ import { formatPrice } from "../../../hooks/contractHelper";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { supportNetwork } from "../../../hooks/network";
+import { coinArray } from "../../../hooks/constant";
 
 export default function Step2() {
   const { value, btnPrevStep, setValue } = useContext(Context);
@@ -39,6 +40,7 @@ export default function Step2() {
         inputValue = parseFloat(inputValue);
         reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+          console.log("terror 1");
           terror += 1;
           message = "Please Enter Valid Amount!";
         } else {
@@ -53,6 +55,7 @@ export default function Step2() {
         reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
         inputValue = parseFloat(inputValue);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+          console.log("terror 2");
           terror += 1;
           message = "Please Enter Valid Amount!";
         // } else if (
@@ -81,6 +84,7 @@ export default function Step2() {
         inputValue = parseFloat(inputValue);
 
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+          console.log("terror 3");
           terror += 1;
           message = "Please Enter Valid Amount!";
         // } else if (
@@ -105,12 +109,14 @@ export default function Step2() {
         reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
         inputValue = parseFloat(inputValue);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+          console.log("terror 4");
           terror += 1;
           message = "Please Enter Valid Amount!";
         } else if (
           parseFloat(value.hardcap) > 0 &&
           parseFloat(inputValue) >= parseFloat(value.maxbuy)
         ) {
+          console.log("terror 5");
           terror += 1;
           message = "Min buy must be less than max buy";
         } else {
@@ -121,12 +127,14 @@ export default function Step2() {
         inputValue = parseFloat(inputValue);
         reg = new RegExp(/^[+-]?\d+(\.\d+)?$/);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+          console.log("terror 6");
           terror += 1;
           message = "Please Enter Valid Amount!";
         } else if (
           parseFloat(value.softcap) > 0 &&
           parseFloat(inputValue) <= parseFloat(value.minbuy)
         ) {
+          console.log("terror 7");
           terror += 1;
           message = "Min buy must be less than max buy";
         } else {
@@ -136,12 +144,15 @@ export default function Step2() {
       case "liquidity":
         reg = new RegExp(/^\d+$/);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+          console.log("terror 8");
           terror += 1;
           message = "Please Enter Valid Amount!";
         } else if (parseFloat(inputValue) <= 50) {
+          console.log("terror 9");
           terror += 1;
           message = "Liquidity must be greater than 50%";
         } else if (parseFloat(inputValue) > 100) {
+          console.log("terror 10");
           terror += 1;
           message = "Liquidity must be less than 100%";
         } else {
@@ -150,12 +161,15 @@ export default function Step2() {
         break;
       case "starttime":
         if (inputValue === "" || inputValue === null) {
+          console.log("terror 11");
           terror += 1;
           message = "Please enter valid date";
         } else if (inputValue < new Date()) {
+          console.log("terror 12");
           terror += 1;
           message = "Start Time must be after current time";
         } else if (inputValue >= value.endtime) {
+          console.log("terror 13");
           terror += 1;
           message = "Start time needs to be before End time";
         } else {
@@ -164,9 +178,11 @@ export default function Step2() {
         break;
       case "endtime":
         if (inputValue === "" || inputValue === null) {
+          console.log("terror 14");
           terror += 1;
           message = "Please enter valid date";
         } else if (value.starttime >= inputValue) {
+          console.log("terror 15");
           terror += 1;
           message = "Start time needs to be before End time";
         } else {
@@ -178,6 +194,7 @@ export default function Step2() {
       case "cycle":
         reg = new RegExp(/^\d+$/);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+          console.log("terror 16");
           terror += 1;
           message = "Please Enter Valid Number!";
         } else {
@@ -187,9 +204,11 @@ export default function Step2() {
       case "eachcycleper":
         reg = new RegExp(/^\d+$/);
         if (!reg.test(inputValue) || parseFloat(inputValue) <= 0) {
+          console.log("terror 17");
           terror += 1;
           message = "Please Enter Valid Number!";
         } else if (parseFloat(inputValue) > 100) {
+          console.log("terror 18");
           terror += 1;
           message = "Value must be less than 100!";
         } else {
@@ -230,6 +249,7 @@ export default function Step2() {
             !reg.test(parseFloat(value[key])) ||
             parseFloat(value[key]) <= 0
           ) {
+            console.log("checkAllValidation 1");
             terror += 1;
           }
           break;
@@ -242,11 +262,11 @@ export default function Step2() {
             parseFloat(value[key]) <= 0
           ) {
             terror += 1;
-          } else if (
-            parseFloat(value.hardcap) > 0 &&
-            parseFloat(parseFloat(value.hardcap) / 2) > parseFloat(value[key])
-          ) {
-            terror += 1;
+          // } else if (
+          //   parseFloat(value.hardcap) > 0 &&
+          //   parseFloat(parseFloat(value.hardcap) / 2) > parseFloat(value[key])
+          // ) {
+          //   terror += 1;
           } else if (
             parseFloat(value.hardcap) > 0 &&
             parseFloat(value[key]) > parseFloat(value.hardcap)
@@ -262,11 +282,11 @@ export default function Step2() {
             parseFloat(value[key]) <= 0
           ) {
             terror += 1;
-          } else if (
-            parseFloat(value.softcap) > 0 &&
-            parseFloat(parseFloat(value[key]) / 2) > parseFloat(value.softcap)
-          ) {
-            terror += 1;
+          // } else if (
+          //   parseFloat(value.softcap) > 0 &&
+          //   parseFloat(parseFloat(value[key]) / 2) > parseFloat(value.softcap)
+          // ) {
+          //   terror += 1;
           } else if (
             parseFloat(value.softcap) > 0 &&
             parseFloat(value.softcap) > parseFloat(value[key])
@@ -434,7 +454,7 @@ export default function Step2() {
             <label>
               Presale rate<span className="text-danger">*</span>
               <small className="text-danger">
-                (If I spend 1 {value.currencyTSymbol} how many tokens will I
+                (If I spend 1 {coinArray[chainId]} how many tokens will I
                 receive?)
               </small>
             </label>
@@ -495,7 +515,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              Softcap ({value.currencyTSymbol})
+              Softcap ({coinArray[chainId]})
               <span className="text-danger">*</span>(
               <small className="text-danger">{`Softcap must be >= 15% of Hardcap!`}</small>
               )
@@ -515,7 +535,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              HardCap ({value.currencyTSymbol}){" "}
+              HardCap ({coinArray[chainId]}){" "}
               <span className="text-danger">*</span>
             </label>
             <input
@@ -533,7 +553,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              Minimum buy ({value.currencyTSymbol})
+              Minimum buy ({coinArray[chainId]})
               <span className="text-danger">*</span>
             </label>
             <input
@@ -551,7 +571,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              Maximum buy ({value.currencyTSymbol})
+              Maximum buy ({coinArray[chainId]})
               <span className="text-danger">*</span>
             </label>
             <input
@@ -636,7 +656,7 @@ export default function Step2() {
           </small>
           <br />
           <small className="text-danger mt-1 mb-2">
-            If I spend 1 {value.currencyTSymbol} on how many tokens will I
+            If I spend 1 {coinArray[chainId]} on how many tokens will I
             receive? Usually this amount is lower than presale rate to allow for
             a higher listing price on
           </small>

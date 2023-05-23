@@ -11,6 +11,7 @@ import { parseEther } from "@ethersproject/units";
 import Button from "react-bootstrap-button-loader";
 import { supportNetwork } from "../../../hooks/network";
 import { currencies } from "../../../hooks/currencies";
+import { coinArray } from "../../../hooks/constant";
 
 export default function Step1() {
   const context = useWeb3React();
@@ -164,7 +165,7 @@ export default function Step1() {
                 onChange={(e) => handleFeesChange(e)}
                 checked={value.feesType === "1" ? true : false}
               />
-              0.5 BNB + 3% {symbol} raised only
+              0.5 {coinArray[chainId]} + 3% {coinArray[chainId]} raised only
             </span>
           </div>
         </div>

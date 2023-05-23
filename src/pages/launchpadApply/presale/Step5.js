@@ -14,6 +14,7 @@ import { useCommonStats } from "./hooks/useStats";
 import { parseEther } from "ethers/lib/utils";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { supportNetwork } from "../../../hooks/network";
+import { coinArray, convertDay } from "../../../hooks/constant";
 
 export default function Step5() {
   const { value, btnPrevStep } = useContext(Context);
@@ -51,6 +52,7 @@ export default function Step5() {
               mulDecimal(value.minbuy, 18).toString(),
               mulDecimal(value.maxbuy, 18).toString(),
               mulDecimal(value.softcap, 18).toString(),
+              // mulDecimal(value.hardcap / 2, 18).toString(),
               mulDecimal(value.hardcap, 18).toString(),
               Math.floor(new Date(value.starttime).getTime() / 1000.0),
               Math.floor(new Date(value.endtime).getTime() / 1000.0),
@@ -83,6 +85,9 @@ export default function Step5() {
             );
             
             let feesCal = parseFloat(value.totalCost) + parseFloat(commonStats.poolPrice);
+
+            console.log("para : ", para);
+            console.log("feesCal : ", feesCal);
 
             let tx = await factoryContract.createSale(
               para[0],
@@ -182,13 +187,13 @@ export default function Step5() {
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Softcap</span>
         <span className="step-input-value">
-          {value.softcap} {value.currencyTSymbol}
+          {value.softcap} { coinArray[chainId] }
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Hardcap</span>
         <span className="step-input-value">
-          {value.hardcap} {value.currencyTSymbol}
+          {value.hardcap} {coinArray[chainId]}
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
@@ -200,13 +205,13 @@ export default function Step5() {
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Minimum buy</span>
         <span className="step-input-value">
-          {value.minbuy} {value.currencyTSymbol}
+          {value.minbuy} {coinArray[chainId]}
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Maximum buy</span>
         <span className="step-input-value">
-          {value.maxbuy} {value.currencyTSymbol}
+          {value.maxbuy} {coinArray[chainId]}
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
@@ -227,7 +232,7 @@ export default function Step5() {
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Liquidity lockup time</span>
-        <span className="step-input-value">{value.llockup} minutes</span>
+        <span className="step-input-value">{ convertDay(value.llockup) } </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Website</span>

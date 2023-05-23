@@ -138,198 +138,198 @@ export default function Step3() {
   return (
     <div
       className={`tab-pane ${value.step === 3 ? "active" : ""}`}
-      role="tabpanel"
-      id="step3"
+      role='tabpanel'
+      id='step3'
     >
-      <h4 className="text-center">Let people know who you are</h4>
-      <div className="row">
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+      <h4 className='text-center'>Let people know who you are</h4>
+      <div className='row'>
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>
-              Logo URL<span className="text-danger">*</span>
+              Logo URL<span className='text-danger'>*</span>
             </label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="logourl"
-              placeholder="e.g. https://blockstar.site/pwa_image/blockstar_pwa.png"
+              type='text'
+              name='logourl'
+              placeholder='e.g. https://i.ibb.co/pvyN7PB/testimage.png'
             />
-            <small className="text-danger">{error.logourl}</small>
+            <small className='text-danger'>{error.logourl}</small>
             <br />
           </div>
         </div>
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>
-              Banner Image URL<span className="text-danger">*</span>
+              Banner Image URL<span className='text-danger'>*</span>
             </label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="bannerurl"
-              placeholder="e.g. https://blockstar.site/pwa_image/blockstar_pwa.png"
+              type='text'
+              name='bannerurl'
+              placeholder='e.g. https://i.ibb.co/QjW6pvx/testbanner.png'
             />
-            <small className="text-danger">{error.bannerurl}</small>
+            <small className='text-danger'>{error.bannerurl}</small>
             <br />
           </div>
         </div>
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>
-              Website*<span className="text-danger">*</span>
+              Website*<span className='text-danger'>*</span>
             </label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="website"
-              placeholder="e.g. https://blockstar.site"
+              type='text'
+              name='website'
+              placeholder='e.g. https://basedex.ai'
             />
-            <small className="text-danger">{error.website}</small>
+            <small className='text-danger'>{error.website}</small>
             <br />
           </div>
         </div>
 
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Facebook</label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="facebook"
-              placeholder="e.g. https://www.facebook.com/"
+              type='text'
+              name='facebook'
+              placeholder='e.g. https://www.facebook.com/'
             />
-            <small className="text-danger">{error.facebook}</small>
+            <small className='text-danger'>{error.facebook}</small>
             <br />
           </div>
         </div>
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Twitter</label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="twitter"
-              placeholder="e.g. https://twitter.com/"
+              type='text'
+              name='twitter'
+              placeholder='e.g. https://twitter.com/'
             />
-            <small className="text-danger">{error.twitter}</small>
+            <small className='text-danger'>{error.twitter}</small>
             <br />
           </div>
         </div>
 
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Github</label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="github"
-              placeholder="e.g. https://github.com/"
+              type='text'
+              name='github'
+              placeholder='e.g. https://github.com/'
             />
-            <small className="text-danger">{error.github}</small>
+            <small className='text-danger'>{error.github}</small>
             <br />
           </div>
         </div>
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Telegram</label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="telegram"
-              placeholder="e.g. https://t.me/BlockStar_Social_Media"
+              type='text'
+              name='telegram'
+              placeholder='e.g. https://t.me/BlockStar_Social_Media'
             />
-            <small className="text-danger">{error.telegram}</small>
+            <small className='text-danger'>{error.telegram}</small>
             <br />
           </div>
         </div>
 
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Instagram</label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="instagram"
-              placeholder="e.g. https://www.instagram.com/"
+              type='text'
+              name='instagram'
+              placeholder='e.g. https://www.instagram.com/'
             />
-            <small className="text-danger">{error.instagram}</small>
+            <small className='text-danger'>{error.instagram}</small>
             <br />
           </div>
         </div>
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Discord</label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="discord"
-              placeholder="e.g. https://discord.com/"
+              type='text'
+              name='discord'
+              placeholder='e.g. https://discord.com/'
             />
-            <small className="text-danger">{error.discord}</small>
+            <small className='text-danger'>{error.discord}</small>
             <br />
           </div>
         </div>
 
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Reddit</label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="reddit"
-              placeholder="e.g. https://reddit.com/"
+              type='text'
+              name='reddit'
+              placeholder='e.g. https://reddit.com/'
             />
-            <small className="text-danger">{error.reddit}</small>
+            <small className='text-danger'>{error.reddit}</small>
             <br />
           </div>
         </div>
-        <div className="col-md-6 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-6 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Youtube Video</label>
             <input
-              className="form-control"
+              className='form-control'
               onChange={(e) => onChangeInput(e)}
-              type="text"
-              name="youtube"
-              placeholder="e.g. https://www.youtube.com/watch?v=BHACKCNDMW8"
+              type='text'
+              name='youtube'
+              placeholder='e.g. https://youtube.com/watch'
             />
-            <small className="text-danger">{error.youtube}</small>
+            <small className='text-danger'>{error.youtube}</small>
             <br />
           </div>
         </div>
 
-        <div className="col-md-12 mt-4 mb-0">
-          <div className="form-group">
+        <div className='col-md-12 mt-4 mb-0'>
+          <div className='form-group'>
             <label>Description</label>
             <textarea
-              type="text"
-              name="brief"
+              type='text'
+              name='brief'
               onChange={(e) => onChangeInput(e)}
-              className="brief"
-              placeholder="Project Brief"
+              className='brief'
+              placeholder='Project Brief'
             >
               {value.brief}
             </textarea>
-            <small className="text-danger">{error.brief}</small>
+            <small className='text-danger'>{error.brief}</small>
             <br />
           </div>
         </div>
       </div>
-      <ul className="list-inline text-center">
+      <ul className='list-inline text-center'>
         <li>
           <button
-            type="button"
-            className="btn default-btn prev-step mr-4"
+            type='button'
+            className='btn default-btn prev-step mr-4'
             onClick={(e) => btnPrevStep(e)}
           >
             Back
@@ -337,8 +337,8 @@ export default function Step3() {
         </li>
         <li>
           <button
-            type="button"
-            className="btn default-btn next-step"
+            type='button'
+            className='btn default-btn next-step'
             onClick={(e) => btnNextStepValidation(e)}
           >
             Continue

@@ -15,6 +15,7 @@ import { parseEther } from "ethers/lib/utils";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import copyIcon from "../../../images/icon.png";
 import { supportNetwork } from "../../../hooks/network";
+import { coinArray } from "../../../hooks/constant";
 
 export default function Step5() {
   const { value, btnPrevStep } = useContext(Context);
@@ -71,6 +72,10 @@ export default function Step5() {
 
           let feesCal =
             parseFloat(value.totalCost) + parseFloat(commonStats.poolPrice);
+
+          console.log("para");
+          console.log(para);
+          console.log(feesCal);
 
           let tx = await factoryContract.createFairSale(
             para[0],
@@ -169,7 +174,7 @@ export default function Step5() {
       <div className="mt-2 d-flex justify-content-between card-span">
         <span>Softcap</span>
         <span className="step-input-value">
-          {value.softcap} ({value.currencyTSymbol})
+          {value.softcap} ({coinArray[chainId]})
         </span>
       </div>
       <div className="mt-2 d-flex justify-content-between card-span">

@@ -44,7 +44,7 @@ export const useCommonStats = (updater) => {
         })
       }
       catch (err) {
-          toast.error(err.reason ? err.reason : err.message);
+        toast.error(err.reason ? err.reason : err.message);
         history.push('/sale-list');
       }
     }

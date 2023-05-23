@@ -76,12 +76,12 @@ export default function Step4() {
                         <div className="col-12 mt-4 mb-0">
                             <div className="form-group">
                                 <label>Contact Email</label>
-                                <input className="form-control" onChange={(e) => onChangeInput(e)} value={value.usermail} type="text" name="usermail" placeholder="e.g. test@gmail.com" />
+                                <input className="form-control" onChange={(e) => onChangeInput(e)} value={value.usermail} type="text" name="usermail" />
                             </div>
                         </div>
                     }
 
-                    {value.audit === true &&
+                    {/* {value.audit === true &&
                         <div className="col-6 mt-4 mb-0">
                             <div className="form-group">
                                 <label>Audit Link</label>
@@ -97,7 +97,7 @@ export default function Step4() {
                                 <input className="form-control" onChange={(e) => onChangeInput(e)} value={value.auditlink} type="text" name="auditlink" placeholder="e.g. https://github.com/interfinetwork/smart-contract-audits/blob/kyc-updates/OceansFinance_0x7769d930BC6B087f960C5D21e34A4449576cf22a.pdf" />
                             </div>
                         </div>
-                    }
+                    } */}
 
                 </div>
             </div>

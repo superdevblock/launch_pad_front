@@ -139,13 +139,12 @@ export default function Step4() {
                   value={value.usermail}
                   type="text"
                   name="usermail"
-                  placeholder="e.g. test@gmail.com"
                 />
               </div>
             </div>
           )}
 
-          {value.audit === true && (
+          {/* {value.audit === true && (
             <div className="col-6 mt-4 mb-0">
               <div className="form-group">
                 <label>Audit Link</label>
@@ -175,7 +174,7 @@ export default function Step4() {
                 />
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
 

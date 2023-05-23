@@ -27,6 +27,8 @@ import MyTokenLock from "./pages/locklist/MyTokenLock";
 import MyLpLock from "./pages/locklist/MyLpLock";
 import KycAudit from "./component/KycAudit";
 import LpLockList from "./pages/locklist/LpLockList";
+
+const globalChainID = 56;
 // #7f56fe
 function App() {
   return (

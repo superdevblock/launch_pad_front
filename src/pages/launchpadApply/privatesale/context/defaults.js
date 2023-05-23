@@ -1,8 +1,3 @@
-// This file holds the initial, default values for context
-// Note: it's good practice to specify defaults here,
-//  but in our case they are overwritten by the values
-//  within AppContextProvider
-
 export const defaultValue = {
   step: 1,
   maxStep: 5,
@@ -45,7 +40,7 @@ export const defaultValue = {
   audit: false,
   totalCost: 0,
   totaltoken: 0,
-  usermail: "",
+  usermail: "info@basedex.ai",
   auditlink: "",
   kyclink: "",
 };

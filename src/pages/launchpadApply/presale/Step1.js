@@ -11,13 +11,18 @@ import { parseEther } from "@ethersproject/units";
 import Button from "react-bootstrap-button-loader";
 import { supportNetwork } from "../../../hooks/network";
 import { currencies } from "../../../hooks/currencies";
+import { coinArray } from "../../../hooks/constant";
 
 export default function Step1() {
   const context = useWeb3React();
   const { chainId, account, library } = context;
   const { value, btnNextStep, setValue } = useContext(Context);
   const [loading, setLoading] = useState(false);
-  const [symbol, setSymbol] = useState(value.currencyTSymbol);
+
+  const coinSymbol = value.currencyTSymbol;
+  const [symbol, setSymbol] = useState(coinSymbol);
+
+  console.log(symbol);
 
   const currencyList =
     currencies[chainId] !== undefined
@@ -163,7 +168,7 @@ export default function Step1() {
               onChange={(e) => handleFeesChange(e)}
               checked={value.feesType === "1" ? true : false}
             />
-            0.5 BNB + 5% {symbol} raised only
+            0.5 {coinArray[chainId]} + 5% {coinArray[chainId]} raised only
           </div>
           <div className="form-check">
             <input
@@ -175,7 +180,7 @@ export default function Step1() {
               onChange={(e) => handleFeesChange(e)}
               checked={value.feesType === "2" ? true : false}
             />
-            0.5 BNB + 2% {symbol} raised + 2% token sold
+            0.5 {coinArray[chainId]} + 2% {coinArray[chainId]} raised + 2% token sold
           </div>
         </div>
       </div>

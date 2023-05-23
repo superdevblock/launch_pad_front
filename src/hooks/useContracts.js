@@ -5,8 +5,6 @@ import multiCallAbi from '../json/multicall.json';
 import { getWeb3 } from "./connectors";
 
 
-
-
 export const MulticallContractWeb3 = (chainId) => {
   let multicallAddress = contract[chainId] ? contract[chainId].multicallAddress : contract['default'].multicallAddress; 
 

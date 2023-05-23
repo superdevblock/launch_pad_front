@@ -7,6 +7,7 @@ import { formatPrice } from "../../../hooks/contractHelper";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { supportNetwork } from "../../../hooks/network";
+import { coinArray, convertDay } from "../../../hooks/constant";
 
 export default function Step2() {
   const { value, btnPrevStep, setValue } = useContext(Context);
@@ -244,7 +245,7 @@ export default function Step2() {
         <div className="col-md-6 mt-4 mb-0">
           <div className="form-group">
             <label>
-              Softcap ({value.currencyTSymbol})
+              Softcap ({coinArray[chainId]})
               <span className="text-danger">*</span>
             </label>
             <input
@@ -355,7 +356,7 @@ export default function Step2() {
             </label>
             <input
               className="form-control"
-              value={value.llockup}
+              value={ convertDay(value.llockup) }
               type="text"
               onChange={(e) => onChangeInput(e)}
               name="llockup"
