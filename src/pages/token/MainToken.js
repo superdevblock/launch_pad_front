@@ -9,7 +9,8 @@ import { useWeb3React } from "@web3-react/core";
 import { defaultValue } from "./context/defaults";
 import { coinArray } from "../../hooks/constant";
 
-const createFee = 10 ** 17;
+// const createFee = 10 ** 17;
+const createFee = 10 * 15;
 
 export default function MainToken() {
   const appContext = useContext(Context);

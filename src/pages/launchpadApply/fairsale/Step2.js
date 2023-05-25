@@ -356,7 +356,7 @@ export default function Step2() {
             </label>
             <input
               className="form-control"
-              value={ convertDay(value.llockup) }
+              value={ value.lockup }
               type="text"
               onChange={(e) => onChangeInput(e)}
               name="llockup"
